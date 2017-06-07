@@ -1,3 +1,3 @@
 # kube-samples
-A collection of sample deployments for various examples to kubernetes under bluemix
+A collection of sample deployments to Kubernetes clusters by using IBM Bluemix Container Service.
 
