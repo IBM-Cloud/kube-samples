@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: unrootsquash
+  labels:
+    tier: management
+    app: unrootsquash
+spec:
+  template:
+    metadata:
+      labels:
+        name: unrootsquash
+    spec:
+      hostNetwork: true
+      containers:
+        - resources:
+            requests:
+              cpu: 0.1
+          securityContext:
+            privileged: true
+          image: registry.ng.bluemix.net/yournamespacehere/ursdaemonset
+          name: unrootsquash
+          env:
+            - name: MY_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: HOST_SCRIPT
+              value: "unrootsquashset.sh"
+          volumeMounts:
+            - name: rootsshhome
+              mountPath: /root/.ssh
+      volumes:
+        - name: rootsshhome
+          hostPath:
+            path: /root/.ssh
