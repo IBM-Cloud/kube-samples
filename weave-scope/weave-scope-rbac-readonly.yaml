@@ -1,0 +1,25 @@
+# Read-only permissions and roles for weave-scope
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1alpha1
+metadata:
+  name: weave-scope-mgr
+rules:
+- apiGroups: ["*"]
+  resources: ["services", "deployments", "replicasets", "pods", "replicationcontrollers", "namespaces", "nodes", "daemonsets"]
+  verbs: ["get", "list", "watch"]
+- nonResourceURLs: ["*"]
+  verbs: ["*"]
+---
+# Grant permissions to weave-scope in the kube-system namespace.
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1alpha1
+metadata:
+  name: weave-scope-mgr-role-binding
+subjects:
+- kind: ServiceAccount
+  name: weave-scope
+  namespace: kube-system
+roleRef:
+  kind: ClusterRole
+  name: weave-scope-mgr
+  apiGroup: rbac.authorization.k8s.io
