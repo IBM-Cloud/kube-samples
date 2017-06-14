@@ -1,0 +1,83 @@
+#############################################################################
+# This kubernetes ingress resource is designed to be used in conjunction
+# with a kubernetes cluster from the IBM Bluemix Container Service (https://bluemix.net)
+# and the istio helm chart (https://github.com/kubernetes/charts/tree/master/incubator/istio).
+#
+# This ingress is to be used with the istio bookinfo example (https://istio.io/docs/samples/bookinfo.html).
+#
+# This file will create an ingress in the kubernetes cluster where the default
+# ingress controller will perform tls termination and route the request to the istio
+# gateway. The ingress includes wildcard entries for the istio add-ons for prometheus,
+# servicegroph, and zipkin.
+#
+# NOTE: This file assumes you have created the cluster in the us-south region. If you have
+# created a cluster in another region, you will need to modify this file to adjust the host
+# name to use the appropriate region name.
+#
+# The file is a template kubernetes yaml file. You will need to replace the following values:
+#   <aramda-cluster> = the name of the IBM Bluemix kubernetes cluster
+#   <helm-release> = the name of the helm release used to install the istio control plane
+#
+# This file enables TLS support with the ingress controller. In IBM Bluemix a host
+# is automatically generated and registered for your cluster (using the cluster name).
+# The tls key is generated and stored as a secret in the default namespace. If you
+# install the bookinfo sample in another namespace (e.g., istio) then you will need
+# to copy the tls secret from the default namespace. The tls secret has the same name
+# as your cluster name. Here is a simple command to copy the tls secret from the default
+# namespace into another namespace such as "istio".
+#
+# kubectl get secret mycluster -o yaml | sed 's/default/istio/g' | kubectl -n istio create -f -
+#
+# You can execute the substitution and execution of the yaml file against the kubernetes
+# cluster using the following command:
+#
+# sed -e 's/<armada-cluster>/mycluster/g' -e 's/<helm-release>/bogus-release/g' istio-chain-ingress-armada-helm-tls.yaml| kubectl apply -f -
+#
+#############################################################################
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: istio-fd
+spec:
+  tls:
+  - hosts:
+    - <armada-cluster>.us-south.containers.mybluemix.net
+    secretName: <armada-cluster>
+  rules:
+  - host: <armada-cluster>.us-south.containers.mybluemix.net
+    http:
+      paths:
+      - path: /productpage
+        backend:
+          serviceName: <helm-release>-istio-ingress
+          servicePort: 80
+      - path: /login
+        backend:
+          serviceName: <helm-release>-istio-ingress
+          servicePort: 80
+      - path: /logout
+        backend:
+          serviceName: <helm-release>-istio-ingress
+          servicePort: 80
+  - host: zip.<armada-cluster>.us-south.containers.mybluemix.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: <helm-release>-istio-zipkin
+          servicePort: 9411
+  - host: grafana.<armada-cluster>.us-south.containers.mybluemix.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: <helm-release>-istio-grafana
+          servicePort: 3000
+  - host: sg.<armada-cluster>.us-south.containers.mybluemix.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: <helm-release>-istio-servicegraph
+          servicePort: 8088
