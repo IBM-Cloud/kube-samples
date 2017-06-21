@@ -1,0 +1,31 @@
+# Read/write permissions and roles for weave-scope
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1alpha1
+metadata:
+  name: weave-cortex-mgr
+rules:
+- apiGroups: [""]
+  resources: ["services", "replicationcontrollers", "namespaces", "nodes", "daemonsets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["extensions"]
+  resources: ["deployments", "replicasets", "deployments.extensions", "replicasets.extensions", "deployments/scale", "deployments/rollback", "deployments/status", "replicasets/scale", "replicasets/rollback", "replicasets/status"]
+  verbs: ["get", "list", "watch", "update", "patch"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch", "delete", "update", "patch"]
+- nonResourceURLs: ["*"]
+  verbs: ["*"]
+---
+# Grant permissions to weave-scope in the kube-system namespace.
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1alpha1
+metadata:
+  name: weave-cortex-mgr-role-binding
+subjects:
+- kind: ServiceAccount
+  name: weave-cortex
+  namespace: kube-system
+roleRef:
+  kind: ClusterRole
+  name: weave-cortex-mgr
+  apiGroup: rbac.authorization.k8s.io
