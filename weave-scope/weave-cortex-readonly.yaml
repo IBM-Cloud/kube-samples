@@ -5,7 +5,7 @@ metadata:
   name: weave-cortex-mgr
 rules:
 - apiGroups: ["*"]
-  resources: ["services", "deployments", "replicasets", "pods", "replicationcontrollers", "namespaces", "nodes", "daemonsets", "endpoints"]
+  resources: ["*"]
   verbs: ["get", "list", "watch"]
 - nonResourceURLs: ["*"]
   verbs: ["*"]
