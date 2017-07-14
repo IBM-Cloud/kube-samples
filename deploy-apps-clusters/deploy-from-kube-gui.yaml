@@ -1,0 +1,15 @@
+#Example script for deploying apps to clusters from the Kubernetes GUI
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ibmliberty-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: ibmliberty
+    spec:
+      containers:
+      - name: ibmliberty
+        image: registry.stage1.ng.bluemix.net/ibmliberty
