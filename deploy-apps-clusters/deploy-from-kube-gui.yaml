@@ -1,4 +1,5 @@
 #Example script for deploying apps to clusters from the Kubernetes GUI
+#If you are not logged into the US-South https://api.ng.bluemix.net region, change the image registry location to match your region.
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -12,4 +13,4 @@ spec:
     spec:
       containers:
       - name: ibmliberty
-        image: registry.stage1.ng.bluemix.net/ibmliberty
+        image: registry.ng.bluemix.net/ibmliberty
