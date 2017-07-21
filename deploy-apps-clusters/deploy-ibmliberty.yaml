@@ -1,4 +1,3 @@
-#Example script for deploying apps to clusters from the Kubernetes GUI
 #If you are not logged into the US-South https://api.ng.bluemix.net region, change the image registry location to match your region.
 apiVersion: extensions/v1beta1
 kind: Deployment
