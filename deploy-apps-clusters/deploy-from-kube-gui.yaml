@@ -1,0 +1,15 @@
+#If you are not logged into the US-South https://api.ng.bluemix.net region, change the image registry location to match your region.
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ibmliberty-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: ibmliberty
+    spec:
+      containers:
+      - name: ibmliberty
+        image: registry.ng.bluemix.net/ibmliberty
