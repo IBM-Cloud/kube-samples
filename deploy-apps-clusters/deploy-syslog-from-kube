@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: rsyslog
+  name: rsyslog
+spec:
+  selector:
+    app: rsyslog
+  ports:
+  - name: tcp-syslog
+    port: 514
+    targetPort: 514
+    nodePort: 30514
+    protocol: TCP
+  - name: udp-syslog
+    port: 514
+    targetPort: 514
+    nodePort: 30514
+    protocol: UDP
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: rsyslog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rsyslog
+  template:
+    metadata:
+      name: rsyslog
+      labels:
+        app: rsyslog
+    spec:
+      containers:
+      - name: rsyslog
+        image: voxxit/rsyslog:latest
+        imagePullPolicy: "Always"
+        ports:
+        - name: incoming-logs
+          containerPort: 514
