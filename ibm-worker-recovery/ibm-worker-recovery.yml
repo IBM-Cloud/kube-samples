@@ -110,7 +110,7 @@
         [Partitioner]
         unique_label_value = "nurse"
         unique_label_key = "nursekey"
-        pod_id = "ibm-worker-recovery-214123-1232321"
+        pod_id = ""
         namespace = "kube-system"
         peer_cache_ttl_seconds = 10
 
