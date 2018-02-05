@@ -22,8 +22,6 @@
           # Allow this to run on all nodes, no matter what taints exist
           tolerations:
           - operator: "Exists"
-          imagePullSecrets:
-          - name: international-registry-docker-secret
           containers:
           - name: ibm-worker-recovery
             image: registry.bluemix.net/armada-master/ibm-worker-recovery:prod
