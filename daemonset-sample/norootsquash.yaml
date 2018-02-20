@@ -1,0 +1,42 @@
+# Use this configuration file to create a DaemonSet that disables the root squash restriction for NFS file shares that are mounted to cluster pods in IBM Cloud Container Service.
+# Note that the pods run in privileged mode, which can pose a security risk. Use with caution.
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: norootsquash
+  labels:
+    tier: management
+    app: norootsquash
+spec:
+  template:
+    metadata:
+      labels:
+        name: norootsquash
+    spec:
+      containers:
+        - resources:
+            requests:
+              cpu: 0.1
+          securityContext:
+            privileged: true
+          image: ubuntu:16.04
+          name: unrootsquash
+          command: ["/bin/sh", "-c"]
+          args:
+            - >
+              grep "^Domain = slnfsv4.com" /modifyetc/idmapd.conf;
+              if [ "$?" -ne "0" ] ; then
+                sed -i 's/.*Domain =.*/Domain = slnfsv4.com/g' /modifyetc/idmapd.conf;
+                nfsidmap -c;
+                service nfs-idmapd start;
+              fi;
+              while true; do
+                sleep 100;
+              done
+          volumeMounts:
+            - name: modifyetc
+              mountPath: /modifyetc
+      volumes:
+        - name: modifyetc
+          hostPath:
+            path: /etc
