@@ -31,7 +31,7 @@ spec:
                 service nfs-idmapd start;
               fi;
               while true; do
-                sleep 100;
+                sleep 100000;
               done
           volumeMounts:
             - name: modifyetc
