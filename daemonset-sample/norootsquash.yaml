@@ -28,7 +28,6 @@ spec:
               if [ "$?" -ne "0" ] ; then
                 sed -i 's/.*Domain =.*/Domain = slnfsv4.com/g' /modifyetc/idmapd.conf;
                 nfsidmap -c;
-                service nfs-idmapd start;
               fi;
               while true; do
                 sleep 100000;
