@@ -12,4 +12,4 @@ spec:
     spec:
       containers:
       - name: ibmliberty
-        image: ibmcom/websphere-liberty
+        image: registry.bluemix.net/ibmliberty
