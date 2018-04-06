@@ -69,6 +69,7 @@
               periodSeconds: 60
               successThreshold: 1
               timeoutSeconds: 20
+          serviceAccount: ibm-worker-recovery
           volumes:
             - name: config-volume
               configMap:
@@ -98,6 +99,42 @@
         targetPort: 8080
       selector:
         app: ibm-worker-recovery
+ -  kind: ServiceAccount
+    apiVersion: v1
+    metadata:
+      name: ibm-worker-recovery
+      namespace: kube-system
+    imagePullSecrets:
+    - name: bluemix-default-secret
+    - name: bluemix-default-secret-regional
+    - name: bluemix-default-secret-international
+ -  kind: ClusterRole
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: worker-recovery-role
+    rules:
+    - apiGroups: [""]
+      resources: ["nodes"]
+      verbs: ["get", "watch", "list","update","patch","post"]
+    - apiGroups: [""]
+      resources: ["pods"]
+      verbs: ["get", "watch", "list","update","patch"]
+    - apiGroups: [""]
+      resources: ["configmaps"]
+      verbs: ["get", "watch", "list","create","post","update"]
+ -  kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: worker-recovery-roles
+    subjects:
+    - kind: ServiceAccount
+      name: ibm-worker-recovery
+      namespace: kube-system
+      apiGroup: ""
+    roleRef:
+      kind: ClusterRole
+      name: worker-recovery-role
+      apiGroup: rbac.authorization.k8s.io
  -  kind: ConfigMap
     apiVersion: v1
     metadata:
