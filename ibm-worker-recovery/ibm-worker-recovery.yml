@@ -121,7 +121,7 @@
       verbs: ["get", "watch", "list","update","patch"]
     - apiGroups: [""]
       resources: ["configmaps"]
-      verbs: ["get", "watch", "list","create","post","update"]
+      verbs: ["get", "watch", "list","create","post","update","patch"]
  -  kind: ClusterRoleBinding
     apiVersion: rbac.authorization.k8s.io/v1beta1
     metadata:
