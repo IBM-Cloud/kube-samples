@@ -47,7 +47,7 @@
               mountPath: /tmp/checkdirectory
             - name: storage-volume
               readOnly: true
-               mountPath: /go/src/github.ibm.com/alchemy-containers/ibm-worker-recovery/etc/secret
+              mountPath: /go/src/github.ibm.com/alchemy-containers/ibm-worker-recovery/etc/secret
             - name: cluster-volume
               readOnly: true
               mountPath: /go/src/github.ibm.com/alchemy-containers/ibm-worker-recovery/etc/clusterinfo
@@ -69,7 +69,6 @@
               periodSeconds: 60
               successThreshold: 1
               timeoutSeconds: 20
-          serviceAccount: ibm-worker-recovery
           volumes:
             - name: config-volume
               configMap:
@@ -99,15 +98,6 @@
         targetPort: 8080
       selector:
         app: ibm-worker-recovery
- -  kind: ServiceAccount
-    apiVersion: v1
-    metadata:
-      name: ibm-worker-recovery
-      namespace: kube-system
-    imagePullSecrets:
-    - name: bluemix-default-secret
-    - name: bluemix-default-secret-regional
-    - name: bluemix-default-secret-international
  -  kind: ConfigMap
     apiVersion: v1
     metadata:
