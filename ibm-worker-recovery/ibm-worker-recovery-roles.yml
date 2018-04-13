@@ -1,0 +1,33 @@
+ apiVersion: v1
+ kind: List
+ items:
+ -  kind: ClusterRole
+    apiVersion: rbac.authorization.k8s.io/v1
+    metadata:
+      name: worker-recovery-role
+    rules:
+    - apiGroups: [""]
+      resources: ["nodes"]
+      verbs: ["get", "watch", "list","update","patch","post"]
+    - apiGroups: [""]
+      resources: ["pods"]
+      verbs: ["get", "watch", "list","update","patch"]
+    - apiGroups: [""]
+      resources: ["configmaps"]
+      verbs: ["get", "watch", "list","create","post","update","patch","delete"]
+    - apiGroups: ["extensions"]
+      resources: ["deployments"]
+      verbs: ["get", "watch", "list","create","post","update","patch"]
+ -  kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1
+    metadata:
+      name: worker-recovery-rolebinding
+    subjects:
+    - kind: ServiceAccount
+      name: ibm-worker-recovery
+      namespace: kube-system
+      apiGroup: ""
+    roleRef:
+      kind: ClusterRole
+      name: worker-recovery-role
+      apiGroup: rbac.authorization.k8s.io

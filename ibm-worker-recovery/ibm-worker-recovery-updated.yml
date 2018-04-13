@@ -1,0 +1,135 @@
+ apiVersion: v1
+ kind: List
+ items:
+ -  apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      name: ibm-worker-recovery
+      namespace: kube-system
+    spec:
+      replicas: 2
+      strategy:
+        type: RollingUpdate
+      revisionHistoryLimit: 10
+      template:
+        metadata:
+          labels:
+            nursekey: nurse
+            app: ibm-worker-recovery
+          annotations:
+            scheduler.alpha.kubernetes.io/critical-pod: ''
+        spec:
+          # Allow this to run on all nodes, no matter what taints exist
+          tolerations:
+          - operator: "Exists"
+          containers:
+          - name: ibm-worker-recovery
+            image: registry.bluemix.net/armada-master/ibm-worker-recovery:prod
+            imagePullPolicy: Always
+            resources:
+              requests:
+                memory: "50Mi"
+            env:
+            - name: NURSE_POD_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NURSE_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            ports:
+            - containerPort: 8080
+            volumeMounts:
+            - name: config-volume
+              mountPath: /go/src/github.ibm.com/alchemy-containers/ibm-worker-recovery/etc/config
+            - name: checks-volume
+              mountPath: /tmp/checkdirectory
+            - name: storage-volume
+              readOnly: true
+              mountPath: /go/src/github.ibm.com/alchemy-containers/ibm-worker-recovery/etc/secret
+            - name: cluster-volume
+              readOnly: true
+              mountPath: /go/src/github.ibm.com/alchemy-containers/ibm-worker-recovery/etc/clusterinfo
+            readinessProbe:
+              httpGet:
+                path: /health
+                port: 8080
+              failureThreshold: 4
+              initialDelaySeconds: 10
+              periodSeconds: 60
+              successThreshold: 1
+              timeoutSeconds: 20
+            livenessProbe:
+              httpGet:
+                path: /health
+                port: 8080
+              failureThreshold: 4
+              initialDelaySeconds: 10
+              periodSeconds: 60
+              successThreshold: 1
+              timeoutSeconds: 20
+          serviceAccount: ibm-worker-recovery
+          volumes:
+            - name: config-volume
+              configMap:
+                name: ibm-worker-recovery-config
+            - name: checks-volume
+              configMap:
+                name: ibm-worker-recovery-checks
+                optional: true
+            - name: storage-volume
+              secret:
+                secretName: storage-secret-store
+                optional: true
+            - name: cluster-volume
+              configMap:
+                name: cluster-info
+ -  kind: Service
+    apiVersion: v1
+    metadata:
+      labels:
+        app: ibm-worker-recovery
+      name: ibm-worker-recovery
+      namespace: kube-system
+    spec:
+      type: ClusterIP
+      ports:
+      - port: 8080
+        targetPort: 8080
+      selector:
+        app: ibm-worker-recovery
+ -  kind: ServiceAccount
+    apiVersion: v1
+    metadata:
+      name: ibm-worker-recovery
+      namespace: kube-system
+    imagePullSecrets:
+    - name: bluemix-default-secret
+    - name: bluemix-default-secret-regional
+    - name: bluemix-default-secret-international
+ -  kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: ibm-worker-recovery-config
+      namespace: kube-system
+    data:
+      nurse.toml: |
+        [Partitioner]
+        unique_label_value = "nurse"
+        unique_label_key = "nursekey"
+        pod_id = ""
+        namespace = "kube-system"
+        peer_cache_ttl_seconds = 10
+
+        [General]
+        check_information_direction = "/tmp/checkdirectory"
+        max_workers = 50
+        kube_api_timeout_ms = 10000
+        activity_tracker_queue_length = 40
+        kube_api_timeout_seconds = 10
+        node_cache_ttl_seconds = 10
+        armada_api_timeout_seconds = 60
+        node_corrector_check_minutes = 1
+        node_ready_poll_minutes = 5
+        checks_information_timeout_seconds = 30
