@@ -1,0 +1,53 @@
+# Sample yaml for an IBM WAS Liberty app deployment that:
+#   Replicates to 3 pods.
+#   Spreads the pods across worker nodes with required pod anti-affinity.
+#   Sets resource requests and limits.
+# Apply the deployment by running 'kubectl apply -f filepath/liberty_requiredAntiAffinity.yaml'.
+# Check the state of your deployment by running 'kubectl get pods'.
+# Note that if you have more pod replicas specified than worker nodes, the surplus pods remain in a pending status.
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: wasliberty
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: wasliberty
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - wasliberty
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - name: wasliberty
+        image: registry.bluemix.net/ibmliberty
+        ports:
+        - containerPort: 9080
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wasliberty
+  labels:
+    app: wasliberty
+spec:
+  ports:
+  - port: 9080
+  selector:
+    app: wasliberty
+  type: NodePort
