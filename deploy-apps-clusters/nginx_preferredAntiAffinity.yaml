@@ -1,0 +1,54 @@
+# Sample yaml for an nginx app deployment that:
+#   Replicates to 3 pods.
+#   Spreads the pods across worker nodes with preferred pod anti-affinity.
+#   Sets resource requests and limits for the container.
+# Apply the deployment by running 'kubectl apply -f filepath/nginx_preferredAntiAffinity.yaml'.
+# Check the state of your deployment by running 'kubectl get pods'.
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - nginx
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  ports:
+  - port: 8080
+  selector:
+    app: nginx
+  type: NodePort
