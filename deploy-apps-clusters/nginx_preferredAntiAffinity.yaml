@@ -1,7 +1,7 @@
 # Sample yaml for an nginx app deployment that:
 #   Replicates to 3 pods.
 #   Spreads the pods across worker nodes with preferred pod anti-affinity.
-#   Sets resource requests and limits.
+#   Sets resource requests and limits for the container.
 # Apply the deployment by running 'kubectl apply -f filepath/nginx_preferredAntiAffinity.yaml'.
 # Check the state of your deployment by running 'kubectl get pods'.
 apiVersion: apps/v1beta1
