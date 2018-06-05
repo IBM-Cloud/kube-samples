@@ -1,6 +1,8 @@
+from __future__ import print_function
+from __future__ import absolute_import
 import ConfigParser
 import json
-import slack
+from . import slack
 import sys
 from watson_developer_cloud import ConversationV1
 
@@ -14,9 +16,9 @@ class bot(object):
         self.messages_processed = 0
         self.slack_token = token
         self.me = self.name
-        print slack.get_my_id(self.sc, self.me)
+        print(slack.get_my_id(self.sc, self.me))
         self.at_bot = "<@" + slack.get_my_id(self.sc, self.me) + ">"
-        print "AT " + self.name + ": " + self.at_bot
+        print("AT " + self.name + ": " + self.at_bot)
         self.whitelist = [self.name + "-private"]
          # set up conversation service
         self.conversation = ConversationV1(
@@ -29,20 +31,20 @@ class bot(object):
         try:
             if "type" in msg:
                 if "subtype" in msg and msg["subtype"] == "group_join" and msg["type"] == "message":
-                    print "-- " + self.name + " joined a new group!"
+                    print("-- " + self.name + " joined a new group!")
                 elif "subtype" in msg and msg["subtype"] == "channel_join" and msg["type"] == "message":
-                    print "-- " + self.name + " joined a new channel!"
+                    print("-- " + self.name + " joined a new channel!")
                 elif "subtype" in msg and msg["subtype"] == "message_changed" and msg["type"] == "message":
-                    print "-- " + self.name + " detected a changed message in one of her channels."
+                    print("-- " + self.name + " detected a changed message in one of her channels.")
                 elif "subtype" in msg and msg["subtype"] == "bot_message" and msg["type"] == "message":
-                    print "-- " + self.name + " detected a new bot-message.. ignoring!"
+                    print("-- " + self.name + " detected a new bot-message.. ignoring!")
                 elif msg["type"] == "message" and (self.at_bot in msg["text"] or "@here" in msg["text"]):
                     self.messages_processed += 1
-                    print msg["text"]
+                    print(msg["text"])
                     response = self.conversation.message(
                                                 workspace_id=self.conversation_workspace_id, 
                                                 message_input={'text': msg["text"]})
-                    print json.dumps(response['output'])
+                    print(json.dumps(response['output']))
                     if len(response['output']['text']) > 0:
                         if 'function' in response['output']:
                             if response['output']['function'] != 'trains_status':
