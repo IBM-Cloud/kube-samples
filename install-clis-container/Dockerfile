@@ -1,11 +1,11 @@
-FROM ubuntu:latest
+FROM alpine:latest
 
 ENV SUPPORTED_CALICO 1.6.1
 
 # Install IBM Cloud CLI, IBM Cloud Container Service plugin, IBM Cloud Container Registry plugin, Kubernetes CLI, and Calico CLI
-RUN apt-get update &&\
+RUN apk add --no-cache \
     # Install Curl
-    apt-get install -y curl \
+    curl \
     # Install VIM
     vim &&\
     # Install the Linux version of the IBM Cloud CLI
