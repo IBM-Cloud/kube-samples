@@ -1,34 +1,34 @@
 #############################################################################
-# This kubernetes ingress resource is designed to be used in conjunction
-# with a kubernetes cluster from the IBM Bluemix Container Service (https://bluemix.net)
-# and the istio helm chart (https://github.com/kubernetes/charts/tree/master/incubator/istio).
+# This Kubernetes Ingress resource is designed to be used in conjunction
+# with a Kubernetes cluster from the IBM Cloud Kubernetes Service (https://console.bluemix.net/docs/containers/container_index.html)
+# and the Istio Helm chart (https://github.com/kubernetes/charts/tree/master/incubator/istio).
 #
-# This ingress is to be used with the istio bookinfo example (https://istio.io/docs/samples/bookinfo.html).
+# This Ingress resource is to be used with the Istio bookinfo example (https://istio.io/docs/samples/bookinfo.html).
 #
-# This file will create an ingress in the kubernetes cluster where the default
-# ingress controller will perform tls termination and route the request to the istio
-# gateway. The ingress includes wildcard entries for the istio add-ons for prometheus,
+# This file creates an Ingress in the Kubernetes cluster where the default
+# Ingress controller performs TLS termination and route the request to the Istio
+# gateway. The Ingress includes wildcard entries for the Istio add-ons for prometheus,
 # servicegroph, and zipkin.
 #
 # NOTE: This file assumes you have created the cluster in the us-south region. If you have
-# created a cluster in another region, you will need to modify this file to adjust the host
+# created a cluster in another region, you must modify this file to adjust the host
 # name to use the appropriate region name.
 #
-# The file is a template kubernetes yaml file. You will need to replace the following values:
-#   <aramda-cluster> = the name of the IBM Bluemix kubernetes cluster
+# The file is a template Kubernetes yaml file. You will need to replace the following values:
+#   <aramda-cluster> = the name of the IBM Cloud Kubernetes cluster
 #   <helm-release> = the name of the helm release used to install the istio control plane
 #
-# This file enables TLS support with the ingress controller. In IBM Bluemix a host
+# This file enables TLS support with the ingress controller. In IBM Cloud a host
 # is automatically generated and registered for your cluster (using the cluster name).
-# The tls key is generated and stored as a secret in the default namespace. If you
+# The TLS key is generated and stored as a secret in the default namespace. If you
 # install the bookinfo sample in another namespace (e.g., istio) then you will need
-# to copy the tls secret from the default namespace. The tls secret has the same name
-# as your cluster name. Here is a simple command to copy the tls secret from the default
+# to copy the TLS secret from the default namespace. The TLS secret has the same name
+# as your cluster name. Here is a simple command to copy the TLS secret from the default
 # namespace into another namespace such as "istio".
 #
 # kubectl get secret mycluster -o yaml | sed 's/default/istio/g' | kubectl -n istio create -f -
 #
-# You can execute the substitution and execution of the yaml file against the kubernetes
+# You can execute the substitution and execution of the yaml file against the Kubernetes
 # cluster using the following command:
 #
 # sed -e 's/<armada-cluster>/mycluster/g' -e 's/<helm-release>/bogus-release/g' istio-chain-ingress-armada-helm-tls.yaml| kubectl apply -f -
@@ -42,10 +42,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - <armada-cluster>.us-south.containers.mybluemix.net
+    - <armada-cluster>.us-south.containers.appdomain.cloud
     secretName: <armada-cluster>
   rules:
-  - host: <armada-cluster>.us-south.containers.mybluemix.net
+  - host: <armada-cluster>.us-south.containers.appdomain.cloud
     http:
       paths:
       - path: /productpage
@@ -60,21 +60,21 @@ spec:
         backend:
           serviceName: <helm-release>-istio-ingress
           servicePort: 80
-  - host: zip.<armada-cluster>.us-south.containers.mybluemix.net
+  - host: zip.<armada-cluster>.us-south.containers.appdomain.cloud
     http:
       paths:
       - path: /
         backend:
           serviceName: <helm-release>-istio-zipkin
           servicePort: 9411
-  - host: grafana.<armada-cluster>.us-south.containers.mybluemix.net
+  - host: grafana.<armada-cluster>.us-south.containers.appdomain.cloud
     http:
       paths:
       - path: /
         backend:
           serviceName: <helm-release>-istio-grafana
           servicePort: 3000
-  - host: sg.<armada-cluster>.us-south.containers.mybluemix.net
+  - host: sg.<armada-cluster>.us-south.containers.appdomain.cloud
     http:
       paths:
       - path: /
