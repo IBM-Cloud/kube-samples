@@ -5,13 +5,13 @@
 #
 # This Ingress resource is to be used with the Istio bookinfo example (https://istio.io/docs/samples/bookinfo.html).
 #
-# This file will create an Ingress in the Kubernetes cluster where the default
-# Ingress controller will perform TLS termination and route the request to the Istio
+# This file creates an Ingress in the Kubernetes cluster where the default
+# Ingress controller performs TLS termination and route the request to the Istio
 # gateway. The Ingress includes wildcard entries for the Istio add-ons for prometheus,
 # servicegroph, and zipkin.
 #
 # NOTE: This file assumes you have created the cluster in the us-south region. If you have
-# created a cluster in another region, you will need to modify this file to adjust the host
+# created a cluster in another region, you must modify this file to adjust the host
 # name to use the appropriate region name.
 #
 # The file is a template Kubernetes yaml file. You will need to replace the following values:
@@ -22,7 +22,7 @@
 # is automatically generated and registered for your cluster (using the cluster name).
 # The TLS key is generated and stored as a secret in the default namespace. If you
 # install the bookinfo sample in another namespace (e.g., istio) then you will need
-# to copy the tls secret from the default namespace. The TLS secret has the same name
+# to copy the TLS secret from the default namespace. The TLS secret has the same name
 # as your cluster name. Here is a simple command to copy the TLS secret from the default
 # namespace into another namespace such as "istio".
 #
