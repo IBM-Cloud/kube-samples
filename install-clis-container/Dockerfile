@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 ENV SUPPORTED_CALICO 1.6.1
 
-# Install IBM Cloud CLI, IBM Cloud Container Service plugin, IBM Cloud Container Registry plugin, Kubernetes CLI, and Calico CLI
+# Install IBM Cloud CLI, IBM Cloud Kubernetes Service plugin, IBM Cloud Container Registry plugin, Kubernetes CLI, and Calico CLI
 RUN apt-get update &&\
     # Install Curl
     apt-get install -y curl \
@@ -10,7 +10,7 @@ RUN apt-get update &&\
     vim &&\
     # Install the Linux version of the IBM Cloud CLI
     curl -fsSL https://clis.ng.bluemix.net/install/linux | sh &&\ 
-    # Install the IBM Cloud Container Service CLI
+    # Install the IBM Cloud Kubernetes Service CLI
     bx plugin install container-service -r Bluemix &&\  
     # Install the IBM Cloud Container Registry CLI              
     bx plugin install container-registry -r Bluemix &&\  
