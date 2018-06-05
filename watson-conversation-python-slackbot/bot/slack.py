@@ -1,8 +1,9 @@
+from __future__ import print_function
 import json
 
 def get_channel_name(sc, channel_id):
     name = ""
-    print "Trying to retrieve name for channel: " + channel_id
+    print("Trying to retrieve name for channel: " + channel_id)
     channel_id = str(channel_id)
     channel_info = sc.api_call('channels.info', channel=channel_id)
 
@@ -15,15 +16,15 @@ def get_channel_name(sc, channel_id):
     try:
         return name
     except Exception as e:
-        print e
+        print(e)
         return ""
 
 
 def get_my_id(sc, my_name):
     api_call = sc.api_call('users.list')
     if api_call.get('ok'):
-        print "api call ok"
-        print "my name: " + my_name
+        print("api call ok")
+        print("my name: " + my_name)
         # retrieve all users so we can find our bot
         users = api_call.get('members')
         for user in users:
