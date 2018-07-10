@@ -1,3 +1,5 @@
+#This is the pod that we'll block access to
+
 apiVersion: v1
 kind: Pod
 metadata:
@@ -12,7 +14,7 @@ spec:
     - containerPort: 9080
     
 ---
-    
+
 apiVersion: v1
 kind: Pod
 metadata:
