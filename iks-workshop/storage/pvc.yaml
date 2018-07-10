@@ -1,0 +1,14 @@
+ apiVersion: v1
+ kind: PersistentVolumeClaim
+ metadata:
+   name: mypvc
+   annotations:
+     volume.beta.kubernetes.io/storage-class:  "ibmc-file-bronze"
+   labels:
+     billingType: "hourly"
+ spec:
+   accessModes:
+     - ReadWriteMany
+   resources:
+     requests:
+       storage: 20Gi
