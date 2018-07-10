@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: storage-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: storage-deployment
+      labels:
+        run: liberty
+    spec:
+      containers:
+        - name: storage-deployment
+          image: ubuntu
+          volumeMounts:
+          - name: storage-volume
+            # folder that is mounted in the container filesystem
+            mountPath: /mnt
+          command: ["/bin/sh", "-c"]
+          args:
+            - >
+              cd mnt;
+              touch "Hello_IKS_Workshop";
+              while true; do
+                sleep 100000;
+              done
+      volumes:
+      - name: storage-volume
+        persistentVolumeClaim:
+          # name of the pvc that you created
+          claimName: mypvc
