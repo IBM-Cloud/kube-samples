@@ -1,0 +1,17 @@
+# This policy allows pods with the cordoned label to have ingress only from other pods with the label cordoned.
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-ingress-uncordoned
+spec:
+  podSelector:
+    matchLabels:
+      app: cordoned
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector: 
+        matchLabels:
+          app: cordoned
