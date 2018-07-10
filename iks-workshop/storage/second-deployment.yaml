@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: second-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: second-deployment
+      labels:
+        run: liberty
+    spec:
+      containers:
+        - name: second-deployment
+          image: ubuntu
+          volumeMounts:
+          - name: storage-volume
+            # folder that is mounted in the container filesystem
+            mountPath: /volume
+          command: ["/bin/sh", "-c"]
+          args:
+            - >
+              while true; do
+                sleep 100000;
+              done
+      volumes:
+      - name: storage-volume
+        persistentVolumeClaim:
+          # name of the pvc that you created
+          claimName: mypvc
