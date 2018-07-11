@@ -50,3 +50,7 @@ Endurance options
 
 Performance options
 ![Performance options](images/performance.png)
+
+## What's next?
+
+[Create a dynamic persistent volume claim.](workshop.md)
