@@ -47,8 +47,8 @@ What IBM Cloud Kubernetes Service provides
 - Calico Network Policies
 - Namespaces
 
-**Ingress options for Network Confidentiality**
-1. Enforce TLS at Ingress. CA is Digicert (LetsEncrypt in future)
+**User Ingress options for network confidentiality**
+1. Enforce TLS at Ingress.
 2. Enforce TLS from Ingress to containers using Ingress ‘ssl-service’ annotation 
 3. Enforce TLS from component to component: 
 	- Self-signed CA ok within deployment or cluster across private network
@@ -77,7 +77,7 @@ Options
 
 Kubernetes object that contains a small amount of confidential information. Safer than storing in a pod specification.
 
-Key features
+Notes
 - System created
   - In IBM Cloud: service binding, ingress ALB w/TLS, container registry
 - User created
