@@ -7,9 +7,9 @@ Containers are ephemeral, so Kubernetes and IBM Cloud provides options for apps 
 
 ## Storage options
 
-![Image of container filesystem volumes](https://console.bluemix.net/docs/api/content/containers/images/cs_storage_nonpersistent.png)
+![Image of container filesystem volumes](images/cs_storage_nonpersistent.png)
 
-![Image of persistent storage options](https://console.bluemix.net/docs/api/content/containers/images/cs_storage_mz-ha.png)
+![Image of persistent storage options](images/cs_storage_mz-ha.png)
 
 **Persistent storage considerations**
 - If you want to use Kubernetes native resources (persistent volume claims)
