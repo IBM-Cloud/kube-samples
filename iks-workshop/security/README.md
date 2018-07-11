@@ -38,7 +38,7 @@ What IBM Cloud Kubernetes Service provides
 - Hardware Firewall (vyatta, fortigate)
 - Calico network policies
 
-Network Isolation
+**Network Isolation**
 
 - Control what talks to talk
 - VLANs
@@ -47,7 +47,7 @@ Network Isolation
 - Calico Network Policies
 - Namespaces
 
-Ingress options for Network Confidentiality
+**Ingress options for Network Confidentiality**
 1. Enforce TLS at Ingress. CA is Digicert (LetsEncrypt in future)
 2. Enforce TLS from Ingress to containers using Ingress ‘ssl-service’ annotation 
 3. Enforce TLS from component to component: 
@@ -55,7 +55,7 @@ Ingress options for Network Confidentiality
 	- Use Digicert/Letsencrypt for microservice to microservice over public
 
 
-Manage User Access
+### Manage User Access
 - RBAC
   - `kubectl get rolebinding`
   - `kubectl get clusterrolebinding`
@@ -66,14 +66,23 @@ Manage User Access
 - Resource Groups
   - Default only – more coming soon
 
-Account Structure / Environments
+### Account Structure / Environments
 
 Options
 - Cluster w/namespaces
 - Multiple clusters
 - Multiple PaaS accounts
 
-Secrets (more to come)
+### Secrets
+
+Kubernetes object that contains a small amount of confidential information. Safer than storing in a pod specification.
+
+Key features
+- System created
+  - In IBM Cloud: service binding, ingress ALB w/TLS, container registry
+- User created
+- Greater user control - IAM role view cannot see secrets
+- base64 encoded
 
 ## Hands on!
 
