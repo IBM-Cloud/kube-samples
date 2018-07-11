@@ -86,4 +86,4 @@ Notes
 
 ## What's next?
 
-[Create a Kubernetes network policy to isolate pods in a namespace.](workshop.yaml)
+[Create a Kubernetes network policy to isolate pods in a namespace.](workshop.md)
