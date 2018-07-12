@@ -2,6 +2,7 @@
 
 ## Resources
 [IKS security documentation](https://console.bluemix.net/docs/containers/cs_secure.html#security)
+[IKS networking documentation](https://console.bluemix.net/docs/containers/cs_network_policy.html#default_policy)
 
 ## What IKS Provides
 

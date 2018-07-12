@@ -4,6 +4,7 @@ Containers are ephemeral, so Kubernetes and IBM Cloud provides options for apps 
 
 ## Resources
 [IKS storage documentation](https://console.bluemix.net/docs/containers/cs_storage.html#storage)
+[Tutorial with Kubernetes and Object Storage](https://console.bluemix.net/docs/tutorials/pub-sub-object-storage.html#asynchronous-data-processing-using-object-storage-and-pub-sub-messaging)
 
 ## Storage options
 
