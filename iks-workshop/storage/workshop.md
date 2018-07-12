@@ -51,7 +51,7 @@ Let's deploy a dynamically provisioned persistent volume claim to give our app a
 
 7. Exec into the pod.
 
-   `kubectl exec -it <podname>`
+   `kubectl exec -it <podname> bash`
 
 8. View the file to confirm it was written and available on the pvc.
 
