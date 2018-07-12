@@ -67,6 +67,18 @@ What IBM Cloud Kubernetes Service provides
 - Resource Groups
   - Default only – more coming soon
 
+### Auditing
+
+Activity Tracker
+- [Service information](https://console.bluemix.net/docs/services/cloud-activity-tracker/activity_tracker_ov.html#activity_tracker_ov)
+- [Integration with IKS](https://console.bluemix.net/docs/containers/cs_at_events.html#at_events)
+
+Examples of activity logs
+- The users who made API calls to cloud services.
+- The source IP address from where the API calls were made.
+- The time-stamp when the API calls were made.
+- The status of the API call.
+
 ### Account Structure / Environments
 
 Options
@@ -84,6 +96,7 @@ Notes
 - User created
 - Greater user control - IAM role view cannot see secrets
 - base64 encoded
+
 
 ## What's next?
 
