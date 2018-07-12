@@ -15,7 +15,7 @@ Containers are ephemeral, so Kubernetes and IBM Cloud provides options for apps 
 **Persistent storage considerations**
 - If you want to use Kubernetes native resources (persistent volume claims)
 - If you're integrating with existing database or storage options
-  - service binding
+  - service binding for cloud services
 - Replication and back up needs
   - Back ups available with PVCs
   - Replication from app or use IBM Cloud Object Storage or database (e.g. Compose)
