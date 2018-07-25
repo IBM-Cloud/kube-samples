@@ -1,0 +1,59 @@
+# Sample YAML for an IBM WAS Liberty deployment.
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: wasliberty
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: wasliberty
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - wasliberty
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - name: wasliberty
+        image: registry.bluemix.net/ibmliberty
+        ports:
+          - containerPort: 9080
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1024Mi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9080
+          initialDelaySeconds: 20
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 9080
+          initialDelaySeconds: 20
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wasliberty
+  labels:
+    app: wasliberty
+spec:
+  ports:
+  - port: 9080
+  selector:
+    app: wasliberty
+  type: NodePort
