@@ -12,14 +12,16 @@ spec:
     spec:
       affinity:
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - wasliberty
-            topologyKey: kubernetes.io/hostname
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - wasliberty
+              topologyKey: kubernetes.io/hostname
       containers:
       - name: wasliberty
         image: registry.bluemix.net/ibmliberty
@@ -36,13 +38,13 @@ spec:
           httpGet:
             path: /
             port: 9080
-          initialDelaySeconds: 20
-          periodSeconds: 5
+          initialDelaySeconds: 300
+          periodSeconds: 15
         readinessProbe:
           httpGet:
             path: /
             port: 9080
-          initialDelaySeconds: 20
+          initialDelaySeconds: 45
           periodSeconds: 5
 ---
 apiVersion: v1
