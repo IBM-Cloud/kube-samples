@@ -1,7 +1,7 @@
  apiVersion: v1
  kind: PersistentVolumeClaim
  metadata:
-   name: mypvc3
+   name: mypvc
    annotations:
      volume.beta.kubernetes.io/storage-class:  "ibmc-file-bronze"
    labels:
