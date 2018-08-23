@@ -1,0 +1,28 @@
+# This policy limits communication on the private network to worker nodes within the cluster.
+
+- apiVersion: v1
+  kind: policy
+  metadata:
+    name: allow-all-workers-private
+  spec:
+    egress:
+    - action: allow
+      destination:
+        selector: ibm.role == 'worker_private'
+      source: {}
+    - action: allow
+      destination:
+        nets:
+        # Allows communication to pod IPs
+        - 172.30.0.0/16
+      source: {}
+    ingress:
+    - action: allow
+      destination: {}
+      source:
+        selector: ibm.role == 'worker_private'
+    order: 1800
+    selector: ibm.role == 'worker_private'
+    types:
+    - egress
+    - ingress

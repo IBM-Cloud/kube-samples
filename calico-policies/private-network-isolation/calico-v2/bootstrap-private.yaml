@@ -1,0 +1,25 @@
+# This policy applies rules from https://console.bluemix.net/docs/containers/cs_firewall.html#firewall_outbound (Step #5) 
+# The list of locations can be found here: https://console.bluemix.net/docs/infrastructure/hardware-firewall-dedicated/ips.html#backend-private-network.
+# These rules allow bootstrapping for IBM Cloud infrastructure.
+
+- apiVersion: v1
+  kind: policy
+  metadata:
+    name: bootstrap-private
+  spec:
+    ingress:
+    - action: allow
+      protocol: tcp
+      source:
+        nets:
+        #dal01, required for all regions.
+        - 10.0.64.0/19
+        # wdc04, required for all regions.
+        - 10.3.160.0/20
+        - 10.201.0.0/20
+        <list nets for all locations in the region>
+      destination: {}
+    order: 1500
+    selector: ibm.role == 'worker_private'
+    types:
+    - ingress
