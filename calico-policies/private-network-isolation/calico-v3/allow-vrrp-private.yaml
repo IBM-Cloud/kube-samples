@@ -1,4 +1,4 @@
-# This policy opens the VRRP protocol, which manages load balancing.
+# This policy opens the VRRP protocol, which is required when running Kubernetes LoadBalancer services.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
