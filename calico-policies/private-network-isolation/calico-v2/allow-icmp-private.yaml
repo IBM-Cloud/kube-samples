@@ -1,0 +1,16 @@
+# This policy opens the ICMP protocol to allow infrastructure health monitoring.
+
+- apiVersion: v1
+  kind: policy
+  metadata:
+    name: allow-icmp-private
+  spec:
+    ingress:
+    - action: allow
+      destination: {}
+      protocol: icmp
+      source: {}
+    order: 1500
+    selector: ibm.role == 'worker_private'
+    types:
+    - ingress

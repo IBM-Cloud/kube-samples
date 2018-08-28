@@ -1,0 +1,37 @@
+# List all worker node names on your private network.
+
+# worker node 1
+- apiVersion: v1
+  kind: hostEndpoint
+  metadata:
+    labels:
+      ibm.role: worker_private
+    # run ibmcloud ks workers <cluster-name> to see worker node names
+    name: <worker_name>_worker_private
+    node: <worker_name>.cloud.ibm
+  spec:
+    # Interface name for virtual machines on the private network.
+    interfaceName: eth0
+    # Worker node private IP
+    expectedIPs:
+    - <worker-node-private-ip>
+    
+---
+
+# worker node 2  
+- apiVersion: v1
+  kind: hostEndpoint
+  metadata:
+    labels:
+      ibm.role: worker_private
+    # run ibmcloud ks workers <cluster-name> to see worker node names
+    name: <worker_name>_worker_private
+    node: <worker_name>.cloud.ibm
+  spec:
+    # Interface name for virtual machines on the private network.
+    interfaceName: eth0
+    # Worker node private IP
+    expectedIPs:
+    - <worker-node-private-ip>
+
+# If you have additional worker nodes, copy the above hostEndpoint and fill in appropriate values.

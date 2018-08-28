@@ -1,0 +1,37 @@
+# This policy blocks egress to private networks, opens port 10250 for VPN communication and opens DNS port (53).
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-egress-pods
+spec:
+  egress:
+  - action: Allow
+    destination:
+      ports:
+      - 53
+      - 10250
+    protocol: UDP
+    source: {}
+  - action: Allow
+    destination:
+      ports:
+      - 53
+      - 10250
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      selector: has(calico/k8s_ns)
+    source: {}
+  - action: Allow
+    destination:
+      notNets:
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+    source: {}
+  order: 1500
+  selector: has(calico/k8s_ns)
+  types:
+  - Egress

@@ -1,0 +1,16 @@
+# This policy opens the VRRP protocol, which is required when running Kubernetes LoadBalancer services.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-vrrp-private
+spec:
+  ingress:
+  - action: Allow
+    destination: {}
+    protocol: 112
+    source: {}
+  order: 1500
+  selector: ibm.role == 'worker_private'
+  types:
+  - Ingress
