@@ -1,6 +1,6 @@
 # Private network Calico policies
 
-This set of Calico policies and host endpoints isolate the private network traffic of a cluster in IBM Cloud Kubernetes from other resources in the account's private network. The policies target the private interface (eth0) and the pod network of a cluster.
+This set of Calico policies and host endpoints isolates the private network traffic of a cluster in IBM Cloud Kubernetes from other resources in the account's private network. The policies target the private interface (eth0) and the pod network of a cluster.
 
 **Note:** Each time you add a worker node to a cluster, you must update the host endpoints file with the new entries.
 
