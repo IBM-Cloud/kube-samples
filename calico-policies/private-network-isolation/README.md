@@ -7,8 +7,8 @@ This set of Calico policies and host endpoints isolate the private network traff
 ## List of changes made by the Calico policies
 
 Worker node summary:
- - Private interface Egress only allowed to pod IPs, workers in this cluster, and udp/tcp port 53 (dns)
- - Private interface Ingress only allowed from workers in the cluster, dns, kubelet, icmp, vrrp, and bootstrap
+ - Private interface Egress only allowed to pod IPs, workers in this cluster, and udp/tcp port 53 (dns).
+ - Private interface Ingress only allowed from workers in the cluster, dns, kubelet, icmp, and vrrp.
 
 Pod specific summary (i.e. pods not on the host network):
  - Allow all ingress to pods. The above worker ingress restrictions limit this to traffic coming from workers in the cluster.
