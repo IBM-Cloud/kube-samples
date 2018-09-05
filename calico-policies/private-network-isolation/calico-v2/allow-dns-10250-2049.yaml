@@ -1,0 +1,43 @@
+# This policy opens port 10250 for VPN communication between master and workers, the DNS port
+# (53), and port 2049 for communication with NFS file servers.
+
+- apiVersion: v1
+  kind: policy
+  metadata:
+    name: allow-dns-10250
+  spec:
+    ingress:
+    - action: allow
+      protocol: udp
+      destination:
+        ports:
+        - 53
+        - 10250
+      source: {}
+    - action: allow
+      protocol: tcp
+      destination:
+        ports:
+        - 53
+        - 10250
+      source: {}
+    egress:
+    - action: allow
+      protocol: udp
+      destination:
+        ports:
+        - 53
+        - 2049
+      source: {}
+    - action: allow
+      protocol: tcp
+      destination:
+        ports:
+        - 53
+        - 2049
+      source: {}
+    order: 1500
+    selector: ibm.role == 'worker_private'
+    types:
+    - ingress
+    - egress
