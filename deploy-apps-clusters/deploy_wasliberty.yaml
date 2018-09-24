@@ -1,4 +1,5 @@
 # Sample YAML for an IBM WAS Liberty deployment.
+# For more information, see ibm.biz/iks_yaml.
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
@@ -25,6 +26,27 @@ spec:
       containers:
       - name: wasliberty
         image: registry.bluemix.net/ibmliberty
+        env:
+          - name: VERSION
+            valueFrom:
+              configMapKeyRef:
+                name: wasliberty
+                key: VERSION
+          - name: LANGUAGE
+            valueFrom:
+              configMapKeyRef:
+                name: wasliberty
+                key: LANGUAGE
+          - name: username
+            valueFrom:
+              secretKeyRef:
+                name: wasliberty
+                key: username
+          - name: password
+            valueFrom:
+              secretKeyRef:
+                name: wasliberty
+                key: password
         ports:
           - containerPort: 9080
         resources:
@@ -46,6 +68,13 @@ spec:
             port: 9080
           initialDelaySeconds: 45
           periodSeconds: 5
+        volumeMounts:
+        - name: pvmount
+          mountPath: /test
+      volumes:
+      - name: pvmount
+        persistentVolumeClaim:
+          claimName: wasliberty
 ---
 apiVersion: v1
 kind: Service
@@ -59,3 +88,40 @@ spec:
   selector:
     app: wasliberty
   type: NodePort
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wasliberty
+  labels:
+    app: wasliberty
+data:
+  VERSION: "1.0"
+  LANGUAGE: en
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: wasliberty
+  labels:
+    app: wasliberty
+type: Opaque
+data:
+  username: dXNlcm5hbWU=
+  password: cGFzc3dvcmQ=
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wasliberty
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "ibmc-file-bronze"
+  labels:
+    billingType: "hourly"
+    app: wasliberty
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 24Gi
