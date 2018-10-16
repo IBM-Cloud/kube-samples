@@ -1,0 +1,118 @@
+# Warning:  In order to make this work as of October 2018 you have to open a ticket with IBM Cloud. Please refer to documentation and howto.
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "ipvs"
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: dal10   # instructs kube to create the LB in this zone
+  labels:
+    app: echoserver-deployment-whole-region
+  name: iks-new-loadbalancer-dal10
+  namespace: default
+spec:
+  ports:
+  - name: port-1
+    port: 1884
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: echoserver-deployment-whole-region
+  type: LoadBalancer
+  externalTrafficPolicy: Local    #  Preserve the original IP address of the client connecting
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "ipvs"
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: dal12   # instructs kube to create the LB in this zone
+  labels:
+    app: echoserver-deployment-whole-region
+  name: iks-new-loadbalancer-dal12
+  namespace: default
+spec:
+  ports:
+  - name: port-1
+    port: 1884
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: echoserver-deployment-whole-region
+  type: LoadBalancer
+  externalTrafficPolicy: Local    #  Preserve the original IP address of the client connecting
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "ipvs"
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: dal13   # instructs kube to create the LB in this zone
+  labels:
+    app: echoserver-deployment-whole-region
+  name: iks-new-loadbalancer-dal13
+  namespace: default
+spec:
+  ports:
+  - name: port-1
+    port: 1884
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: echoserver-deployment-whole-region
+  type: LoadBalancer
+  externalTrafficPolicy: Local    #  Preserve the original IP address of the client connecting
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: echoserver-deployment-whole-region
+  namespace: default
+  labels:
+    app: echoserver-deployment-whole-region
+spec:
+  replicas: 20  # start 20 replicas and spread the application out across the worker nodes (also across the region)
+  selector:
+    matchLabels:
+      app: echoserver-deployment-whole-region
+  template:
+    metadata:
+      labels:
+        app: echoserver-deployment-whole-region
+    spec:
+      affinity:
+        podAntiAffinity:      #  Spread out the "echoserver-deployment-whole-region" pods on the worker nodes as evenly as possible
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - echoserver-deployment-whole-region    # if a pod matching app=echoserver-deployment-whole-region already runs on a node, try to find another node
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: echoserver
+          image: k8s.gcr.io/echoserver:1.10
+          env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+      restartPolicy: Always
