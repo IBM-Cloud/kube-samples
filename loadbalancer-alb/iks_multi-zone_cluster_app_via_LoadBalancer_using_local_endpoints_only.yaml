@@ -6,7 +6,7 @@ metadata:
     service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: dal10   # instructs kube to create the LB in this zone # NEED TO EDIT!
   labels:
     app: echoserver-deployment-dal10
-  name: iks-new-loadbalancer
+  name: iks-new-loadbalancer-dal10
   namespace: default
 spec:
   ports:
@@ -27,7 +27,7 @@ metadata:
     service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: dal12   # instructs kube to create the LB in this zone # NEED TO EDIT!
   labels:
     app: echoserver-deployment-dal12
-  name: iks-new-loadbalancer
+  name: iks-new-loadbalancer-dal12
   namespace: default
 spec:
   ports:
@@ -48,7 +48,7 @@ metadata:
     service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: dal13   # instructs kube to create the LB in this zone # NEED TO EDIT!
   labels:
     app: echoserver-deployment-dal13
-  name: iks-new-loadbalancer
+  name: iks-new-loadbalancer-dal13
   namespace: default
 spec:
   ports:
