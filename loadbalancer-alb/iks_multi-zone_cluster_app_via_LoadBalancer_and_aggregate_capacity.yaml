@@ -4,7 +4,7 @@ kind: Service
 metadata:
   annotations:
     service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "ipvs"
-    service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: dal10   # instructs kube to create the LB in this zone
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: dal10   # instructs kube to create the LB in this zone # NEED TO EDIT!
   labels:
     app: echoserver-deployment-whole-region
   name: iks-new-loadbalancer-dal10
@@ -25,7 +25,7 @@ kind: Service
 metadata:
   annotations:
     service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "ipvs"
-    service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: dal12   # instructs kube to create the LB in this zone
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: dal12   # instructs kube to create the LB in this zone # NEED TO EDIT!
   labels:
     app: echoserver-deployment-whole-region
   name: iks-new-loadbalancer-dal12
@@ -46,7 +46,7 @@ kind: Service
 metadata:
   annotations:
     service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "ipvs"
-    service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: dal13   # instructs kube to create the LB in this zone
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: dal13   # instructs kube to create the LB in this zone # NEED TO EDIT!
   labels:
     app: echoserver-deployment-whole-region
   name: iks-new-loadbalancer-dal13
