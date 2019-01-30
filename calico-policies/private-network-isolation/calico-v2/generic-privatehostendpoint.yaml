@@ -6,31 +6,31 @@
   metadata:
     labels:
       ibm.role: worker_private
-    # run ibmcloud ks workers <cluster-name> to see worker node names
+    # Run 'calicoctl get nodes' to see Calico-formatted worker node names
     name: <worker_name>_worker_private
-    node: <worker_name>.cloud.ibm
+    node: <worker_name>
   spec:
     # Interface name for virtual machines on the private network.
     interfaceName: eth0
-    # Worker node private IP
+    # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
     expectedIPs:
     - <worker-node-private-ip>
-    
+
 ---
 
-# worker node 2  
+# worker node 2
 - apiVersion: v1
   kind: hostEndpoint
   metadata:
     labels:
       ibm.role: worker_private
-    # run ibmcloud ks workers <cluster-name> to see worker node names
+    # Run 'calicoctl get nodes' to see Calico-formatted worker node names
     name: <worker_name>_worker_private
-    node: <worker_name>.cloud.ibm
+    node: <worker_name>
   spec:
     # Interface name for virtual machines on the private network.
     interfaceName: eth0
-    # Worker node private IP
+    # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
     expectedIPs:
     - <worker-node-private-ip>
 
