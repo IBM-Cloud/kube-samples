@@ -12,7 +12,7 @@ spec:
   node: <worker-node-name>
   # Interface name for virtual machines on the private network.
   interfaceName: eth0
-  # Run 'ibmcloud ks workers <cluster-name>' to see worker nodes' private IPs
+  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
   expectedIPs:
   - <worker-node-private-ip>
 
@@ -30,7 +30,7 @@ spec:
   node: <worker-node-name>
   # Interface name for virtual machines on the private network.
   interfaceName: eth0
-  # Run 'ibmcloud ks workers <cluster-name>' to see worker nodes' private IPs
+  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
   expectedIPs:
   - <worker-node-private-ip>
 
