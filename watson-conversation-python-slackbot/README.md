@@ -2,15 +2,15 @@
 
 ### Prereqs
 - Docker needs to be installed on your local machine
-- The Bluemix CLI needs to be installed
+- The IBM Cloud CLI needs to be installed
 - Kubectl needs to be installed and pointed to your cluster
 
 ```
-bx login
-bx plugin install container-service -r Bluemix
-bx cs init
-bx cs clusters
-bx cs cluster-config {cluster-name}
+ibmcloud login
+ibmcloud plugin install container-service -r 'IBM Cloud'
+ibmcloud ks init
+ibmcloud ks clusters
+ibmcloud ks cluster-config {cluster-name}
 ```
 
 ### Enter Credentials
