@@ -27,7 +27,7 @@ then
   echo "${RED}Looks default worker pool not found, please check manually by using 'ibmcloud ks worker-pools --cluster cluster-name'${NC}"
   exit
 fi
-REGION=`bx cs api | grep "Region:" | awk '{print $2}'`
+REGION=`ibmcloud ks api | grep "Region:" | awk '{print $2}'`
 
 eval curl -X GET https://${REGION}.containers.bluemix.net/v1/clusters/$CLUSTER_ID/workerpools/$WORKER_POOL_ID/instancegroups -H $AUTH > temp 2>&1
 

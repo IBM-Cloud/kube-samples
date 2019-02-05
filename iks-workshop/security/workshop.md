@@ -3,7 +3,7 @@
 Together we'll create a Kubernetes network policy that prevents an "uncordoned" pod from accessing our "cordoned" pod. Kubernetes network policies can be used to segment Kubernetes resources within a cluster.
 
 **Reminder**: Set your cluster context.
- - `ibmcloud cs cluster-config <cluster-name> --export`
+ - `ibmcloud ks cluster-config <cluster-name> --export`
 
 1. Deploy the `liberty` and `uncordoned` pods.
 

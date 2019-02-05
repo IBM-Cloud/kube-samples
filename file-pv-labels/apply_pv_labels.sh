@@ -10,8 +10,8 @@
 
 # Use this script when you update your cluster from single-zone to multizone and have existing persistent volumes (PVs).
 # Before you begin:
-# (1) bx cs login
-# (2) Set the cluster context. Run 'bx cs cluster-config <mycluster>'. Then copy and paste the KUBECONFIG environment variable output.
+# (1) ibmcloud ks login
+# (2) Set the cluster context. Run 'ibmcloud ks cluster-config <mycluster>'. Then copy and paste the KUBECONFIG environment variable output.
 
 if [ "$1" == "-h" ]
 then
@@ -20,14 +20,14 @@ then
 fi
 
 cluster_name=$1
-bx cs cluster-get $cluster_name
+ibmcloud ks cluster-get $cluster_name
 if [ $? -ne 0 ]
 then
 	echo "ERROR: The cluster ${cluster_name} does not exist"
 	exit 1
 fi
 
-region=$(bx cs region | cut -d ':' -f 2 | tr -d "[:blank:]")
+region=$(ibmcloud ks region | cut -d ':' -f 2 | tr -d "[:blank:]")
 echo $region
 
 if [ -z "$KUBECONFIG" ] || [ "$KUBECONFIG" == " " ]

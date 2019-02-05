@@ -3,7 +3,7 @@
 Let's deploy a dynamically provisioned persistent volume claim to give our app access to persistent storage.
 
 **Reminder**: Set your cluster context.
- - `ibmcloud cs cluster-config <cluster-name> --export`
+ - `ibmcloud ks cluster-config <cluster-name> --export`
 
 ### Steps
 

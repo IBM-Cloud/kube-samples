@@ -17,13 +17,13 @@ kubectl apply -f norootsquash.yaml
 2. List the worker nodes in your cluster to view the worker IDs.
 
 ```
-bx cs workers <cluster-name>
+ibmcloud ks workers <cluster-name>
 ```
 
 3. Reboot all worker nodes to apply the changes.
 
 ```
-bx cs worker-reboot <cluster-name> <worker-id1> <worker-id2>
+ibmcloud ks worker-reboot <cluster-name> <worker-id1> <worker-id2>
 ```
 
 To delete the DaemonSet, run:
