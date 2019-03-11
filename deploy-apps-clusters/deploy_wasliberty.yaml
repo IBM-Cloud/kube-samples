@@ -1,6 +1,6 @@
 # Sample YAML for an IBM WAS Liberty deployment.
 # For more information, see ibm.biz/iks_yaml.
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wasliberty
