@@ -61,7 +61,7 @@ spec:
   type: LoadBalancer
   externalTrafficPolicy: Local    #  Preserve the original IP address of the client connecting
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: echoserver-deployment-dal10
@@ -124,7 +124,7 @@ spec:
                   fieldPath: status.podIP
       restartPolicy: Always
 --- 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: echoserver-deployment-dal12
@@ -187,7 +187,7 @@ spec:
                   fieldPath: status.podIP
       restartPolicy: Always
 --- 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: echoserver-deployment-dal13

@@ -18,7 +18,7 @@ spec:
   type: LoadBalancer
   externalTrafficPolicy: Local    #  Preserve the original IP address of the client connecting
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: echoserver-deployment

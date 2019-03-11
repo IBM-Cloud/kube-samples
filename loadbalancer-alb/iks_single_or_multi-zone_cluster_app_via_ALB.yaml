@@ -13,7 +13,7 @@ spec:
     app: echoserver-deployment
   type: ClusterIP
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Ingress
 metadata:
   annotations:
@@ -34,7 +34,7 @@ spec:
     - echoserver.arpad-ipvs-test-aug14.us-south.containers.appdomain.cloud    # Change it to your cluster's ALB host name
     secretName: arpad-ipvs-test-aug14                                         # Change it to your cluster's secret (it is in default namespace)
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: echoserver-deployment
