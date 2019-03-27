@@ -9,7 +9,7 @@ metadata:
   # Run 'calicoctl get nodes' to see Calico-formatted worker node names
   name: <worker-node-name>-worker-private
 spec:
-  node: <worker-node-name>
+  node: <worker-node-name>.cloud.ibm
   # Interface name for virtual machines on the private network.
   interfaceName: eth0
   # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
@@ -27,7 +27,7 @@ metadata:
   # Run 'calicoctl get nodes' to see Calico-formatted worker node names
   name: <worker-node-name>-worker-private
 spec:
-  node: <worker-node-name>
+  node: <worker-node-name>.cloud.ibm
   # Interface name for virtual machines on the private network.
   interfaceName: eth0
   # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
