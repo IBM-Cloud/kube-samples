@@ -4,6 +4,9 @@ metadata:
   name: cs-bot
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: cs-bot
   template:
     metadata:
       labels:

@@ -4,6 +4,9 @@ metadata:
   name: second-deployment
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      run: liberty
   template:
     metadata:
       name: second-deployment
