@@ -8,6 +8,9 @@ metadata:
     tier: management
     app: norootsquash
 spec:
+  selector:
+    matchLabels:
+      name: norootsquash
   template:
     metadata:
       labels:

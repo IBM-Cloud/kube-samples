@@ -5,6 +5,9 @@ metadata:
   name: ibmliberty-deployment
 spec:
   replicas: 3
+  selector:
+    matchLabels:
+      app: ibmliberty
   template:
     metadata:
       labels:

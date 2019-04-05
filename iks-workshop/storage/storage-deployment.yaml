@@ -4,6 +4,9 @@ metadata:
   name: storage-deployment
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      run: liberty
   template:
     metadata:
       name: storage-deployment
