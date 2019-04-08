@@ -1,6 +1,6 @@
 #############################################################################
 # This Kubernetes Ingress resource is designed to be used in conjunction
-# with a Kubernetes cluster from the IBM Cloud Kubernetes Service (https://console.bluemix.net/docs/containers/container_index.html)
+# with a Kubernetes cluster from the IBM Cloud Kubernetes Service (https://cloud.ibm.com/docs/containers?topic=containers-getting-started#getting-started)
 # and the Istio Helm chart (https://github.com/kubernetes/charts/tree/master/incubator/istio).
 #
 # This Ingress resource is to be used with the Istio bookinfo example (https://istio.io/docs/samples/bookinfo.html).
