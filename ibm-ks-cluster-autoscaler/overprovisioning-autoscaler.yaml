@@ -1,0 +1,97 @@
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: cluster-proportional-autoscaler-service-account
+  namespace: default
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: cluster-proportional-autoscaler-service-account
+rules:
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["list", "watch"]
+  - apiGroups: [""]
+    resources: ["replicationcontrollers/scale"]
+    verbs: ["get", "update"]
+  - apiGroups: ["extensions","apps"]
+    resources: ["deployments/scale", "replicasets/scale"]
+    verbs: ["get", "update"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "create"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: cluster-proportional-autoscaler-service-account
+subjects:
+  - kind: ServiceAccount
+    name: cluster-proportional-autoscaler-service-account
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: cluster-proportional-autoscaler-service-account
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: scheduling.k8s.io/v1beta1
+kind: PriorityClass
+metadata:
+  name: overprovisioning
+value: -1
+globalDefault: false
+description: "Priority class used by overprovisioning."
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: overprovisioning
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: overprovisioning
+  template:
+    metadata:
+      labels:
+        run: overprovisioning
+    spec:
+      priorityClassName: overprovisioning
+      containers:
+      - name: reserve-resources
+        image: k8s.gcr.io/pause
+        resources:
+          requests:
+            cpu: "1"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: overprovisioning-autoscaler
+  namespace: default
+  labels:
+    app: overprovisioning-autoscaler
+spec:
+  selector:
+    matchLabels:
+      app: overprovisioning-autoscaler
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: overprovisioning-autoscaler
+    spec:
+      containers:
+        - image: k8s.gcr.io/cluster-proportional-autoscaler-amd64:1.1.2
+          name: autoscaler
+          command:
+            - /cluster-proportional-autoscaler
+            - --namespace=default
+            - --configmap=overprovisioning-autoscaler
+            - --default-params={"linear":{"nodesPerReplica":1}}
+            - --target=deployment/overprovisioning
+            - --logtostderr=true
+            - --v=2
+      serviceAccountName: cluster-proportional-autoscaler-service-account
