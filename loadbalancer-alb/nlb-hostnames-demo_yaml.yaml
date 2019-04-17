@@ -1,0 +1,165 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: dal12   # instructs kube to create the LB in this zone # NEED TO EDIT!
+  labels:
+    app: echoserver-deployment-dal12
+  name: iks-new-loadbalancer-dal12
+  namespace: default
+spec:
+  ports:
+  - name: port-1
+    port: 1884
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: echoserver-deployment-dal12
+  type: LoadBalancer
+  externalTrafficPolicy: Local    #  Preserve the original IP address of the client connecting
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-zone: dal13   # instructs kube to create the LB in this zone # NEED TO EDIT!
+  labels:
+    app: echoserver-deployment-dal13
+  name: iks-new-loadbalancer-dal13
+  namespace: default
+spec:
+  ports:
+  - name: port-1
+    port: 1884
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: echoserver-deployment-dal13
+  type: LoadBalancer
+  externalTrafficPolicy: Local    #  Preserve the original IP address of the client connecting
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echoserver-deployment-dal12
+  namespace: default
+  labels:
+    app: echoserver-deployment-dal12
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: echoserver-deployment-dal12
+  template:
+    metadata:
+      labels:
+        app: echoserver-deployment-dal12
+    spec:
+      affinity:
+        nodeAffinity:     # With this we can select which nodes to run on
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: failure-domain.beta.kubernetes.io/zone    # select the label key to match (you can find these in kubectl describe node ...)
+                operator: In
+                values:
+                - "dal12"   # only schedule on nodes that are in this zone # NEED TO EDIT!
+        podAntiAffinity:      #  Spread out the "echoserver-deployment-dal12" pods on the worker nodes as evenly as possible
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - echoserver-deployment-dal12    # if a pod matching app=echoserver-deployment-dal12 already runs on a node, try to find another node
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: echoserver
+          image: k8s.gcr.io/echoserver:1.10
+          env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+      restartPolicy: Always
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echoserver-deployment-dal13
+  namespace: default
+  labels:
+    app: echoserver-deployment-dal13
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: echoserver-deployment-dal13
+  template:
+    metadata:
+      labels:
+        app: echoserver-deployment-dal13
+    spec:
+      affinity:
+        nodeAffinity:     # With this we can select which nodes to run on
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: failure-domain.beta.kubernetes.io/zone    # select the label key to match (you can find these in kubectl describe node ...)
+                operator: In
+                values:
+                - "dal13"   # only schedule on nodes that are in this zone # NEED TO EDIT!
+        podAntiAffinity:      #  Spread out the "echoserver-deployment-dal13" pods on the worker nodes as evenly as possible
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - echoserver-deployment-dal13    # if a pod matching app=echoserver-deployment-dal13 already runs on a node, try to find another node
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: echoserver
+          image: k8s.gcr.io/echoserver:1.10
+          env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+      restartPolicy: Always
