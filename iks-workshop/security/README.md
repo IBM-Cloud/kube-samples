@@ -1,8 +1,8 @@
 # Security + Access Control List (ACL) best practices
 
 ## Resources
-- [IKS security documentation](https://console.bluemix.net/docs/containers/cs_secure.html#security)
-- [IKS networking documentation](https://console.bluemix.net/docs/containers/cs_network_policy.html#default_policy)
+- [IKS security documentation](https://cloud.ibm.com/docs/containers?topic=containers-security#security)
+- [IKS networking documentation](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#default_policy)
 
 ## What IKS Provides
 
@@ -70,8 +70,8 @@ What IBM Cloud Kubernetes Service provides
 ### Auditing
 
 Activity Tracker
-- [Service information](https://console.bluemix.net/docs/services/cloud-activity-tracker/activity_tracker_ov.html#activity_tracker_ov)
-- [Integration with IKS](https://console.bluemix.net/docs/containers/cs_at_events.html#at_events)
+- [Service information](https://cloud.ibm.com/docs/services/cloud-activity-tracker?topic=cloud-activity-tracker-activity_tracker_ov#activity_tracker_ov)
+- [Integration with IKS](https://cloud.ibm.com/docs/containers?topic=containers-at_events#at_events)
 
 Examples of activity logs
 - The users who made API calls to cloud services.

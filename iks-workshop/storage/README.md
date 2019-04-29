@@ -3,8 +3,8 @@
 Containers are ephemeral, so Kubernetes and IBM Cloud provides options for apps that require persistent storage and need to share data across pods.
 
 ## Resources
-- [IKS storage documentation](https://console.bluemix.net/docs/containers/cs_storage.html#storage)
-- [Tutorial with Kubernetes and Object Storage](https://console.bluemix.net/docs/tutorials/pub-sub-object-storage.html#asynchronous-data-processing-using-object-storage-and-pub-sub-messaging)
+- [IKS storage documentation](https://cloud.ibm.com/docs/containers?topic=containers-storage_planning)
+- [Tutorial with Kubernetes and Object Storage](https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-pub-sub-object-storage#asynchronous-data-processing-using-object-storage-and-pub-sub-messaging)
 
 ## Storage options
 
