@@ -1,5 +1,0 @@
-pyopenssl
-requests==2.9.1
-slackclient
-urllib3
-watson_developer_cloud
