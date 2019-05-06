@@ -7,14 +7,14 @@ metadata:
   labels:
     ibm.role: worker_private
   # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal10-cr5bd37250fa4b4961af57cbfc43774d59-w17.cloud.ibm-worker-private
+  name: <worker-node-name>-worker-private
 spec:
-  node: kube-dal10-cr5bd37250fa4b4961af57cbfc43774d59-w17.cloud.ibm
+  node: <worker-node-name>
   # Interface name for virtual machines on the private network.
   interfaceName: eth0
   # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
   expectedIPs:
-  - 10.95.29.161
+  - <worker-node-private-ip>
 
 ---
 
@@ -25,254 +25,13 @@ metadata:
   labels:
     ibm.role: worker_private
   # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal10-cr5bd37250fa4b4961af57cbfc43774d59-w18.cloud.ibm-worker-private
+  name: <worker-node-name>-worker-private
 spec:
-  node: kube-dal10-cr5bd37250fa4b4961af57cbfc43774d59-w18.cloud.ibm
+  node: <worker-node-name>
   # Interface name for virtual machines on the private network.
   interfaceName: eth0
   # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
   expectedIPs:
-  - 10.95.29.136
-
----
-
-# worker node 3
-apiVersion: projectcalico.org/v3
-kind: HostEndpoint
-metadata:
-  labels:
-    ibm.role: worker_private
-  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal10-cr5bd37250fa4b4961af57cbfc43774d59-w2.cloud.ibm-worker-private
-spec:
-  node: kube-dal10-cr5bd37250fa4b4961af57cbfc43774d59-w2.cloud.ibm
-  # Interface name for virtual machines on the private network.
-  interfaceName: eth0
-  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
-  expectedIPs:
-  - 10.95.29.169
-
----
-
-# worker node 3
-apiVersion: projectcalico.org/v3
-kind: HostEndpoint
-metadata:
-  labels:
-    ibm.role: worker_private
-  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal10-cr5bd37250fa4b4961af57cbfc43774d59-w24-worker-private
-spec:
-  node: kube-dal10-cr5bd37250fa4b4961af57cbfc43774d59-w24
-  # Interface name for virtual machines on the private network.
-  interfaceName: eth0
-  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
-  expectedIPs:
-  - 10.95.29.163
-
-
----
-
-# worker node 3
-apiVersion: projectcalico.org/v3
-kind: HostEndpoint
-metadata:
-  labels:
-    ibm.role: worker_private
-  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal10-cr5bd37250fa4b4961af57cbfc43774d59-w3.cloud.ibm-worker-private
-spec:
-  node: kube-dal10-cr5bd37250fa4b4961af57cbfc43774d59-w3.cloud.ibm
-  # Interface name for virtual machines on the private network.
-  interfaceName: eth0
-  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
-  expectedIPs:
-  - 10.95.29.133
-
-
----
-
-# worker node 3
-apiVersion: projectcalico.org/v3
-kind: HostEndpoint
-metadata:
-  labels:
-    ibm.role: worker_private
-  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal12-cr5bd37250fa4b4961af57cbfc43774d59-w13-worker-private
-spec:
-  node: kube-dal12-cr5bd37250fa4b4961af57cbfc43774d59-w13
-  # Interface name for virtual machines on the private network.
-  interfaceName: eth0
-  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
-  expectedIPs:
-  - 10.184.91.45
-
----
-
-# worker node 3
-apiVersion: projectcalico.org/v3
-kind: HostEndpoint
-metadata:
-  labels:
-    ibm.role: worker_private
-  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal12-cr5bd37250fa4b4961af57cbfc43774d59-w19.cloud.ibm-worker-private
-spec:
-  node: kube-dal12-cr5bd37250fa4b4961af57cbfc43774d59-w19.cloud.ibm
-  # Interface name for virtual machines on the private network.
-  interfaceName: eth0
-  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
-  expectedIPs:
-  - 10.184.91.46
-
-
----
-
-# worker node 3
-apiVersion: projectcalico.org/v3
-kind: HostEndpoint
-metadata:
-  labels:
-    ibm.role: worker_private
-  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal12-cr5bd37250fa4b4961af57cbfc43774d59-w23.cloud.ibm-worker-private
-spec:
-  node: kube-dal12-cr5bd37250fa4b4961af57cbfc43774d59-w23.cloud.ibm
-  # Interface name for virtual machines on the private network.
-  interfaceName: eth0
-  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
-  expectedIPs:
-  - 10.184.91.49
-
----
-
-# worker node 3
-apiVersion: projectcalico.org/v3
-kind: HostEndpoint
-metadata:
-  labels:
-    ibm.role: worker_private
-  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal12-cr5bd37250fa4b4961af57cbfc43774d59-w4.cloud.ibm-worker-private
-spec:
-  node: kube-dal12-cr5bd37250fa4b4961af57cbfc43774d59-w4.cloud.ibm
-  # Interface name for virtual machines on the private network.
-  interfaceName: eth0
-  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
-  expectedIPs:
-  - 10.184.91.8
-
-
----
-
-# worker node 3
-apiVersion: projectcalico.org/v3
-kind: HostEndpoint
-metadata:
-  labels:
-    ibm.role: worker_private
-  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal12-cr5bd37250fa4b4961af57cbfc43774d59-w5.cloud.ibm-worker-private
-spec:
-  node: kube-dal12-cr5bd37250fa4b4961af57cbfc43774d59-w5.cloud.ibm
-  # Interface name for virtual machines on the private network.
-  interfaceName: eth0
-  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
-  expectedIPs:
-  - 10.184.91.7
-
-
----
-
-# worker node 3
-apiVersion: projectcalico.org/v3
-kind: HostEndpoint
-metadata:
-  labels:
-    ibm.role: worker_private
-  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal13-cr5bd37250fa4b4961af57cbfc43774d59-w16-worker-private
-spec:
-  node: kube-dal13-cr5bd37250fa4b4961af57cbfc43774d59-w16
-  # Interface name for virtual machines on the private network.
-  interfaceName: eth0
-  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
-  expectedIPs:
-  - 10.208.130.184
-
-
----
-
-# worker node 3
-apiVersion: projectcalico.org/v3
-kind: HostEndpoint
-metadata:
-  labels:
-    ibm.role: worker_private
-  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal13-cr5bd37250fa4b4961af57cbfc43774d59-w21.cloud.ibm-worker-private
-spec:
-  node: kube-dal13-cr5bd37250fa4b4961af57cbfc43774d59-w21.cloud.ibm
-  # Interface name for virtual machines on the private network.
-  interfaceName: eth0
-  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
-  expectedIPs:
-  - 10.208.130.143
-
-
----
-
-# worker node 3
-apiVersion: projectcalico.org/v3
-kind: HostEndpoint
-metadata:
-  labels:
-    ibm.role: worker_private
-  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal13-cr5bd37250fa4b4961af57cbfc43774d59-w22.cloud.ibm-worker-private
-spec:
-  node: kube-dal13-cr5bd37250fa4b4961af57cbfc43774d59-w22.cloud.ibm
-  # Interface name for virtual machines on the private network.
-  interfaceName: eth0
-  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
-  expectedIPs:
-  - 10.208.130.162
-
----
-
-# worker node 3
-apiVersion: projectcalico.org/v3
-kind: HostEndpoint
-metadata:
-  labels:
-    ibm.role: worker_private
-  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal13-cr5bd37250fa4b4961af57cbfc43774d59-w6.cloud.ibm-worker-private
-spec:
-  node: kube-dal13-cr5bd37250fa4b4961af57cbfc43774d59-w6.cloud.ibm
-  # Interface name for virtual machines on the private network.
-  interfaceName: eth0
-  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
-  expectedIPs:
-  - 10.208.130.139
-
----
-
-# worker node 3
-apiVersion: projectcalico.org/v3
-kind: HostEndpoint
-metadata:
-  labels:
-    ibm.role: worker_private
-  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
-  name: kube-dal13-cr5bd37250fa4b4961af57cbfc43774d59-w7.cloud.ibm-worker-private
-spec:
-  node: kube-dal13-cr5bd37250fa4b4961af57cbfc43774d59-w7.cloud.ibm
-  # Interface name for virtual machines on the private network.
-  interfaceName: eth0
-  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
-  expectedIPs:
-  - 10.208.130.151
+  - <worker-node-private-ip>
 
 # If you have additional worker nodes, copy the above hostEndpoint and fill in appropriate values.
