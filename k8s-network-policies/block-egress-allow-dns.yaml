@@ -1,0 +1,20 @@
+# blocks all outbound traffic (except DNS)
+# from the pods in the current namespace
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: block-egress
+spec:
+  podSelector:
+    matchLabels: {}
+  policyTypes:
+  - Egress
+  egress:
+  - ports:
+    - port: 53
+      protocol: TCP
+    - port: 53
+      protocol: UDP
+  - to:
+    - namespaceSelector: {}
+      

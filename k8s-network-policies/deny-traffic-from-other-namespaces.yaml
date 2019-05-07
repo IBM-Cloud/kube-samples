@@ -1,0 +1,15 @@
+# deny traffic to pods in this namespace from pods
+# in other namespaces
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: deny-traffic-from-other-namespaces
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+    matchLabels: {}
+  ingress:
+  - from:
+    - podSelector: {}
+  

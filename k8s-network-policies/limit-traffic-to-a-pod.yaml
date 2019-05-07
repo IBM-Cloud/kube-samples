@@ -1,0 +1,18 @@
+# allow access to the `db` pod from the `api` pod
+# in app `foo`. Our front-end pod `web` for app `foo` will
+# be able to send traffic to our `db` pod
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: limit-traffic-to-a-pod
+spec:
+  podSelector:
+    matchLabels:
+      app: foo
+      role: db
+  ingress:
+  - from:
+      - podSelector:
+          matchLabels:
+            app: foo
+            role: api
