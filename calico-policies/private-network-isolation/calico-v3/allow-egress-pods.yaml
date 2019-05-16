@@ -1,4 +1,4 @@
-# This policy blocks egress to private networks, opens port 10250 for VPN communication and opens DNS port (53).
+# This policy opens port 10250 for VPN communication through kubelet and opens DNS port (53).
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -23,13 +23,6 @@ spec:
   - action: Allow
     destination:
       selector: projectcalico.org/orchestrator == 'k8s'
-    source: {}
-  - action: Allow
-    destination:
-      notNets:
-      - 10.0.0.0/8
-      - 172.16.0.0/12
-      - 192.168.0.0/16
     source: {}
   order: 1500
   selector: projectcalico.org/orchestrator == 'k8s'

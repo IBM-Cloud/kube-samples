@@ -1,0 +1,17 @@
+# This policy blocks pod egress to specified nets.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: deny-egress-pods-other
+spec:
+  egress:
+  - action: Deny
+    destination:
+      nets:
+      -
+    source: {}
+  order: 1500
+  selector: projectcalico.org/orchestrator == 'k8s'
+  types:
+  - Egress
