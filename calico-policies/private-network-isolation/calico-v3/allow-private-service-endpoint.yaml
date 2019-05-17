@@ -1,7 +1,6 @@
 # This policy allows outgoing network traffic from worker nodes in each zone of your cluster
 # to the cluster master through the private service endpoint. Note that you must allow outgoing
-# traffic on TCP/UDP port range 20000-32767 and port 443 for all of the zones within the region.
-# The example nets in this policy are for US South.
+# traffic for all of the zones within the region. The example nets in this policy are for US South.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
