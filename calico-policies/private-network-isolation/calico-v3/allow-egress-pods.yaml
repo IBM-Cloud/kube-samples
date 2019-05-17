@@ -28,3 +28,4 @@ spec:
   selector: projectcalico.org/orchestrator == 'k8s'
   types:
   - Egress
+  
