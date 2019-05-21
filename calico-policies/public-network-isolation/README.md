@@ -13,8 +13,8 @@ For more information on how to use these policies, see the [IBM Cloud Kubernetes
 
 **Pods**
 
-* Ingress to pods on the public interface is permitted from network load balancer (NLB), Ingress application load balancer (ALB), and NodePort services.
 * All egress from pods on the public interface is permitted. You can optionally block pod egress to specific subnets.
+* Ingress to pods on the public interface is permitted from network load balancer (NLB), Ingress application load balancer (ALB), and NodePort services.
 
 ## List of Calico policies
 
