@@ -9,7 +9,7 @@ For more information on how to use these policies, see the [IBM Cloud Kubernetes
 **Worker nodes**
 
 * Egress from workers on the public interface is permitted only to the UPD/TCP port 53 for DNS access, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 2040 for the master API server local proxy, port 2041 for the etcd local proxy, and ports 20000:32767 and 443 for communication with the master. You can optionally allow worker communication to other IBM Cloud services.
-* Ingress to workers on the pubic interface is permitted only from subnets for IBM Cloud Infrastructure (Softlayer) systems that are used to manage worker nodes. This ingress is permitted only through UPD/TCP port 53 for DNS access, port 52311 for Big Fix, port 10250 for VPN communication between master and workers, ICMP to allow infrastructure health monitoring, and VRRP to use load balancer services.
+* Ingress to workers on the public interface is permitted only from subnets for IBM Cloud Infrastructure (Softlayer) systems that are used to manage worker nodes. This ingress is permitted only through UPD/TCP port 53 for DNS access, port 52311 for Big Fix, port 10250 for VPN communication between master and workers, ICMP to allow infrastructure health monitoring, and VRRP to use load balancer services.
 
 **Pods**
 
