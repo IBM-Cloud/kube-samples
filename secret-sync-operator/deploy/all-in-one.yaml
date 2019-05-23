@@ -58,7 +58,7 @@ spec:
       serviceAccountName: secret-sync-operator
       containers:
         - name: secret-sync-operator
-          image: us.icr.io/armada-sigex/secret-sync-operator:1.0
+          image: <REPLACE WITH YOUR BUILT IMAGE NAME>
           command:
           - secret-sync-operator
           imagePullPolicy: Always
