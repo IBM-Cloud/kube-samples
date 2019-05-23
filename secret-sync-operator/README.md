@@ -17,4 +17,18 @@ When the operator creates or updates a target Secret object, it will attach some
 
 * A label of `secretsync.ibm.com/replicated-from` which identifies the source Secret in the format `namespace.secret-name`. This label makes it easy to see all the Secrets in a cluster that are replicated from a certain source Secret. For example, the command `kubectl get secret -l secretsync.ibm.com/replicated-from=default.mysecret --all-namespaces` will show all the Secrets in the cluster that were synced from the `mysecret` Secret in the `default` namespace of the cluster.
 
+## Building and running
+You have a few options are your disposal to get this operator running: 
+* `docker build -t <desired container image name> .` : If you can do local container builds (I.e. using Docker or a similar other OCI-compliant build method) you can simply use the Dockerfile provided to produce a container image that you can reference from the Kubernetes deployment YAMLs located in the `deploy` directory for this project. 
+* `operator-sdk build <container image name>` : If you have a working Go development environment on your machine, you can follow [these instructions](https://github.com/operator-framework/operator-sdk/blob/master/doc/user/install-operator-sdk.md) to get the Operator SDK CLI installed on your machine and use it to build the operator image. 
+
+After building the image you can push it to your choice of container registry (we're partial to the [IBM Cloud Container Registry](https://cloud.ibm.com/kubernetes/catalog/registry) ourselves) and then reference it from the provided YAML deployment files in the `deploy` folder of this project.
+
+To deploy the operator just run `kubectl apply -f deploy/all-in-one.yaml`. This will:
+1. Create a service account for the operator that uses the provided IBM Cloud Container Registry pull secrets. 
+2. Create a ClusterRole that defines access to full access to Secrets and ConfigMap resource types in the cluster and read access to Namespaces, Pods, and ReplicaSets. This is the minimum required access for the operator to do it's function
+3. Create a ClusterRoleBinding that binds the created ClusterRole to the operator's service account
+4. Creates a Deployment that defines the operator's pods.
+
+To delete the operator from your cluster, simply run `kubectl delete -f deploy/all-in-one.yaml`. 
 
