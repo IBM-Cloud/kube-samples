@@ -33,28 +33,28 @@ spec:
       - 2040:2041
       nets:
       - 172.20.0.1/32
-      protocol: UDP
+    protocol: UDP
   - action: Allow
     destination:
       ports:
       - 2040:2041
       nets:
       - 172.20.0.1/32
-      protocol: TCP
+    protocol: TCP
   - action: Allow
-   destination:
-     ports:
-     - 443
-     nets:
-     - 172.21.0.1/32
-     protocol: UDP
+    destination:
+      ports:
+      - 443
+      nets:
+      - 172.21.0.1/32
+    protocol: UDP
   - action: Allow
-   destination:
-     ports:
-     - 443
-     nets:
-     - 172.21.0.1/32
-     protocol: TCP
+    destination:
+      ports:
+      - 443
+      nets:
+      - 172.21.0.1/32
+    protocol: TCP
   ingress:
   - action: Allow
     destination:
