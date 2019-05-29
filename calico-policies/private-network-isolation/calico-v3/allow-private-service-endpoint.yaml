@@ -1,6 +1,6 @@
-# This policy allows outgoing network traffic from worker nodes in each zone of your cluster
-# to the cluster master through the private service endpoint. Note that you must allow outgoing
-# traffic for all of the zones within the region. The example nets in this policy are for US South.
+# This policy allows outgoing network traffic from worker nodes in each zone
+# of your cluster to the cluster master through the private service endpoint.
+# Note that you must allow outgoing traffic for all of the zones within the region.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
