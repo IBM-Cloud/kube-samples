@@ -4,7 +4,7 @@
     name: deny-all-outbound
   spec:
     egress:
-    - action: Allow
+    - action: Deny
       destination: {}
       source: {}
     order: 1850
