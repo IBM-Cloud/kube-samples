@@ -24,6 +24,7 @@ For more information on how to use these policies, see the [IBM Cloud Kubernetes
 |-----------|-----------|
 | `allow-ibm-ports-public` | Opens port 10250 for VPN communication between the master and worker nodes, port 53 for DNS, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 2040 for the master API server local proxy, and port 2041 for the etcd local proxy. |
 | `allow-public-service-endpoint` | Allows worker nodes to communicate with the cluster master through the public service endpoint. |
+| `deny-all-outbound` | Denies all egress from worker nodes. Because this policy has a high order, `1850`, its rule is applied last in the chain of Iptables rules that an outgoing packet from a worker node matches against. Other policies in this set have lower orders, so if an outgoing packet matches one of those rules, the packet is permitted. The `deny-all-outbound` policy ensures that if an outgoing packet does not match any polices as it moves through the Iptables rules chain, the packet is denied by this policy. |
 
 ### Optional policies
 
