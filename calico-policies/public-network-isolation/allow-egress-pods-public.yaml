@@ -1,4 +1,6 @@
-# This policy blocks pod egress to specified nets.
+# This policy opens port 53 for DNS, port 2049 for communication with
+# NFS file servers, and ports 443 and 3260 for communication to block
+# storage. You can optionally allow outgoing traffic to other IBM Cloud services.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -6,11 +8,11 @@ metadata:
   name: allow-egress-pods-public
 spec:
   egress:
+  # Pod access to required IBM ports
   - action: Allow
     destination:
       ports:
       - 53
-      - 80
       - 443
       - 2049
       - 3260
@@ -20,16 +22,12 @@ spec:
     destination:
       ports:
       - 53
-      - 80
       - 443
       - 2049
       - 3260
     protocol: TCP
     source: {}
-  - action: Allow
-    destination:
-      selector: projectcalico.org/orchestrator == 'k8s'
-    source: {}
+  # Pod access to other IBM Cloud services
   - action: Allow
     destination:
       nets:

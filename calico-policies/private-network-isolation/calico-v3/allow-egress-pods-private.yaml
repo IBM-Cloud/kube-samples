@@ -1,4 +1,7 @@
-# This policy opens port 10250 for VPN communication through kubelet and opens DNS port (53).
+# This policy opens port 53 for DNS, port 2049 for communication with NFS file
+# servers, and ports 443 and 3260 for communication to block storage.
+# It also allows pod access to other pods, and you can optionally
+# allow outgoing traffic to other IBM Cloud services.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -6,6 +9,7 @@ metadata:
   name: allow-egress-pods-private
 spec:
   egress:
+  # Pod access to required IBM ports
   - action: Allow
     destination:
       ports:
@@ -24,6 +28,12 @@ spec:
       - 3260
     protocol: TCP
     source: {}
+  # Pod access to other pods in the cluster
+  - action: Allow
+    destination:
+      selector: projectcalico.org/orchestrator == 'k8s'
+    source: {}
+  # Pod access to other IBM Cloud services
   - action: Allow
     destination:
       nets:
@@ -39,10 +49,6 @@ spec:
       - 443
       - 4443
     protocol: TCP
-    source: {}
-  - action: Allow
-    destination:
-      selector: projectcalico.org/orchestrator == 'k8s'
     source: {}
   order: 1500
   selector: projectcalico.org/orchestrator == 'k8s'
