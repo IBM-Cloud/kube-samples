@@ -1,8 +1,6 @@
-# This policy opens port 10250 for VPN communication between master and workers,
-# port 53 for DNS, port 52311 for IBM BigFix worker node updates, port 2049 for
-# communication with NFS file servers, ports 443 and 3260 for communication to
-# block storage, port 2040 and 443 on 172.21.0.1 for the master API server local
-# proxy, and port 2041 on 172.21.0.1 for the etcd local proxy.
+# This policy opens port 10250 for VPN communication between master and workers, the DNS port
+# (53), port 2049 for communication with NFS file servers, and ports 443 and 3260 for communication
+# to block storage.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -14,45 +12,24 @@ spec:
     destination:
       ports:
       - 53
-      - 443
       - 2049
-      - 3260
     protocol: UDP
     source: {}
   - action: Allow
     destination:
       ports:
       - 53
-      - 443
       - 2049
       - 3260
+      - 443
     protocol: TCP
     source: {}
-  - action: Allow
-    destination:
-      ports:
-      - 443
-      - 2040
-      - 2041
-      nets:
-      - 172.21.0.1/32
-    protocol: UDP
-  - action: Allow
-    destination:
-      ports:
-      - 443
-      - 2040
-      - 2041
-      nets:
-      - 172.21.0.1/32
-    protocol: TCP
   ingress:
   - action: Allow
     destination:
       ports:
       - 53
       - 10250
-      - 52311
     protocol: UDP
     source: {}
   - action: Allow
@@ -60,7 +37,6 @@ spec:
       ports:
       - 53
       - 10250
-      - 52311
     protocol: TCP
     source: {}
   order: 1500

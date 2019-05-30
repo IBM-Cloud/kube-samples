@@ -13,7 +13,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Allows communication to pod IPs
+        # Allows communication to pod IPs
       - 172.30.0.0/16
     source: {}
   ingress:
@@ -21,7 +21,7 @@ spec:
     destination: {}
     source:
       selector: ibm.role == 'worker_private'
-  order: 1950
+  order: 1800
   selector: ibm.role == 'worker_private'
   types:
   - Egress

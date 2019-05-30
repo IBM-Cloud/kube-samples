@@ -1,21 +1,15 @@
-# This policy opens port 53 for DNS, port 2049 for communication with
-# NFS file servers, ports 443 and 3260 for communication to block
-# storage, and port 10250 for VPN communication. It also allows pod
-# access to other pods.
+# This policy blocks egress to private networks, opens port 10250 for VPN communication and opens DNS port (53).
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
-  name: allow-egress-pods-private
+  name: allow-egress-pods
 spec:
   egress:
   - action: Allow
     destination:
       ports:
       - 53
-      - 443
-      - 2049
-      - 3260
       - 10250
     protocol: UDP
     source: {}
@@ -23,15 +17,19 @@ spec:
     destination:
       ports:
       - 53
-      - 443
-      - 2049
-      - 3260
       - 10250
     protocol: TCP
     source: {}
   - action: Allow
     destination:
       selector: projectcalico.org/orchestrator == 'k8s'
+    source: {}
+  - action: Allow
+    destination:
+      notNets:
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
     source: {}
   order: 1500
   selector: projectcalico.org/orchestrator == 'k8s'
