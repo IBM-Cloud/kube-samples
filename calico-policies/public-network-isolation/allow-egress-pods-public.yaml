@@ -1,6 +1,7 @@
 # This policy opens port 53 for DNS, port 2049 for communication with
-# NFS file servers, and ports 443 and 3260 for communication to block
-# storage. You can optionally allow outgoing traffic to other IBM Cloud services.
+# NFS file servers, ports 443 and 3260 for communication to block
+# storage, and port 10250 for VPN communication. It also allows pod
+# access to other pods.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -8,7 +9,6 @@ metadata:
   name: allow-egress-pods-public
 spec:
   egress:
-  # Pod access to required IBM ports
   - action: Allow
     destination:
       ports:
@@ -16,6 +16,7 @@ spec:
       - 443
       - 2049
       - 3260
+      - 10250
     protocol: UDP
     source: {}
   - action: Allow
@@ -25,56 +26,12 @@ spec:
       - 443
       - 2049
       - 3260
-    protocol: TCP
-    source: {}
-  # Pod access to other IBM Cloud services
-  - action: Allow
-    destination:
-      nets:
-      # IBM Cloud Container Registry: Global registry
-      - 169.60.72.144/28
-      - 169.60.98.80/29
-      - 169.61.76.176/28
-      - 169.62.37.240/29
-      - 169.63.104.232/29
-      # IBM Cloud Container Registry: Example US South & US East nets for your own registry
-      - 169.46.9.0/27
-      - 169.55.39.112/28
-      - 169.55.211.0/27
-      - 169.61.46.80/29
-      - 169.61.135.160/29
-      - 169.61.234.224/29
-      ports:
-      - 443
-      - 4443
+      - 10250
     protocol: TCP
     source: {}
   - action: Allow
     destination:
-      nets:
-      # IBM Cloud Monitoring with Sysdig: Example US South nets
-      - 169.46.0.70/32
-      - 169.48.214.70/32
-      - 169.60.151.174/32
-      ports:
-      - 443
-      - 6443
-    protocol: TCP
-    source: {}
-  - action: Allow
-    destination:
-      nets:
-      # IBM Log Analysis with LogDNA: Example US South nets
-      - 169.47.224.74/32
-      - 169.47.224.77/32
-      - 169.48.237.107/32
-      - 169.48.237.109/32
-      - 169.60.166.44/32
-      - 169.60.166.45/32
-      ports:
-      - 443
-      - 80
-    protocol: TCP
+      selector: projectcalico.org/orchestrator == 'k8s'
     source: {}
   order: 1500
   selector: projectcalico.org/orchestrator == 'k8s'
