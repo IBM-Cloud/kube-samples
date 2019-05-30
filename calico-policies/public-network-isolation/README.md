@@ -13,14 +13,14 @@ For more information on how to use these policies, see the [IBM Cloud Kubernetes
 
 **Pods**
 
-* Egress from pods on the public interface is permitted to port 53 for DNS access, port 2049 for communication with NFS file servers, and ports 443 and 3260 for communication to block storage. You can optionally allow pod communication to other IBM Cloud services.
+* Egress from pods on the public interface is permitted to port 53 for DNS access, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 10250 for VPN communication, and to other pods.
 * Ingress to pods on the public interface is permitted from network load balancer (NLB), Ingress application load balancer (ALB), and NodePort services.
 
 ## List of Calico policies
 
 |Policy name|Description|
 |-----------|-----------|
-| `allow-egress-pods-public` | Opens ports that are necessary for pods to function properly, allows pods to communicate with other pods in the cluster, and optionally allows pod access to specified IBM Cloud services. |
+| `allow-egress-pods-public` | Opens ports that are necessary for pods to function properly and allows pods to communicate with other pods in the cluster. |
 | `allow-ibm-ports-public` | Opens ports that are necessary for worker nodes to function properly. |
 | `allow-public-service-endpoint` | Allows worker nodes to communicate with the cluster master through the public service endpoint. |
 | `allow-public-services` | Allows workers to access specified IBM Cloud services over the public network. |
