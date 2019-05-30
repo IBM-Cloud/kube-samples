@@ -1,7 +1,7 @@
 - apiVersion: projectcalico.org/v3
   kind: GlobalNetworkPolicy
   metadata:
-    name: deny-all-outbound
+    name: deny-all-outbound-public
   spec:
     egress:
     - action: Deny

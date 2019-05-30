@@ -3,21 +3,41 @@
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
-  name: allow-egress-pods
+  name: allow-egress-pods-private
 spec:
   egress:
   - action: Allow
     destination:
       ports:
       - 53
-      - 10250
+      - 443
+      - 2049
+      - 3260
     protocol: UDP
     source: {}
   - action: Allow
     destination:
       ports:
       - 53
-      - 10250
+      - 443
+      - 2049
+      - 3260
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Container Registry: Global registry
+      - 166.9.20.4/32
+      - 166.9.22.3/32
+      - 166.9.24.2/32
+      # IBM Cloud Container Registry: Example US South & US East nets for your own registry
+      - 166.9.12.114/32
+      - 166.9.15.50/32
+      - 166.9.16.173/32
+      ports:
+      - 443
+      - 4443
     protocol: TCP
     source: {}
   - action: Allow
@@ -28,4 +48,3 @@ spec:
   selector: projectcalico.org/orchestrator == 'k8s'
   types:
   - Egress
-  

@@ -31,4 +31,3 @@ For more information on how to use these policies, see the [IBM Cloud Kubernetes
 |Policy name|Description|
 |-----------|-----------|
 | `allow-public-services` | Allows workers to access other IBM Cloud services over the public network. |
-| `deny-egress-pods-other` | (Placeholder) Blocks pod egress to any subnets that your specify. |
