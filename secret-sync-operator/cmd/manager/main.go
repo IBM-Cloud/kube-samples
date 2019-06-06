@@ -10,8 +10,8 @@ import (
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
-	"github.ibm.com/jtpape/secret-sync-operator/pkg/apis"
-	"github.ibm.com/jtpape/secret-sync-operator/pkg/controller"
+	"github.com/ibm/secret-sync-operator/pkg/apis"
+	"github.com/ibm/secret-sync-operator/pkg/controller"
 
 	// "github.com/operator-framework/operator-sdk/pkg/k8sutil"
 	"github.com/operator-framework/operator-sdk/pkg/leader"

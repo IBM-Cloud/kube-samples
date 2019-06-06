@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.ibm.com/jtpape/secret-sync-operator/pkg/controller/secret"
+	"github.com/ibm/secret-sync-operator/pkg/controller/secret"
 )
 
 func init() {
