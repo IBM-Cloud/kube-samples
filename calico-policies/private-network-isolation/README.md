@@ -27,7 +27,7 @@ Clusters that run Kubernetes version 1.9 or later must use Calico v3 syntax.
 |Policy name|Description|
 |-----------|-----------|
 | `allow-all-workers-private` | Limits worker node communication on the private network to other worker nodes and pods on those worker nodes within the cluster. |
-| `allow-egress-pods-private` | Opens ports that are necessary for pods to function properly and allows pods to communicate with other pods in the cluster. |
+| `allow-egress-pods-private` | Opens ports that are necessary for pods to function properly and allows pods to communicate with other pods in the cluster. Also blocks pod egress to the `10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16` private networks. |
 | `allow-ibm-ports-private` | Opens ports that are necessary for worker nodes to function properly. |
 | `allow-icmp-private`| Opens the ICMP protocol to allow infrastructure health monitoring. |
 | `allow-private-service-endpoint` | Allows worker nodes to communicate with the cluster master through the private service endpoint. |
@@ -40,4 +40,3 @@ Clusters that run Kubernetes version 1.9 or later must use Calico v3 syntax.
 |-----------|-----------|
 | `allow-private-services` | Allows workers to access other IBM Cloud services that support communication over the private network through private service endpoints. |
 | `allow-vrrp-private` | Opens the VRRP protocol to use Kubernetes load balancer services. |
-| `deny-egress-pods-private` | Blocks pod egress to the `10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16` private networks. |
