@@ -61,7 +61,6 @@ spec:
       ports:
       - 53
       - 10250
-      - 52311
     protocol: UDP
     source: {}
   - action: Allow
@@ -69,7 +68,6 @@ spec:
       ports:
       - 53
       - 10250
-      - 52311
     protocol: TCP
     source: {}
   order: 1500
