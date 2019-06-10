@@ -41,6 +41,7 @@ spec:
       - 2040:2041
       nets:
       - 172.20.0.1/32
+    protocol: TCP
   - action: Allow
     destination:
       ports:
