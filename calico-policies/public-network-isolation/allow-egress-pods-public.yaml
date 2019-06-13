@@ -31,6 +31,20 @@ spec:
     source: {}
   - action: Allow
     destination:
+      ports:
+      - 2040:2041
+      nets:
+      - 172.20.0.1/32
+    protocol: UDP
+  - action: Allow
+    destination:
+      ports:
+      - 2040:2041
+      nets:
+      - 172.20.0.1/32
+    protocol: TCP
+  - action: Allow
+    destination:
       selector: projectcalico.org/orchestrator == 'k8s'
     source: {}
   order: 1500
