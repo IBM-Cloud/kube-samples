@@ -1,7 +1,8 @@
 # This policy opens port 53 for DNS, port 2049 for communication with
 # NFS file servers, ports 443 and 3260 for communication to block
-# storage, and port 10250 for VPN communication. It also allows pod
-# access to other pods.
+# storage, port 10250 for VPN communication, and port 2040 and 443 on
+# 172.21.0.1 for the master API server local proxy. It also allows pod
+# access to other pods, and denies access to private networks.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -29,6 +30,20 @@ spec:
       - 10250
     protocol: TCP
     source: {}
+  - action: Allow
+    destination:
+      ports:
+      - 2040:2041
+      nets:
+      - 172.20.0.1/32
+    protocol: UDP
+  - action: Allow
+    destination:
+      ports:
+      - 2040:2041
+      nets:
+      - 172.20.0.1/32
+    protocol: TCP
   - action: Allow
     destination:
       selector: projectcalico.org/orchestrator == 'k8s'
