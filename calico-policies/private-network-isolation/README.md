@@ -8,6 +8,10 @@ For more information on how to use these policies, see the [IBM Cloud Kubernetes
 
 Clusters that run Kubernetes version 1.9 or later must use Calico v3 syntax.
 
+## Regions
+
+The Calico policies are organized by region. Choose the directory for the region that your cluster is in when applying these policies.
+
 ## Summary of changes made by the Calico policies
 
 **Worker nodes**
@@ -17,7 +21,7 @@ Clusters that run Kubernetes version 1.9 or later must use Calico v3 syntax.
 
 **Pods**
 
-* Egress from pods on the public interface is permitted to port 53 for DNS access, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 10250 for VPN communication, and to other pods. You can optionally block pod egress to private networks by applying the `deny-egress-pods-private` policy.
+* Egress from pods on the public interface is permitted to port 53 for DNS access, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 10250 for VPN communication, port 2040 and 2041 on 172.20.0.0 for the master API server local proxy, to the cluster master, and to other pods in the cluster. Access to private networks is denied.
 * Ingress to pods on the private interface is permitted from workers in the cluster.
 
 ## List of Calico policies
