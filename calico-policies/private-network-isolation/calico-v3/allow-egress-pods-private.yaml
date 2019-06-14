@@ -1,8 +1,8 @@
-# This policy opens port 53 for DNS, port 2049 for communication with
-# NFS file servers, ports 443 and 3260 for communication to block
-# storage, port 10250 for VPN communication, and port 2040 and 443 on
-# 172.21.0.1 for the master API server local proxy. It also allows pod
-# access to other pods, and denies access to private networks.
+# This policy opens port 53 for DNS, port 2049 for communication with NFS file servers,
+# ports 443 and 3260 for communication to block storage, port 10250 for VPN communication,
+# and port 2040 and 2041 on 172.20.0.0 for the master API server local proxy. It also
+# allows pod access to other pods, denies access to private networks, and allows access
+# in each zone of your cluster to the master.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -35,14 +35,14 @@ spec:
       ports:
       - 2040:2041
       nets:
-      - 172.20.0.1/32
+      - 172.20.0.0/24
     protocol: UDP
   - action: Allow
     destination:
       ports:
       - 2040:2041
       nets:
-      - 172.20.0.1/32
+      - 172.20.0.0/24
     protocol: TCP
   - action: Allow
     destination:
@@ -54,6 +54,54 @@ spec:
       - 10.0.0.0/8
       - 172.16.0.0/12
       - 192.168.0.0/16
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # Nets for US South
+      - 166.9.12.140/32
+      - 166.9.12.141/32
+      - 166.9.12.142/32
+      - 166.9.12.143/32
+      - 166.9.12.144/32
+      - 166.9.15.69/32
+      - 166.9.15.70/32
+      - 166.9.15.71/32
+      - 166.9.15.72/32
+      - 166.9.15.73/32
+      - 166.9.15.74/32
+      - 166.9.15.75/32
+      - 166.9.15.76/32
+      - 166.9.16.183/32
+      - 166.9.16.184/32
+      - 166.9.16.185/32
+      ports:
+      - 20000:32767
+    protocol: UDP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # Nets for US South
+      - 166.9.12.140/32
+      - 166.9.12.141/32
+      - 166.9.12.142/32
+      - 166.9.12.143/32
+      - 166.9.12.144/32
+      - 166.9.15.69/32
+      - 166.9.15.70/32
+      - 166.9.15.71/32
+      - 166.9.15.72/32
+      - 166.9.15.73/32
+      - 166.9.15.74/32
+      - 166.9.15.75/32
+      - 166.9.15.76/32
+      - 166.9.16.183/32
+      - 166.9.16.184/32
+      - 166.9.16.185/32
+      ports:
+      - 20000:32767
+    protocol: TCP
     source: {}
   order: 1500
   selector: projectcalico.org/orchestrator == 'k8s'

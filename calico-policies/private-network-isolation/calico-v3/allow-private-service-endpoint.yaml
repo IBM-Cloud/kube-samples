@@ -11,7 +11,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Example nets for US South
+      # Nets for US South
       - 166.9.12.140/32
       - 166.9.12.141/32
       - 166.9.12.142/32
@@ -36,7 +36,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Example nets for US South
+      # Nets for US South
       - 166.9.12.140/32
       - 166.9.12.141/32
       - 166.9.12.142/32

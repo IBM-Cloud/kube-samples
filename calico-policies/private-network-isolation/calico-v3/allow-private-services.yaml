@@ -15,7 +15,7 @@ spec:
       - 166.9.20.4/32
       - 166.9.22.3/32
       - 166.9.24.2/32
-      # IBM Cloud Container Registry: Example US South & US East nets for your own registry
+      # IBM Cloud Container Registry: US South & US East nets for your own registry
       - 166.9.12.114/32
       - 166.9.15.50/32
       - 166.9.16.173/32
