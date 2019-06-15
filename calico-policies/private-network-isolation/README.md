@@ -21,7 +21,7 @@ The Calico policies are organized by region. Choose the directory for the region
 
 **Pods**
 
-* Egress from pods on the public interface is permitted to port 53 for DNS access, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 10250 for VPN communication, port 2040 and 2041 on 172.20.0.0 for the master API server local proxy, ports 20000:32767 and 443 for communication with the master, and to other pods in the cluster. Access to private networks is denied.
+* Egress from pods on the private interface is permitted to port 53 for DNS access, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 10250 for VPN communication, port 2040 and 2041 on 172.20.0.0 for the master API server local proxy, ports 20000:32767 and 443 for communication with the master, and to other pods in the cluster. Access to private networks is denied.
 * Ingress to pods on the private interface is permitted from workers in the cluster.
 
 ## List of Calico policies
