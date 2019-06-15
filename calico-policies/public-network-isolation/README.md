@@ -4,16 +4,21 @@ This set of Calico policies work in conjunction with the [default Calico host po
 
 For more information on how to use these policies, see the [IBM Cloud Kubernetes Service documentation](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#isolate_workers_public).
 
+## Regions
+
+The Calico policies are organized by region. Choose the directory for the region that your cluster is in when applying these policies.
+
 ## Summary of changes made by the Calico policies
 
 **Worker nodes**
 
-* Egress from workers on the public interface is permitted to port 10250 for VPN communication between master and workers, port 53 for DNS, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 2040 for the master API server local proxy, port 2041 for the etcd local proxy, and ports 20000:32767 and 443 for communication with the master. You can optionally allow worker communication to other IBM Cloud services.
-* Ingress to workers on the public interface is permitted only from subnets for IBM Cloud Infrastructure (Softlayer) systems that are used to manage worker nodes. This ingress is permitted only through UPD/TCP port 53 for DNS access, port 52311 for Big Fix, port 10250 for VPN communication between master and workers, ICMP to allow infrastructure health monitoring, and VRRP to use load balancer services.
+* Egress from workers on the public interface is permitted to port 53 for DNS, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 2040 for the master API server local proxy, port 2041 for the etcd local proxy, ports 20000:32767 and 443 for communication with the master, and optionally to other {{site.data.keyword.Bluemix_notm}} services.
+* Ingress to workers on the public interface is permitted only from subnets for {[softlayer]} systems that are used to manage worker nodes.
+This ingress is permitted only through UPD/TCP port 53 for DNS access, port 52311 for Big Fix, ICMP to allow infrastructure health monitoring, and VRRP to use load balancer services.
 
 **Pods**
 
-* Egress from pods on the public interface is permitted to port 53 for DNS access, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 10250 for VPN communication, and to other pods.
+* Egress from pods on the public interface is permitted to port 53 for DNS access, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 2040 and 2041 on 172.20.0.0 for the master API server local proxy, and ports 20000:32767 and 443 for communication with the master.
 * Ingress to pods on the public interface is permitted from network load balancer (NLB), Ingress application load balancer (ALB), and NodePort services.
 
 ## List of Calico policies
