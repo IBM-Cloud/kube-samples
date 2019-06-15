@@ -1,7 +1,6 @@
 # This policy allows outgoing network traffic from worker
 # nodes to other IBM Cloud services. The example nets in this
-# policy are for IBM Cloud Container Registry, IBM Cloud
-# Monitoring with Sysdig, and IBM Log Analysis with LogDNA.
+# policy are for IBM Cloud Container Registry.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -28,33 +27,6 @@ spec:
       ports:
       - 443
       - 4443
-    protocol: TCP
-    source: {}
-  - action: Allow
-    destination:
-      nets:
-      # IBM Cloud Monitoring with Sysdig: US South nets
-      - 169.46.0.70/32
-      - 169.48.214.70/32
-      - 169.60.151.174/32
-      ports:
-      - 443
-      - 6443
-    protocol: TCP
-    source: {}
-  - action: Allow
-    destination:
-      nets:
-      # IBM Log Analysis with LogDNA: US South nets
-      - 169.47.224.74/32
-      - 169.47.224.77/32
-      - 169.48.237.107/32
-      - 169.48.237.109/32
-      - 169.60.166.44/32
-      - 169.60.166.45/32
-      ports:
-      - 443
-      - 80
     protocol: TCP
     source: {}
   order: 1800

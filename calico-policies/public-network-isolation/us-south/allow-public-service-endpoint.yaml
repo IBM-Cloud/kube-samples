@@ -1,6 +1,6 @@
-# This policy allows outgoing network traffic from worker nodes in each zone of your cluster
-# to the cluster master through the public service endpoint. Note that you must allow outgoing
-# traffic for all of the zones within the region. The example nets in this policy are for US South.
+# This policy allows outgoing network traffic from worker nodes in each zone of
+# your cluster to the cluster master through the public service endpoint. Note
+# that you must allow outgoing traffic for all of the zones within the region.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -11,7 +11,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Example nets for US South
+      # Nets for US South: hou02, mex01, sao01, sjc03, sjc04, dal10, dal12, dal13
       - 169.45.67.210/32
       - 169.46.7.238/32
       - 169.46.110.218/32
@@ -34,7 +34,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Example nets for US South
+      # Nets for US South: hou02, mex01, sao01, sjc03, sjc04, dal10, dal12, dal13
       - 169.45.67.210/32
       - 169.46.7.238/32
       - 169.46.110.218/32
