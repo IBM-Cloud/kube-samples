@@ -58,7 +58,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for EU Central
+      # Nets for EU Central: ams03, mil01, osl01, par01, fra02, fra04, fra05
       - 166.9.28.17
       - 166.9.30.11
       - 166.9.28.20
@@ -76,7 +76,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for EU Central
+      # Nets for EU Central: ams03, mil01, osl01, par01, fra02, fra04, fra05
       - 166.9.28.17
       - 166.9.30.11
       - 166.9.28.20

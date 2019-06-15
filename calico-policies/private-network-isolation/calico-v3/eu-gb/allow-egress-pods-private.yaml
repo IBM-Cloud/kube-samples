@@ -58,7 +58,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for UK South
+      # Nets for UK South: lon02, lon04, lon05, lon06
       - 166.9.34.5
       - 166.9.34.6
       - 166.9.36.10
@@ -74,7 +74,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for UK South
+      # Nets for UK South: lon02, lon04, lon05, lon06
       - 166.9.34.5
       - 166.9.34.6
       - 166.9.36.10

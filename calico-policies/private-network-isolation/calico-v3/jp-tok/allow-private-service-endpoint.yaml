@@ -11,7 +11,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for AP North
+      # Nets for AP North: che01, hkg02, seo01, sng01, tok02, tok04, tok05
       - 166.9.40.7
       - 166.9.42.7
       - 166.9.44.5
@@ -27,7 +27,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for AP North
+      # Nets for AP North: che01, hkg02, seo01, sng01, tok02, tok04, tok05
       - 166.9.40.7
       - 166.9.42.7
       - 166.9.44.5

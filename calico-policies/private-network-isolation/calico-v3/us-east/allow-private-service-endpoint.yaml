@@ -11,7 +11,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for US East
+      # Nets for US East: mon01, tor01, wdc04, wdc06, wdc07
       - 166.9.20.11
       - 166.9.22.8
       - 166.9.20.12
@@ -28,7 +28,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for US East
+      # Nets for US East: mon01, tor01, wdc04, wdc06, wdc07
       - 166.9.20.11
       - 166.9.22.8
       - 166.9.20.12
