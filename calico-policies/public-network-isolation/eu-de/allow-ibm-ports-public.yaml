@@ -45,14 +45,14 @@ spec:
       ports:
       - 2040:2041
       nets:
-      - 172.20.0.1/32
+      - 172.20.0.0/24
     protocol: UDP
   - action: Allow
     destination:
       ports:
       - 2040:2041
       nets:
-      - 172.20.0.1/32
+      - 172.20.0.0/24
     protocol: TCP
   ingress:
   - action: Allow
