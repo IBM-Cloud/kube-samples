@@ -21,7 +21,7 @@ The Calico policies are organized by region. Choose the directory for the region
 
 **Pods**
 
-* Egress from pods on the private interface is permitted to port 53 for DNS access, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 10250 for VPN communication, port 2040 and 2041 on 172.20.0.0 for the master API server local proxy, ports 20000:32767 and 443 for communication with the master, and to other pods in the cluster. Access to private networks is denied.
+* Egress from pods on the private interface is permitted to port 53 for DNS access, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 10250 for VPN communication, port 2040 and 2041 on 172.20.0.0 for the master API server local proxy, ports 20000:32767 and 443 for communication with the master, and to other pods in the cluster. Access to private networks is denied. If worker nodes are connected to a public VLAN, pod egress is permitted to public networks.
 * Ingress to pods on the private interface is permitted from workers in the cluster.
 
 ## List of Calico policies
@@ -31,7 +31,7 @@ The Calico policies are organized by region. Choose the directory for the region
 |Policy name|Description|
 |-----------|-----------|
 | `allow-all-workers-private` | Limits worker node communication on the private network to other worker nodes and pods on those worker nodes within the cluster. |
-| `allow-egress-pods-private` | Opens ports that are necessary for pods to function properly and allows pods to communicate with other pods in the cluster. Also blocks pod egress to the `10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16` private networks. |
+| `allow-egress-pods-private` | Opens ports that are necessary for pods to function properly and allows pods to communicate with other pods in the cluster. Also blocks pod egress to the `10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16` private networks. If worker nodes are connected to a public VLAN, pod egress is permitted to public networks. |
 | `allow-ibm-ports-private` | Opens ports that are necessary for worker nodes to function properly. |
 | `allow-icmp-private`| Opens the ICMP protocol to allow infrastructure health monitoring. |
 | `allow-private-service-endpoint` | Allows worker nodes to communicate with the cluster master through the private service endpoint. |
@@ -43,4 +43,5 @@ The Calico policies are organized by region. Choose the directory for the region
 |Policy name|Description|
 |-----------|-----------|
 | `allow-private-services` | Allows workers to access other IBM Cloud services that support communication over the private network through private service endpoints. |
+| `allow-private-services-pods` | Allows pods to access other IBM Cloud services that support communication over the private network through private service endpoints. |
 | `allow-vrrp-private` | Opens the VRRP protocol to use Kubernetes load balancer services. |
