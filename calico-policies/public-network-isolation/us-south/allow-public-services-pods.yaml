@@ -1,0 +1,62 @@
+# This policy allows outgoing network traffic from pods to other IBM Cloud services.
+# The example nets in this policy are for IBM Cloud Container Registry, IBM Cloud
+# Monitoring with Sysdig, and IBM Log Analysis with LogDNA.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-public-services-pods
+spec:
+  egress:
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Container Registry: Global registry
+      - 169.60.72.144/28
+      - 169.60.98.80/29
+      - 169.61.76.176/28
+      - 169.62.37.240/29
+      - 169.63.104.232/29
+      # IBM Cloud Container Registry: US South & US East nets for your own registry
+      - 169.46.9.0/27
+      - 169.55.39.112/28
+      - 169.55.211.0/27
+      - 169.61.46.80/29
+      - 169.61.135.160/29
+      - 169.61.234.224/29
+      ports:
+      - 443
+      - 4443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Monitoring with Sysdig: US South nets
+      - 169.46.0.70/32
+      - 169.48.214.70/32
+      - 169.60.151.174/32
+      ports:
+      - 443
+      - 6443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: US South nets
+      - 169.47.224.74/32
+      - 169.47.224.77/32
+      - 169.48.237.107/32
+      - 169.48.237.109/32
+      - 169.60.166.44/32
+      - 169.60.166.45/32
+      ports:
+      - 443
+      - 80
+    protocol: TCP
+    source: {}
+  order: 1800
+  selector: projectcalico.org/orchestrator == 'k8s'
+  types:
+  - Egress
