@@ -16,9 +16,9 @@ spec:
       - 166.9.22.3/32
       - 166.9.24.2/32
       # IBM Cloud Container Registry: EU Central nets for your own registry
-      - 166.9.28.12
-      - 166.9.30.9
-      - 166.9.32.5
+      - 166.9.28.12/32
+      - 166.9.30.9/32
+      - 166.9.32.5/32
       ports:
       - 443
       - 4443
