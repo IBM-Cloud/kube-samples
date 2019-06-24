@@ -1,6 +1,6 @@
 # Public network Calico policies
 
-This set of Calico policies work in conjunction with the [default Calico host policies](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#default_policy) to protect public network traffic of a cluster while allowing communication on the public network that is necessary for the cluster to function. The policies target the public interface (eth1) and the pod network of a cluster.
+This set of Calico policies work in conjunction with the [default Calico policies](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#default_policy) to protect public network traffic of a cluster while allowing communication on the public network that is necessary for the cluster to function. The policies target the public interface (eth1) and the pod network of a cluster.
 
 For more information on how to use these policies, see the [IBM Cloud Kubernetes Service documentation](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#isolate_workers_public).
 
@@ -10,16 +10,36 @@ The Calico policies are organized by region. Choose the directory for the region
 
 ## Summary of changes made by the Calico policies
 
+Along with the default Calico policies that are applied to the public interface of worker nodes, the Calico policies in this set configure the public network for worker node and pods as follows:
+
 **Worker nodes**
 
-* Egress from workers on the public interface is permitted to port 53 for DNS, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 2040 for the master API server local proxy, port 2041 for the etcd local proxy, ports 20000:32767 and 443 for communication with the master, and optionally to other {{site.data.keyword.Bluemix_notm}} services.
-* Ingress to workers on the public interface is permitted only from subnets for {[softlayer]} systems that are used to manage worker nodes.
-This ingress is permitted only through UPD/TCP port 53 for DNS access, port 52311 for Big Fix, ICMP to allow infrastructure health monitoring, and VRRP to use load balancer services.
+* Egress network traffic on the public network interface for worker nodes is permitted to the following ports:
+  * TCP/UDP 53 for DNS
+  * TCP/UDP 2049 for communication with NFS file servers
+  * TCP/UDP 443 and 3260 for communication to block storage
+  * TCP/UDP 443 on 172.21.0.1 for the Kubernetes master API server local proxy
+  * TCP/UDP 2040 and 2041 on 172.20.0.0 for the etcd local proxy
+  * Specified ports for other {{site.data.keyword.Bluemix_notm}} services
+* Ingress network traffic on the public network interface for worker nodes is permitted only from subnets for {[softlayer]} to manage worker nodes through the following ports:
+  * TCP/UDP 53 for DNS
+  * TCP/UDP 52311 for Big Fix
+  * ICMP to allow infrastructure health monitoring
+  * VRRP to use load balancer services
 
 **Pods**
 
-* Egress from pods on the public interface is permitted to port 53 for DNS access, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 2040 and 2041 on 172.20.0.0 for the master API server local proxy, and ports 20000:32767 and 443 for communication with the master.
-* Ingress to pods on the public interface is permitted from network load balancer (NLB), Ingress application load balancer (ALB), and NodePort services.
+* Egress network traffic on the public network interface for pods is permitted to the following ports:
+  * TCP/UDP 53 for DNS
+  * TCP/UDP 2049 for communication with NFS file servers
+  * TCP/UDP 443 and 3260 for communication to block storage
+  * TCP/UDP 443 on 172.21.0.1 for the Kubernetes master API server local proxy
+  * TCP/UDP 2040 and 2041 on 172.20.0.0 for the etcd local proxy
+  * TCP/UDP 20000:32767 and 443 for communication with the Kubernetes master
+  * Specified ports for other {{site.data.keyword.Bluemix_notm}} services
+* Ingress network traffic on the public network interface for pods is permitted from network load balancer (NLB), Ingress application load balancer (ALB), and NodePort services.
+
+> When you apply the egress pod policies that are included in this policy set, only network traffic to the subnets and ports that are specified in the pod policies is permitted. All traffic to any subnets or ports that are not specified in the policies is blocked for all pods in all namespaces. Because only the ports and subnets that are necessary for the pods to function in IBM Cloud Kubernetes Service are specified in these policies, your pods cannot send network traffic over the internet until you add or change the Calico policy to allow them to.
 
 ## List of Calico policies
 
