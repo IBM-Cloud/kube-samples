@@ -40,6 +40,8 @@ The Calico policies are organized by region. Choose the directory for the region
   * Specified ports for other IBM Cloud services
 * Ingress network traffic on the private network interface for pods is permitted from workers in the cluster.
 
+> When you apply the egress pod policies that are included in this policy set, only network traffic to the subnets and ports that are specified in the pod policies is permitted. All traffic to any subnets or ports that are not specified in the policies is blocked for all pods in all namespaces. Because only the ports and subnets that are necessary for the pods to function in IBM Cloud Kubernetes Service are specified in these policies, your pods cannot send network traffic over the private network until you add or change the Calico policy to allow them to.
+
 ## List of Calico policies
 
 ### Required policies
