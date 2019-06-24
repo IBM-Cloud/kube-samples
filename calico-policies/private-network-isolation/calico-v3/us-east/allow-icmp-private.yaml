@@ -1,0 +1,16 @@
+# This policy opens the ICMP protocol to allow infrastructure health monitoring.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-icmp-private
+spec:
+  ingress:
+  - action: Allow
+    destination: {}
+    protocol: ICMP
+    source: {}
+  order: 1500
+  selector: ibm.role == 'worker_private'
+  types:
+  - Ingress

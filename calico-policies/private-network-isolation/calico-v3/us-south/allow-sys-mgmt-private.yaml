@@ -1,0 +1,31 @@
+# This policy allows connections for specific IBM Cloud infrastructure
+# (SoftLayer) systems that are used to manage the worker nodes.
+# Note that you must include the nets for dal01, dal10, and wdc04.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-sys-mgmt-private
+spec:
+  ingress:
+  - action: Allow
+    destination: {}
+    source:
+      nets:
+      # Required nets for all clusters: dal01, dal10, wdc04
+      - 10.0.64.0/19
+      - 10.200.80.0/20
+      - 10.3.160.0/20
+      - 10.201.0.0/20
+      # Nets for US South zones
+      - 10.200.112.0/20 # dal12
+      - 10.200.128.0/20 # dal13
+      - 10.1.160.0/20 # hou02
+      - 10.2.176.0/20 # mex01
+      - 10.200.0.0/20 # sao01
+      - 10.3.176.0/20 # sjc03
+      - 10.201.80.0/20 # sjc04
+  order: 1800
+  selector: ibm.role == 'worker_private'
+  types:
+  - Ingress

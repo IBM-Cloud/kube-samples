@@ -1,0 +1,30 @@
+# This policy allows outgoing network traffic from pods to other
+# IBM Cloud services that support private service endpoints.
+# The example nets in this policy are for IBM Cloud Container Registry.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-private-services-pods
+spec:
+  egress:
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Container Registry: Global registry
+      - 166.9.20.4/32
+      - 166.9.22.3/32
+      - 166.9.24.2/32
+      # IBM Cloud Container Registry: AP North nets for your own registry
+      - 166.9.40.3/32
+      - 166.9.42.3/32
+      - 166.9.44.3/32
+      ports:
+      - 443
+      - 4443
+    protocol: TCP
+    source: {}
+  order: 1900
+  selector: projectcalico.org/orchestrator == 'k8s'
+  types:
+  - Egress

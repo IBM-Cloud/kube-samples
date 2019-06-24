@@ -1,0 +1,91 @@
+# This policy opens port 53 for DNS, port 2049 for communication with NFS file servers,
+# ports 443 and 3260 for communication to block storage, port 10250 for VPN communication,
+# and port 2040 and 2041 on 172.20.0.0 for the master API server local proxy. It also
+# allows pod access to other pods, denies access to private networks but allows access to
+# public networks, and allows access in each zone of the region to the master.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-egress-pods-private
+spec:
+  egress:
+  - action: Allow
+    destination:
+      ports:
+      - 53
+      - 443
+      - 2049
+      - 3260
+      - 10250
+    protocol: UDP
+    source: {}
+  - action: Allow
+    destination:
+      ports:
+      - 53
+      - 443
+      - 2049
+      - 3260
+      - 10250
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      ports:
+      - 2040:2041
+      nets:
+      - 172.20.0.0/24
+    protocol: UDP
+  - action: Allow
+    destination:
+      ports:
+      - 2040:2041
+      nets:
+      - 172.20.0.0/24
+    protocol: TCP
+  - action: Allow
+    destination:
+      selector: projectcalico.org/orchestrator == 'k8s'
+    source: {}
+  # Denies pod egress to private networks. If workers are connected to a public VLAN,
+  # pod egress is permitted to public networks.
+  - action: Allow
+    destination:
+      notNets:
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # Nets for AP South: mel01, syd01, syd04, syd05
+      - 166.9.54.10/32
+      - 166.9.52.14/32
+      - 166.9.52.15/32
+      - 166.9.54.11/32
+      - 166.9.54.13/32
+      - 166.9.54.12/32
+      ports:
+      - 20000:32767
+    protocol: UDP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # Nets for AP South: mel01, syd01, syd04, syd05
+      - 166.9.54.10/32
+      - 166.9.52.14/32
+      - 166.9.52.15/32
+      - 166.9.54.11/32
+      - 166.9.54.13/32
+      - 166.9.54.12/32
+      ports:
+      - 20000:32767
+    protocol: TCP
+    source: {}
+  order: 1500
+  selector: projectcalico.org/orchestrator == 'k8s'
+  types:
+  - Egress

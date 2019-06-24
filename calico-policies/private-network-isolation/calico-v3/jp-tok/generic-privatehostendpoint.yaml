@@ -1,0 +1,37 @@
+# List all worker node names on your private network.
+
+# worker node 1
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  labels:
+    ibm.role: worker_private
+  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
+  name: <worker-node-name>-worker-private
+spec:
+  node: <worker-node-name>
+  # Interface name for virtual machines on the private network.
+  interfaceName: eth0
+  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
+  expectedIPs:
+  - <worker-node-private-ip>
+
+---
+
+# worker node 2
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  labels:
+    ibm.role: worker_private
+  # Run 'calicoctl get nodes' to see Calico-formatted worker node names
+  name: <worker-node-name>-worker-private
+spec:
+  node: <worker-node-name>
+  # Interface name for virtual machines on the private network.
+  interfaceName: eth0
+  # Run 'ibmcloud ks workers --cluster <cluster-name>' to see worker nodes' private IPs
+  expectedIPs:
+  - <worker-node-private-ip>
+
+# If you have additional worker nodes, copy the above hostEndpoint and fill in appropriate values.
