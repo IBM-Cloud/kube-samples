@@ -15,14 +15,30 @@ The Calico policies are organized by region. Choose the directory for the region
 ## Summary of changes made by the Calico policies
 
 **Worker nodes**
-
-* Egress from workers on the private interface is permitted to other workers and pod IPs on workers in the cluster, the UPD/TCP port 53 for DNS access, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 2040 for the master API server local proxy, port 2041 for the etcd local proxy, port 52311 for IBM BigFix worker updates, ports 20000:32767 and 443 for communication with the master, and optionally to other IBM Cloud services.
-* Ingress to workers on the private interface is permitted only from other workers in the cluster and subnets for IBM Cloud Infrastructure (SoftLayer) systems that are used to manage worker nodes. This ingress is permitted only through UPD/TCP port 53 for DNS access, port 10250 for VPN communication between master and workers, ICMP to allow infrastructure health monitoring, and optionally VRRP to use load balancer services.
+* Egress network traffic on the private network interface for worker nodes is permitted to the following ports:
+  * TCP/UDP 53 for DNS
+  * TCP/UDP 2049 for communication with NFS file servers
+  * TCP/UDP 443 and 3260 for communication to block storage
+  * TCP/UDP 443 on 172.21.0.1 for the Kubernetes master API server local proxy
+  * TCP/UDP 2040 and 2041 on 172.20.0.0 for the etcd local proxy
+  * Specified ports for other {{site.data.keyword.Bluemix_notm}} services
+* Ingress network traffic on the private network interface for worker nodes is permitted only from subnets for {[softlayer]} to manage worker nodes through the following ports:
+  * TCP/UDP 53 for DNS
+  * TCP/UDP 52311 for Big Fix
+  * 10250 for VPN communication between the Kubernetes master and worker nodes
+  * ICMP to allow infrastructure health monitoring
+  * VRRP to use load balancer services
 
 **Pods**
-
-* Egress from pods on the private interface is permitted to port 53 for DNS access, port 2049 for communication with NFS file servers, ports 443 and 3260 for communication to block storage, port 10250 for VPN communication, port 2040 and 2041 on 172.20.0.0 for the master API server local proxy, ports 20000:32767 and 443 for communication with the master, and to other pods in the cluster. Access to private networks is denied. If worker nodes are connected to a public VLAN, pod egress is permitted to public networks.
-* Ingress to pods on the private interface is permitted from workers in the cluster.
+* Egress network traffic on the private network interface for pods to private networks is denied. If worker nodes are connected to a public VLAN, pod egress is permitted to public networks. All other pod egress on the private network interface is permitted to the following ports:
+  * TCP/UDP 53 for DNS
+  * TCP/UDP 2049 for communication with NFS file servers
+  * TCP/UDP 443 and 3260 for communication to block storage
+  * TCP/UDP 443 on 172.21.0.1 for the Kubernetes master API server local proxy
+  * TCP/UDP 2040 and 2041 on 172.20.0.0 for the etcd local proxy
+  * TCP/UDP 20000:32767 and 443 for communication with the Kubernetes master
+  * Specified ports for other {{site.data.keyword.Bluemix_notm}} services
+* Ingress network traffic on the private network interface for pods is permitted from workers in the cluster.
 
 ## List of Calico policies
 
@@ -30,12 +46,12 @@ The Calico policies are organized by region. Choose the directory for the region
 
 |Policy name|Description|
 |-----------|-----------|
-| `allow-all-workers-private` | Limits worker node communication on the private network to other worker nodes and pods on those worker nodes within the cluster. |
+| `allow-all-workers-private` | Limits worker node communication on the private network to other worker nodes and pods within the cluster. |
 | `allow-egress-pods-private` | Opens ports that are necessary for pods to function properly and allows pods to communicate with other pods in the cluster. Also blocks pod egress to the `10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16` private networks. If worker nodes are connected to a public VLAN, pod egress is permitted to public networks. |
 | `allow-ibm-ports-private` | Opens ports that are necessary for worker nodes to function properly. |
 | `allow-icmp-private`| Opens the ICMP protocol to allow infrastructure health monitoring. |
 | `allow-private-service-endpoint` | Allows worker nodes to communicate with the cluster master through the private service endpoint. |
-| `allow-sys-mgmt-private` | Allows egress to the IBM Cloud Infrastructure (Softlayer) private subnets so that you can create worker nodes in your cluster. |
+| `allow-sys-mgmt-private` | Allows egress to the IBM Cloud Classic infrastructure private subnets so that you can create worker nodes in your cluster. |
 | `generic-privatehostendpoint` | Sets up private host endpoints for your worker nodes so that the other policies in this set can target the worker node private interface (eth0) of worker nodes. **Note:** Each time you add a worker node to a cluster, you must update the host endpoints file with the new entries. |
 
 ### Optional policies
