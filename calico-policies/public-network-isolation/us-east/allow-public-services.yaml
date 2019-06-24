@@ -1,0 +1,35 @@
+# This policy allows outgoing network traffic from worker
+# nodes to other IBM Cloud services. The example nets in this
+# policy are for IBM Cloud Container Registry.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-public-services
+spec:
+  egress:
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Container Registry: Global registry
+      - 169.60.72.144/28
+      - 169.60.98.80/29
+      - 169.61.76.176/28
+      - 169.62.37.240/29
+      - 169.63.104.232/29
+      # IBM Cloud Container Registry: US South & US East nets for your own registry
+      - 169.46.9.0/27
+      - 169.55.39.112/28
+      - 169.55.211.0/27
+      - 169.61.46.80/29
+      - 169.61.135.160/29
+      - 169.61.234.224/29
+      ports:
+      - 443
+      - 4443
+    protocol: TCP
+    source: {}
+  order: 1800
+  selector: ibm.role == 'worker_public'
+  types:
+  - Egress

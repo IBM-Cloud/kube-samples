@@ -1,0 +1,76 @@
+# This policy opens port 53 for DNS, port 2049 for communication with NFS
+# file servers, ports 443 and 3260 for communication to block storage, and
+# port 2040 and 443 on 172.21.0.1 for the master API server local proxy.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-egress-pods-public
+spec:
+  egress:
+  - action: Allow
+    destination:
+      ports:
+      - 53
+      - 443
+      - 2049
+      - 3260
+    protocol: UDP
+    source: {}
+  - action: Allow
+    destination:
+      ports:
+      - 53
+      - 443
+      - 2049
+      - 3260
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      ports:
+      - 2040:2041
+      nets:
+      - 172.20.0.0/24
+    protocol: UDP
+  - action: Allow
+    destination:
+      ports:
+      - 2040:2041
+      nets:
+      - 172.20.0.0/24
+    protocol: TCP
+  - action: Allow
+    destination:
+      nets:
+      # Nets for AP North: che01, hkg02, seo01, sng01, tok02, tok04, tok05
+      - 128.168.71.117/32
+      - 161.202.126.210/32
+      - 161.202.186.226/32
+      - 165.192.69.69/32
+      - 169.38.70.10/32
+      - 169.56.69.242/32
+      - 169.56.132.234/32
+      ports:
+      - 20000:32767
+    protocol: UDP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # Nets for AP North: che01, hkg02, seo01, sng01, tok02, tok04, tok05
+      - 128.168.71.117/32
+      - 161.202.126.210/32
+      - 161.202.186.226/32
+      - 165.192.69.69/32
+      - 169.38.70.10/32
+      - 169.56.69.242/32
+      - 169.56.132.234/32
+      ports:
+      - 20000:32767
+    protocol: TCP
+    source: {}
+  order: 1500
+  selector: projectcalico.org/orchestrator == 'k8s'
+  types:
+  - Egress

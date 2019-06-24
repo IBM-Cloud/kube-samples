@@ -1,0 +1,90 @@
+# This policy opens port 53 for DNS, port 2049 for communication with NFS
+# file servers, ports 443 and 3260 for communication to block storage, and
+# port 2040 and 443 on 172.21.0.1 for the master API server local proxy.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-egress-pods-public
+spec:
+  egress:
+  - action: Allow
+    destination:
+      ports:
+      - 53
+      - 443
+      - 2049
+      - 3260
+    protocol: UDP
+    source: {}
+  - action: Allow
+    destination:
+      ports:
+      - 53
+      - 443
+      - 2049
+      - 3260
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      ports:
+      - 2040:2041
+      nets:
+      - 172.20.0.0/24
+    protocol: UDP
+  - action: Allow
+    destination:
+      ports:
+      - 2040:2041
+      nets:
+      - 172.20.0.0/24
+    protocol: TCP
+  - action: Allow
+    destination:
+      nets:
+      # Nets for US South: hou02, mex01, sao01, sjc03, sjc04, dal10, dal12, dal13
+      - 169.45.67.210/32
+      - 169.46.7.238/32
+      - 169.46.110.218/32
+      - 169.47.70.10/32
+      - 169.48.143.218/32
+      - 169.48.230.146/32
+      - 169.57.100.18/32
+      - 169.57.151.10/32
+      - 169.61.29.194/32
+      - 169.62.82.197/32
+      - 169.62.166.98/32
+      - 169.61.177.2/32
+      - 169.60.128.2/32
+      - 184.173.44.62/32
+      ports:
+      - 20000:32767
+    protocol: UDP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # Nets for US South: hou02, mex01, sao01, sjc03, sjc04, dal10, dal12, dal13
+      - 169.45.67.210/32
+      - 169.46.7.238/32
+      - 169.46.110.218/32
+      - 169.47.70.10/32
+      - 169.48.143.218/32
+      - 169.48.230.146/32
+      - 169.57.100.18/32
+      - 169.57.151.10/32
+      - 169.61.29.194/32
+      - 169.62.82.197/32
+      - 169.62.166.98/32
+      - 169.61.177.2/32
+      - 169.60.128.2/32
+      - 184.173.44.62/32
+      ports:
+      - 20000:32767
+    protocol: TCP
+    source: {}
+  order: 1500
+  selector: projectcalico.org/orchestrator == 'k8s'
+  types:
+  - Egress
