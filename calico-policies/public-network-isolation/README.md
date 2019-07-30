@@ -20,7 +20,7 @@ Along with the default Calico policies that are applied to the public interface 
   * TCP/UDP 443 and 3260 for communication to block storage
   * TCP/UDP 443 on 172.21.0.1 for the Kubernetes master API server local proxy
   * TCP/UDP 2040 and 2041 on 172.20.0.0 for the etcd local proxy
-  * Specified ports for other {{site.data.keyword.Bluemix_notm}} services
+  * Specified ports for other IBM Cloud services
 * Ingress network traffic on the public network interface for worker nodes is permitted only from subnets for {[softlayer]} to manage worker nodes through the following ports:
   * TCP/UDP 53 for DNS
   * TCP/UDP 52311 for Big Fix
@@ -36,7 +36,7 @@ Along with the default Calico policies that are applied to the public interface 
   * TCP/UDP 443 on 172.21.0.1 for the Kubernetes master API server local proxy
   * TCP/UDP 2040 and 2041 on 172.20.0.0 for the etcd local proxy
   * TCP/UDP 20000:32767 and 443 for communication with the Kubernetes master
-  * Specified ports for other {{site.data.keyword.Bluemix_notm}} services
+  * Specified ports for other IBM Cloud services
 * Ingress network traffic on the public network interface for pods is permitted from network load balancer (NLB), Ingress application load balancer (ALB), and NodePort services.
 
 > When you apply the egress pod policies that are included in this policy set, only network traffic to the subnets and ports that are specified in the pod policies is permitted. All traffic to any subnets or ports that are not specified in the policies is blocked for all pods in all namespaces. Because only the ports and subnets that are necessary for the pods to function in IBM Cloud Kubernetes Service are specified in these policies, your pods cannot send network traffic over the internet until you add or change the Calico policy to allow them to.
