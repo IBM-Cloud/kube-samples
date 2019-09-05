@@ -7,7 +7,7 @@ Install serverless Jenkins-X with Tekton and Kaniko on an existing IBM Cloud Kub
 2) Install the Jenkins-X cli.
 3) After cluster has provisioned, install Jenkins-X on the cluster.
 
-`jx install cluster --provider=kubernetes --external-ip <ingress-ip> --domain <cluster-domain> --docker-registry us.icr.io --tekton --git-username <github-username> --git-api-token <github-api-token> --environment-git-owner <github-owner> --skip-ingress`
+- `jx install cluster --provider=kubernetes --external-ip <ingress-ip> --domain <cluster-domain> --docker-registry us.icr.io --tekton --git-username <github-username> --git-api-token <github-api-token> --environment-git-owner <github-owner> --skip-ingress`
 
 If prompted, select `Serverless Jenkins X Pipelines with Tekton`.
 
@@ -17,11 +17,11 @@ You will then see the message: `Installing jenkins-x-platform version`. The inst
 
 5) While Jenkins-X is installing, create an API key to authorize Jenkins-X to push to the Container Registry. For production environments, create a Service ID API Key with Container Registry write permissions.
 
-`ibmcloud iam api-key-create MyKey -d "this is my API key" --file key_file`
+- `ibmcloud iam api-key-create MyKey -d "this is my API key" --file key_file`
 
 6) After Jenkins-X has installed, use `jx create docker auth` command to update the registry authorization.
 
-`jx create docker auth --host "us.icr.io" --user "iamapikey" --secret "<IAMAPIKEY>" --email "a@b.c"`
+- `jx create docker auth --host "us.icr.io" --user "iamapikey" --secret "<IAMAPIKEY>" --email "a@b.c"`
 
 7) Copy and rename the default secret to any environment namespaces that you are using. These steps update the secret for the staging and production namespaces.
 
