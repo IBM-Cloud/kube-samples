@@ -57,5 +57,5 @@ kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "jx-us-i
 kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "jx-us-icr-io"}]}' -n jx-production
 ```
 
-10) Jenkins-X is now installed. You can run your serverless builds in your cluster.
+10) Jenkins-X is now installed. You can run your serverless builds in your cluster. To test the installation run `jx create quickstart`.
 
