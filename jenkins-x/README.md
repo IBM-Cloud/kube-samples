@@ -32,16 +32,16 @@ jx create docker auth --host "us.icr.io" --user "iamapikey" --secret "<IAMAPIKEY
 7) Copy and rename the default secret to any environment namespaces that you are using. These steps update the secret for the staging and production namespaces.
 
 ```
-`kubectl get secret default-us-icr-io -o yaml -n default | sed 's/default/jx-staging/g' | kubectl -n jx-staging create -f -
+kubectl get secret default-us-icr-io -o yaml -n default | sed 's/default/jx-staging/g' | kubectl -n jx-staging create -f -
 ```
 ```
-`kubectl get secret default-us-icr-io -o yaml -n default | sed 's/default/jx-production/g' | kubectl -n jx-production create -f -
+kubectl get secret default-us-icr-io -o yaml -n default | sed 's/default/jx-production/g' | kubectl -n jx-production create -f -
 ```
 
 8) Patch the ServiceAccounts to use the pull secret in the new namespaces.
 
 ```
-`kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "jx-us-icr-io"}]}' -n jx-staging
+kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "jx-us-icr-io"}]}' -n jx-staging
 ```
 ```
 kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "jx-us-icr-io"}]}' -n jx-production
