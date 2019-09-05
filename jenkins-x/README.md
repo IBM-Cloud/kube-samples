@@ -7,7 +7,7 @@ Install serverless Jenkins-X with Tekton and Kaniko on an existing IBM Cloud Kub
 2) Install the Jenkins-X cli.
 3) After cluster has provisioned, install Jenkins-X on the cluster.
 
-- `jx install cluster --provider=kubernetes --external-ip <ingress-ip> --domain <cluster-domain> --docker-registry us.icr.io --tekton --git-username <github-username> --git-api-token <github-api-token> --environment-git-owner <github-owner> --skip-ingress`
+  `jx install cluster --provider=kubernetes --external-ip <ingress-ip> --domain <cluster-domain> --docker-registry us.icr.io --tekton --git-username <github-username> --git-api-token <github-api-token> --environment-git-owner <github-owner> --skip-ingress`
 
 If prompted, select `Serverless Jenkins X Pipelines with Tekton`.
 
