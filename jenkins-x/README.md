@@ -3,7 +3,7 @@
 Install serverless Jenkins-X with Tekton and Kaniko on an existing IBM Cloud Kubernetes Service cluster. These steps use GitHub as the source repository. These steps also default to using the US-South `us-icr-io` region for the IBM Cloud Container Registry. If you use a different registry, substitute the region name as appropriate.
 
 
-1) Create an IBM Cloud Kubernetes cluster.
+1) Create an [IBM Cloud Kubernetes cluster](https://cloud.ibm.com/kubernetes/).
 2) Install the [Jenkins-X CLI](https://jenkins-x.io/getting-started/install/).
 3) After cluster has provisioned, set the cluster context.
 
