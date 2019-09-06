@@ -51,10 +51,10 @@ kubectl get secret default-us-icr-io -o yaml -n default | sed 's/default/jx-prod
 9) Patch the ServiceAccounts to use the pull secret in the new namespaces.
 
 ```
-kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "jx-us-icr-io"}]}' -n jx-staging
+kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "jx-staging-us-icr-io"}]}' -n jx-staging
 ```
 ```
-kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "jx-us-icr-io"}]}' -n jx-production
+kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "jx-production-us-icr-io"}]}' -n jx-production
 ```
 
 10) Jenkins-X is now installed. You can run your serverless builds in your cluster. To test the installation run `jx create quickstart`.
