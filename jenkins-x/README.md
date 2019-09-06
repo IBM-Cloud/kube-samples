@@ -39,7 +39,7 @@ ibmcloud iam api-key-create <key-name> -d "Jenkins X API Key" --file <filename>
 jx create docker auth --host "us.icr.io" --user "iamapikey" --secret "<IAMAPIKEY>" --email "a@b.c"
 ```
 
-8) Copy and rename the default secret to any environment namespaces that you are using. These steps update the secret for the staging and production namespaces.
+8) Copy and rename the default secret to any environment namespaces that you are using. These steps update the secret for the `jx-staging` and `jx-production` namespaces.
 
 ```
 kubectl get secret default-us-icr-io -o yaml -n default | sed 's/default/jx-staging/g' | kubectl -n jx-staging create -f -
