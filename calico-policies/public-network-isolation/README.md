@@ -21,7 +21,7 @@ Along with the default Calico policies that are applied to the public interface 
   * TCP/UDP 443 on 172.21.0.1 for the Kubernetes master API server local proxy
   * TCP/UDP 2040 and 2041 on 172.20.0.0 for the etcd local proxy
   * Specified ports for other IBM Cloud services
-* Ingress network traffic on the public network interface for worker nodes is permitted only from subnets for {[softlayer]} to manage worker nodes through the following ports:
+* Ingress network traffic on the public network interface for worker nodes is permitted only from subnets for IBM Cloud infrastructure to manage worker nodes through the following ports:
   * TCP/UDP 53 for DNS
   * TCP/UDP 52311 for Big Fix
   * ICMP to allow infrastructure health monitoring
