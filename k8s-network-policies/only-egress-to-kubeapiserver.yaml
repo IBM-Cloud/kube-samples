@@ -1,0 +1,21 @@
+# This policy allow traffic to the kube-apiserver and blocks everything else
+# attempting to egress from the default namespace.
+# One reason you might use this policy would be to restrict Kubernetes
+# Operators from talking to anything but the k8s API server
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: only-allow-egress-to-apiserver
+  namespace: default
+spec:
+  podSelector:
+    matchLabels: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - ipBlock:
+         cidr: 172.20.0.1/32
+    ports:
+    - port: 2040
+      protocol: TCP
