@@ -1,0 +1,18 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: deny-all-private-default
+spec:
+  egress:
+  - action: Deny
+    destination: {}
+    source: {}
+  ingress:
+  - action: Deny
+    destination: {}
+    source: {}
+  order: 99900
+  selector: ibm.role == 'worker_private'
+  types:
+  - Egress
+  - Ingress

@@ -4,10 +4,6 @@ This set of Calico policies and host endpoints isolate the private network traff
 
 For more information on how to use these policies, see the [IBM Cloud Kubernetes Service documentation](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#isolate_workers).
 
-## Calico version
-
-Clusters that run Kubernetes version 1.9 or later must use Calico v3 syntax.
-
 ## Regions
 
 The Calico policies are organized by region. Choose the directory for the region that your cluster is in when applying these policies.
@@ -55,6 +51,7 @@ The Calico policies are organized by region. Choose the directory for the region
 | `allow-private-service-endpoint` | Allows worker nodes to communicate with the cluster master through the private service endpoint. |
 | `allow-sys-mgmt-private` | Allows egress to the IBM Cloud Classic infrastructure private subnets so that you can create worker nodes in your cluster. |
 | `generic-privatehostendpoint` | Sets up private host endpoints for your worker nodes so that the other policies in this set can target the worker node private interface (eth0) of worker nodes. **Note:** Each time you add a worker node to a cluster, you must update the host endpoints file with the new entries. |
+| `deny-all-private-default` | Denies all ingress to and egress from worker nodes on the private network. Because this policy has a high order, its rule is applied last in the chain of Iptables rules that an outgoing packet from a worker node matches against. Other policies in this set have lower orders, so if an outgoing packet matches one of those rules, the packet is permitted. The `deny-all-private-default` policy ensures that if traffic does not match any polices as it moves through the Iptables rules chain, the packet is denied by this policy.|
 
 ### Optional policies
 
