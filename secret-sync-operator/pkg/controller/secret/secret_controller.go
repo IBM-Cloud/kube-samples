@@ -60,23 +60,23 @@ type ReconcileSecret struct {
 	scheme *runtime.Scheme
 }
 
-func createSecret(secret *corev1.Secret, name string, namespace string) (*corev1.Secret, error){
+func createSecret(secret *corev1.Secret, name string, namespace string) (*corev1.Secret, error) {
 	labels := map[string]string{
 		"secretsync.ibm.com/replicated-from": fmt.Sprintf("%s.%s", secret.Namespace, secret.Name),
 	}
 	annotations := map[string]string{
-		"secretsync.ibm.com/replicated-time": time.Now().Format("Mon Jan 2 15:04:05 MST 2006"),
+		"secretsync.ibm.com/replicated-time":             time.Now().Format("Mon Jan 2 15:04:05 MST 2006"),
 		"secretsync.ibm.com/replicated-resource-version": secret.ResourceVersion,
 	}
 	return &corev1.Secret{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: secret.TypeMeta.APIVersion,
-			Kind: secret.Kind,
+			Kind:       secret.Kind,
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name: name,
-			Namespace: namespace,
-			Labels: labels,
+			Name:        name,
+			Namespace:   namespace,
+			Labels:      labels,
 			Annotations: annotations,
 		},
 		Data: secret.Data,
@@ -106,9 +106,10 @@ func (r *ReconcileSecret) Reconcile(request reconcile.Request) (reconcile.Result
 		return reconcile.Result{}, err
 	}
 
-	if rep,ok := instance.Annotations["secretsync.ibm.com/replicate"]; ok {
-		if rep=="true" {
-			if tgts,ok := instance.Annotations["secretsync.ibm.com/replicate-to"]; ok {
+	namespaceMissing := false
+	if rep, ok := instance.Annotations["secretsync.ibm.com/replicate"]; ok {
+		if rep == "true" {
+			if tgts, ok := instance.Annotations["secretsync.ibm.com/replicate-to"]; ok {
 				namespaceType := &corev1.NamespaceList{}
 				err := r.client.List(context.TODO(), &client.ListOptions{}, namespaceType)
 				if err != nil {
@@ -120,8 +121,8 @@ func (r *ReconcileSecret) Reconcile(request reconcile.Request) (reconcile.Result
 				targetList := strings.Split(tgts, ",")
 				for _, target := range targetList {
 					targetData := strings.Split(target, "/")
-					targetSecret,err := createSecret(instance, targetData[1], targetData[0])
-					if (err != nil){
+					targetSecret, err := createSecret(instance, targetData[1], targetData[0])
+					if err != nil {
 						return reconcile.Result{}, err
 					}
 					if valueInList(targetSecret.Namespace, namespaces) {
@@ -143,15 +144,21 @@ func (r *ReconcileSecret) Reconcile(request reconcile.Request) (reconcile.Result
 						}
 					} else {
 						reqLogger.Info(fmt.Sprintf("Namespace %s does not exist, not replicating and skipping namespace", targetSecret.Namespace))
+						namespaceMissing = true
 					}
 				}
-				
+
 			}
 		}
-		
-		
+
 	}
-	return reconcile.Result{}, nil
+
+	if namespaceMissing {
+		return reconcile.Result{RequeueAfter: time.Minute * 5}, nil
+	} else {
+		//if a namespace is missing then retry to sync after 5 minutes in case it gets added at a later time
+		return reconcile.Result{}, nil
+	}
 }
 
 func getNamespaces(namespaceList []corev1.Namespace) []string {
