@@ -121,7 +121,7 @@ func (r *ReconcileSecret) Reconcile(request reconcile.Request) (reconcile.Result
 				targetList := strings.Split(tgts, ",")
 				for _, target := range targetList {
 					targetData := strings.Split(target, "/")
-					targetSecret, err := createSecret(instance, targetData[1], targetData[0])
+					targetSecret,err := createSecret(instance, targetData[1], targetData[0])
 					if (err != nil){
 						return reconcile.Result{}, err
 					}
@@ -147,10 +147,8 @@ func (r *ReconcileSecret) Reconcile(request reconcile.Request) (reconcile.Result
 						namespaceMissing = true
 					}
 				}
-
 			}
 		}
-
 	}
 
 	if namespaceMissing {
