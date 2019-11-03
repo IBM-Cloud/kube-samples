@@ -60,23 +60,23 @@ type ReconcileSecret struct {
 	scheme *runtime.Scheme
 }
 
-func createSecret(secret *corev1.Secret, name string, namespace string) (*corev1.Secret, error) {
+func createSecret(secret *corev1.Secret, name string, namespace string) (*corev1.Secret, error){
 	labels := map[string]string{
 		"secretsync.ibm.com/replicated-from": fmt.Sprintf("%s.%s", secret.Namespace, secret.Name),
 	}
 	annotations := map[string]string{
-		"secretsync.ibm.com/replicated-time":             time.Now().Format("Mon Jan 2 15:04:05 MST 2006"),
+		"secretsync.ibm.com/replicated-time": time.Now().Format("Mon Jan 2 15:04:05 MST 2006"),
 		"secretsync.ibm.com/replicated-resource-version": secret.ResourceVersion,
 	}
 	return &corev1.Secret{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: secret.TypeMeta.APIVersion,
-			Kind:       secret.Kind,
+			Kind: secret.Kind,
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:        name,
-			Namespace:   namespace,
-			Labels:      labels,
+			Name: name,
+			Namespace: namespace,
+			Labels: labels,
 			Annotations: annotations,
 		},
 		Data: secret.Data,
@@ -122,7 +122,7 @@ func (r *ReconcileSecret) Reconcile(request reconcile.Request) (reconcile.Result
 				for _, target := range targetList {
 					targetData := strings.Split(target, "/")
 					targetSecret, err := createSecret(instance, targetData[1], targetData[0])
-					if err != nil {
+					if (err != nil){
 						return reconcile.Result{}, err
 					}
 					if valueInList(targetSecret.Namespace, namespaces) {
