@@ -152,9 +152,9 @@ func (r *ReconcileSecret) Reconcile(request reconcile.Request) (reconcile.Result
 	}
 
 	if namespaceMissing {
+		//if a namespace is missing then retry to sync after 5 minutes in case it gets added at a later time
 		return reconcile.Result{RequeueAfter: time.Minute * 5}, nil
 	} else {
-		//if a namespace is missing then retry to sync after 5 minutes in case it gets added at a later time
 		return reconcile.Result{}, nil
 	}
 }
