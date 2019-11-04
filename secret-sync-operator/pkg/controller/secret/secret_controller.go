@@ -106,9 +106,17 @@ func (r *ReconcileSecret) Reconcile(request reconcile.Request) (reconcile.Result
 		return reconcile.Result{}, err
 	}
 
-	if rep,ok := instance.Annotations["secretsync.ibm.com/replicate"]; ok {
-		if rep=="true" {
-			if tgts,ok := instance.Annotations["secretsync.ibm.com/replicate-to"]; ok {
+	namespaceMissing := false
+	if rep, ok := instance.Annotations["secretsync.ibm.com/replicate"]; ok {
+		if rep == "true" {
+			if tgts, ok := instance.Annotations["secretsync.ibm.com/replicate-to"]; ok {
+				namespaceType := &corev1.NamespaceList{}
+				err := r.client.List(context.TODO(), &client.ListOptions{}, namespaceType)
+				if err != nil {
+					return reconcile.Result{}, err
+				}
+				namespaces := getNamespaces(namespaceType.Items)
+
 				reqLogger.Info(fmt.Sprintf("Secret [%s] in the [%s] namespace is configured for sync to [%s].", instance.Name, instance.Namespace, tgts))
 				targetList := strings.Split(tgts, ",")
 				for _, target := range targetList {
@@ -117,29 +125,53 @@ func (r *ReconcileSecret) Reconcile(request reconcile.Request) (reconcile.Result
 					if (err != nil){
 						return reconcile.Result{}, err
 					}
-					secret := &corev1.Secret{}
-					
-					err = r.client.Get(context.TODO(), types.NamespacedName{Name: targetSecret.Name, Namespace: targetSecret.Namespace}, secret)
-					if err != nil && errors.IsNotFound(err) {
-						reqLogger.Info(fmt.Sprintf("Target secret %s doesn't exist, creating it", target))
-						err = r.client.Create(context.TODO(), targetSecret)
-						if err != nil {
-							return reconcile.Result{}, err
+					if valueInList(targetSecret.Namespace, namespaces) {
+						secret := &corev1.Secret{}
+
+						err = r.client.Get(context.TODO(), types.NamespacedName{Name: targetSecret.Name, Namespace: targetSecret.Namespace}, secret)
+						if err != nil && errors.IsNotFound(err) {
+							reqLogger.Info(fmt.Sprintf("Target secret %s doesn't exist, creating it", target))
+							err = r.client.Create(context.TODO(), targetSecret)
+							if err != nil {
+								return reconcile.Result{}, err
+							}
+						} else {
+							reqLogger.Info(fmt.Sprintf("Target secret %s exists, updating it now", target))
+							err = r.client.Update(context.TODO(), targetSecret)
+							if err != nil {
+								return reconcile.Result{}, err
+							}
 						}
 					} else {
-						reqLogger.Info(fmt.Sprintf("Target secret %s exists, updating it now", target))
-						err = r.client.Update(context.TODO(), targetSecret)
-						if err != nil {
-							return reconcile.Result{}, err
-						}
+						reqLogger.Info(fmt.Sprintf("Namespace %s does not exist, not replicating and skipping namespace", targetSecret.Namespace))
+						namespaceMissing = true
 					}
 				}
-				
 			}
 		}
-		
-		
 	}
-	return reconcile.Result{}, nil
+
+	if namespaceMissing {
+		//if a namespace is missing then retry to sync after 5 minutes in case it gets added at a later time
+		return reconcile.Result{RequeueAfter: time.Minute * 5}, nil
+	} else {
+		return reconcile.Result{}, nil
+	}
 }
 
+func getNamespaces(namespaceList []corev1.Namespace) []string {
+	var namespaces []string
+	for _, namespace := range namespaceList {
+		namespaces = append(namespaces, namespace.Name)
+	}
+	return namespaces
+}
+
+func valueInList(value string, list []string) bool {
+	for _, v := range list {
+		if v == value {
+			return true
+		}
+	}
+	return false
+}
