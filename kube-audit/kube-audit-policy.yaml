@@ -12,25 +12,25 @@ rules:
     namespaces: ["kube-system"]
     verbs: ["get"]
     resources:
-      - group: "" # core
+      - group: ""
         resources: ["configmaps"]
   - level: None
-    users: ["kubelet"] # legacy kubelet identity
+    users: ["kubelet"]
     verbs: ["get"]
     resources:
-      - group: "" # core
+      - group: ""
         resources: ["nodes"]
   - level: None
     userGroups: ["system:nodes"]
     verbs: ["get", "patch"]
     resources:
-      - group: "" # core
+      - group: ""
         resources: ["nodes"]
   - level: None
     userGroups: ["system:nodes"]
     verbs: ["get"]
     resources:
-      - group: "" # core
+      - group: ""
         resources: ["secrets"]
   - level: None
     users:
@@ -40,13 +40,13 @@ rules:
     verbs: ["get", "update"]
     namespaces: ["kube-system"]
     resources:
-      - group: "" # core
+      - group: ""
         resources: ["endpoints"]
   - level: None
     users: ["system:apiserver"]
     verbs: ["get"]
     resources:
-      - group: "" # core
+      - group: ""
         resources: ["namespaces"]
   # Don't log these read-only URLs.
   - level: None
