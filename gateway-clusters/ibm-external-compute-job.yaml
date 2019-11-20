@@ -1,0 +1,115 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ibm-external-compute-job
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ibm-external-compute-job
+rules:
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get", "create", "update", "patch"]
+- apiGroups: [""]
+  resources: ["endpoints"]
+  verbs: ["get", "create", "update", "patch"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ibm-external-compute-job
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ibm-external-compute-job
+subjects:
+- kind: ServiceAccount
+  namespace: kube-system
+  name: ibm-external-compute-job
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ibm-external-compute-job
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      imagePullSecrets:
+      - name: ibm-external-compute-image-pull
+      containers:
+      - name: provision
+        image: us.icr.io/armada-master/stranger:512
+        env:
+        - name: ETCD_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: cluster-info
+              key: etcd_host
+        - name: ETCD_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: cluster-info
+              key: etcd_port
+        - name: REPO_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: ibm-external-compute-config
+              key: repo_name
+        - name: ANSIBLE_HOST_KEY_CHECKING
+          value: "false"
+        - name: SERVICE_K8S_NS
+          valueFrom:
+            configMapKeyRef:
+              name: ibm-external-compute-config
+              key: service_k8s_ns
+        - name: CLUSTERDNS_SETUP
+          valueFrom:
+            configMapKeyRef:
+              name: ibm-external-compute-config
+              key: clusterdns_setup
+        command: ["ansible-playbook"]
+        args:
+        - "-i"
+        - "/config/inventory"
+        - "setup.yml"
+        - "-e etcd_host=$(ETCD_HOST)"
+        - "-e etcd_port=$(ETCD_PORT)"
+        - "-e repo_name=$(REPO_NAME)"
+        - "-e service_k8s_ns=$(SERVICE_K8S_NS)"
+        - "-e clusterdns_setup=$(CLUSTERDNS_SETUP)"
+        volumeMounts:
+        - name: calico-etcd-secrets
+          mountPath: /ansible/roles/calico-node/files
+          readOnly: true
+        - name: ibm-external-compute-pk
+          mountPath: /root/.ssh
+          readOnly: true
+        - name: ibm-external-compute-config
+          mountPath: /config
+          readOnly: true
+        - name: cluster-info
+          mountPath: /ansible/roles/ibm-gateway-controller/files
+          readOnly: true
+      restartPolicy: Never
+      volumes:
+      - name: calico-etcd-secrets
+        secret:
+          secretName: calico-etcd-secrets
+      - name: ibm-external-compute-pk
+        secret:
+          secretName: ibm-external-compute-pk
+          defaultMode: 0400
+      - name: ibm-external-compute-config
+        configMap:
+          name: ibm-external-compute-config
+      - name: cluster-info
+        configMap:
+          name: cluster-info
+      serviceAccountName: ibm-external-compute-job
+  backoffLimit: 0
