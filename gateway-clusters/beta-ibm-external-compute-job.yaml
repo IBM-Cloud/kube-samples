@@ -18,9 +18,6 @@ rules:
 - apiGroups: [""]
   resources: ["nodes"]
   verbs: ["list"]
-- apiGroups: [""]
-  resources: ["configmaps"]
-  verbs: ["get", "create", "update", "patch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -29,31 +26,6 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: ibm-external-compute-job
-subjects:
-- kind: ServiceAccount
-  namespace: kube-system
-  name: ibm-external-compute-job
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  namespace: kube-system
-  name: ibm-external-compute-job
-rules:
-- apiGroups: ["apps", "extensions"]
-  resources: ["daemonsets"]
-  resourceNames: ["calico-node", "ibm-gateway-controller"]
-  verbs: ["get"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: ibm-external-compute-job
-  namespace: kube-system
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
   name: ibm-external-compute-job
 subjects:
 - kind: ServiceAccount
@@ -72,19 +44,45 @@ spec:
       - name: ibm-external-compute-image-pull
       containers:
       - name: provision
-        image: &image us.icr.io/armada-master/stranger:v1.0.0
+        image: us.icr.io/armada-master/stranger:512
         env:
-        - name: IMAGE_URL
-          value: *image
-        - name: POD_NAME
+        - name: ETCD_HOST
           valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
+            configMapKeyRef:
+              name: cluster-info
+              key: etcd_host
+        - name: ETCD_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: cluster-info
+              key: etcd_port
+        - name: REPO_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: ibm-external-compute-config
+              key: repo_name
+        - name: ANSIBLE_HOST_KEY_CHECKING
+          value: "false"
+        - name: SERVICE_K8S_NS
+          valueFrom:
+            configMapKeyRef:
+              name: ibm-external-compute-config
+              key: service_k8s_ns
+        - name: CLUSTERDNS_SETUP
+          valueFrom:
+            configMapKeyRef:
+              name: ibm-external-compute-config
+              key: clusterdns_setup
         command: ["ansible-playbook"]
         args:
         - "-i"
         - "/config/inventory"
         - "setup.yml"
+        - "-e etcd_host=$(ETCD_HOST)"
+        - "-e etcd_port=$(ETCD_PORT)"
+        - "-e repo_name=$(REPO_NAME)"
+        - "-e service_k8s_ns=$(SERVICE_K8S_NS)"
+        - "-e clusterdns_setup=$(CLUSTERDNS_SETUP)"
         volumeMounts:
         - name: calico-etcd-secrets
           mountPath: /ansible/roles/calico-node/files
@@ -96,7 +94,7 @@ spec:
           mountPath: /config
           readOnly: true
         - name: cluster-info
-          mountPath: /cluster-info
+          mountPath: /ansible/roles/ibm-gateway-controller/files
           readOnly: true
       restartPolicy: Never
       volumes:
