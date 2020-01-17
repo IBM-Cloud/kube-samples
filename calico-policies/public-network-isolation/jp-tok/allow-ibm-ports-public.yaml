@@ -1,6 +1,7 @@
-# This policy opens port 53 for DNS, port 2049 for communication with NFS file
-# servers, ports 443 and 3260 for communication to block storage, port 2040 and 443
-# for the master API server local proxy, and port 2041 for the etcd local proxy.
+# This policy opens port 53 for DNS (5353 for Openshift 4.3 and later),
+# port 2049 for communication with NFS file servers, ports 443 and 3260,
+# for communication to block storage, port 2040 and 443 for the master
+# API server local proxy, and port 2041 for the etcd local proxy.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -12,6 +13,7 @@ spec:
     destination:
       ports:
       - 53
+      - 5353
       - 443
       - 2049
       - 3260
@@ -21,6 +23,7 @@ spec:
     destination:
       ports:
       - 53
+      - 5353
       - 443
       - 2049
       - 3260
@@ -59,6 +62,7 @@ spec:
     destination:
       ports:
       - 53
+      - 5353
       - 52311
     protocol: UDP
     source: {}
@@ -66,6 +70,7 @@ spec:
     destination:
       ports:
       - 53
+      - 5353
       - 52311
     protocol: TCP
     source: {}
