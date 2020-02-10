@@ -1,5 +1,6 @@
-# This policy opens port 53 for DNS, port 2049 for communication with NFS file servers,
-# ports 443 and 3260 for communication to block storage, port 10250 for VPN communication,
+# This policy opens port 53 for DNS (5353 for OpenShift 4.3 and later),
+# port 2049 for communication with NFS file servers, ports 443 and 3260
+# for communication to block storage, port 10250 for VPN communication,
 # and port 2040 and 2041 on 172.20.0.0 for the master API server local proxy. It also
 # allows pod access to other pods, denies access to private networks but allows access to
 # public networks, and allows access in each zone of the region to the master.
@@ -14,6 +15,7 @@ spec:
     destination:
       ports:
       - 53
+      - 5353
       - 443
       - 2049
       - 3260
@@ -24,6 +26,7 @@ spec:
     destination:
       ports:
       - 53
+      - 5353
       - 443
       - 2049
       - 3260

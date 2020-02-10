@@ -12,14 +12,14 @@ The Calico policies are organized by region. Choose the directory for the region
 
 **Worker nodes**
 * Egress network traffic on the private network interface for worker nodes is permitted to the following ports:
-  * TCP/UDP 53 for DNS
+  * TCP/UDP 53 (5353 for OpenShift version 4.3 or later) for DNS
   * TCP/UDP 2049 for communication with NFS file servers
   * TCP/UDP 443 and 3260 for communication to block storage
   * TCP/UDP 443 on 172.21.0.1 for the Kubernetes master API server local proxy
   * TCP/UDP 2040 and 2041 on 172.20.0.0 for the etcd local proxy
   * Specified ports for other IBM Cloud services
 * Ingress network traffic on the private network interface for worker nodes is permitted only from subnets for IBM Cloud Infrastructure to manage worker nodes through the following ports:
-  * TCP/UDP 53 for DNS
+  * TCP/UDP 53 (5353 for OpenShift version 4.3 or later) for DNS
   * TCP/UDP 52311 for Big Fix
   * 10250 for VPN communication between the Kubernetes master and worker nodes
   * ICMP to allow infrastructure health monitoring
@@ -27,7 +27,7 @@ The Calico policies are organized by region. Choose the directory for the region
 
 **Pods**
 * Egress network traffic on the private network interface for pods to private networks is denied. If worker nodes are connected to a public VLAN, pod egress is permitted to public networks. All other pod egress on the private network interface is permitted to the following ports:
-  * TCP/UDP 53 for DNS
+  * TCP/UDP 53 (5353 for OpenShift version 4.3 or later) for DNS
   * TCP/UDP 2049 for communication with NFS file servers
   * TCP/UDP 443 and 3260 for communication to block storage
   * TCP/UDP 443 on 172.21.0.1 for the Kubernetes master API server local proxy
