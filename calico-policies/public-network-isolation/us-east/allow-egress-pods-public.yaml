@@ -1,6 +1,7 @@
 # This policy opens port 53 for DNS (5353 for OpenShift 4.3 and later),
 # port 2049 for communication with NFS file servers, ports 443 and 3260
-# for communication to block storage, 10250 for VPN pod, and
+# for communication to block storage
+10250 for VPN pod, and
 # port 2040 and 443 on 172.21.0.1 for the master API server local proxy.
 
 apiVersion: projectcalico.org/v3
@@ -49,14 +50,19 @@ spec:
     destination:
       nets:
       # Nets for US East: mon01, tor01, wdc04, wdc06, wdc07
+      - 169.47.174.106/32
       - 169.53.167.50/32
+      - 169.53.171.210/32
+      - 169.54.80.106/32
       - 169.54.126.219/32
       - 169.60.73.142/32
       - 169.60.101.42/32
+      - 169.61.74.210/32
       - 169.61.83.62/32
       - 169.61.109.34/32
       - 169.63.88.178/32
       - 169.63.88.186/32
+      - 169.63.149.122/32
       ports:
       - 20000:32767
     protocol: UDP
@@ -65,14 +71,19 @@ spec:
     destination:
       nets:
       # Nets for US East: mon01, tor01, wdc04, wdc06, wdc07
+      - 169.47.174.106/32
       - 169.53.167.50/32
+      - 169.53.171.210/32
+      - 169.54.80.106/32
       - 169.54.126.219/32
       - 169.60.73.142/32
       - 169.60.101.42/32
+      - 169.61.74.210/32
       - 169.61.83.62/32
       - 169.61.109.34/32
       - 169.63.88.178/32
       - 169.63.88.186/32
+      - 169.63.149.122/32
       ports:
       - 20000:32767
     protocol: TCP
