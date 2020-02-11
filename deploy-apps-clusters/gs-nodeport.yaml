@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: liberty
+  labels:
+    k8s-app: liberty
+spec:
+  selector:
+    k8s-app: liberty
+  type: NodePort
+  ports:
+   - port: 9080
