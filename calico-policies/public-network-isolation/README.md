@@ -4,6 +4,8 @@ This set of Calico policies work in conjunction with the [default Calico policie
 
 For more information on how to use these policies, see the [IBM Cloud Kubernetes Service documentation](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#isolate_workers_public).
 
+**Tip**: In addition to these policies, you can also create a [Calico preDNAT network policy to whitelist or blacklist traffic from specific IP ranges](https://cloud.ibm.com/docs/containers?topic=containers-policy_tutorial#policy_tutorial).
+
 ## Regions
 
 The Calico policies are organized by region. Choose the directory for the region that your cluster is in when applying these policies.
@@ -39,7 +41,7 @@ Along with the default Calico policies that are applied to the public interface 
   * Specified ports for other IBM Cloud services
 * Ingress network traffic on the public network interface for pods is permitted from network load balancer (NLB), Ingress application load balancer (ALB), and NodePort services.
 
-> When you apply the egress pod policies that are included in this policy set, only network traffic to the subnets and ports that are specified in the pod policies is permitted. All traffic to any subnets or ports that are not specified in the policies is blocked for all pods in all namespaces. Because only the ports and subnets that are necessary for the pods to function in IBM Cloud Kubernetes Service are specified in these policies, your pods cannot send network traffic over the internet until you add or change the Calico policy to allow them to.
+> **IMPORTANT**: When you apply the egress pod policies that are included in this policy set, only network traffic to the subnets and ports that are specified in the pod policies is permitted. All traffic to any subnets or ports that are not specified in the policies is blocked for all pods in all namespaces. Because only the ports and subnets that are necessary for the pods to function in IBM Cloud Kubernetes Service are specified in these policies, your pods cannot send network traffic over the internet until you add or change the Calico policy to allow them to.
 
 ## List of Calico policies
 
