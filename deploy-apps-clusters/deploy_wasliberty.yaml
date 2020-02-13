@@ -78,6 +78,16 @@ spec:
       - name: pvmount
         persistentVolumeClaim:
           claimName: wasliberty
+---  
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: wasliberty
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: wasliberty
 ---
 apiVersion: v1
 kind: Service
