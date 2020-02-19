@@ -13,9 +13,7 @@ spec:
     destination:
       nets:
       # IBM Cloud Container Registry: Global registry
-      - 169.60.72.144/28
       - 169.60.98.80/29
-      - 169.61.76.176/28
       - 169.62.37.240/29
       - 169.63.104.232/29
       # IBM Cloud Container Registry: AP North nets for your own registry
