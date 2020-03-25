@@ -5,6 +5,11 @@ kind: GlobalNetworkPolicy
 metadata:
   name: allow-vrrp-private
 spec:
+  egress:
+  - action: Allow
+    destination: {}
+    protocol: 112
+    source: {}
   ingress:
   - action: Allow
     destination: {}
@@ -14,3 +19,4 @@ spec:
   selector: ibm.role == 'worker_private'
   types:
   - Ingress
+  - Egress
