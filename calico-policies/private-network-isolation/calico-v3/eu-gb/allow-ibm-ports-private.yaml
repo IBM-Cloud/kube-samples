@@ -1,9 +1,9 @@
 # This policy opens port 10250 for VPN communication between master and workers,
 # port 53 for DNS (5353 for OpenShift 4.3 and later), port 52311 for IBM BigFix
 # worker node updates, port 2049 forcommunication with NFS file servers,
-# ports 443 and 3260 for communication to block storage, port 2040 and 443 on
-# 172.21.0.1 for the master API server local proxy, and port 2041 on 172.21.0.1
-# for the etcd local proxy.
+# ports 443 and 3260 for communication to block storage, port 2040 and 2041 on
+# 172.20.0.0/24 for the master API server local proxy, and port 443 on 172.21.0.1
+# (or 10.10.10.1 for clusters created more than 2 years ago) for the etcd local proxy.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
