@@ -12,13 +12,13 @@ spec:
     destination:
       nets:
       # IBM Cloud Container Registry: Global registry
-      - 166.9.20.4/32
-      - 166.9.22.3/32
-      - 166.9.24.2/32
+      - 166.9.20.31/32
+      - 166.9.22.22/32
+      - 166.9.24.16/32
       # IBM Cloud Container Registry: UK South nets for your own registry
-      - 166.9.36.9/32
-      - 166.9.38.5/32
-      - 166.9.34.4/32
+      - 166.9.36.19/32
+      - 166.9.38.14/32
+      - 166.9.34.12/32
       ports:
       - 443
       - 4443
