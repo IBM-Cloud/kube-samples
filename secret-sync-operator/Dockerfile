@@ -13,7 +13,7 @@ RUN PATH=$GOPATH/bin:$PATH go build -o build/_output/bin/secret-sync-operator cm
 
 
 
-FROM registry.access.redhat.com/ubi7-dev-preview/ubi-minimal:7.6
+FROM registry.access.redhat.com/ubi8-minimal
 ENV OPERATOR=/usr/local/bin/secret-sync-operator \
     USER_UID=1001 \
     USER_NAME=secret-sync-operator
@@ -21,6 +21,7 @@ ENV OPERATOR=/usr/local/bin/secret-sync-operator \
 COPY --from=0 /go/src/github.com/ibm/secret-sync-operator/build/_output/bin/secret-sync-operator ${OPERATOR}
 COPY --from=0 /go/src/github.com/ibm/secret-sync-operator/build/bin /usr/local/bin
 RUN  /usr/local/bin/user_setup
+# vulnerability advisor fix
+RUN microdnf install -y shared-mime-info
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
 USER ${USER_UID}
-
