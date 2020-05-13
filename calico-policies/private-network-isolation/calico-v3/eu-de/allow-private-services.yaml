@@ -1,6 +1,7 @@
 # This policy allows outgoing network traffic from worker nodes to other
 # IBM Cloud services that support private service endpoints.
-# The example nets in this policy are for IBM Cloud Container Registry.
+# The example nets in this policy are for IBM Cloud Container Registry
+# and IBM Cloud Monitoring with Sysdig.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -22,6 +23,18 @@ spec:
       ports:
       - 443
       - 4443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Monitoring with Sysdig: EU Central nets
+      - 166.9.30.20/32
+      - 166.9.28.32/32
+      - 166.9.32.16/32
+      ports:
+      - 443
+      - 6443
     protocol: TCP
     source: {}
   order: 1900
