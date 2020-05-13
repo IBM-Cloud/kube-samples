@@ -33,7 +33,6 @@ spec:
       - 166.9.42.8/32
       - 166.9.44.2/32
       ports:
-      - 443
       - 6443
     protocol: TCP
     source: {}
