@@ -29,8 +29,8 @@ spec:
     destination:
       nets:
       # IBM Cloud Monitoring with Sysdig: EU GB nets
-      - 166.9.34.20/32
-      - 166.9.36.7/32
+      - 166.9.34.56/32
+      - 166.9.36.71/32
       ports:
       - 6443
     protocol: TCP

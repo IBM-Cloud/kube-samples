@@ -29,9 +29,9 @@ spec:
     destination:
       nets:
       # IBM Cloud Monitoring with Sysdig: AU Syd nets
-      - 166.9.52.10/32
-      - 166.9.54.2/32
-      - 166.9.56.24/32
+      - 166.9.52.27/32
+      - 166.9.54.27/32
+      - 166.9.56.32/32
       ports:
       - 6443
     protocol: TCP
