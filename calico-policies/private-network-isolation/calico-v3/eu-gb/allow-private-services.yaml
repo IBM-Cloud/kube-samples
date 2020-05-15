@@ -39,12 +39,39 @@ spec:
     destination:
       nets:
       # IBM Log Analysis with LogDNA: EU GB nets
-      - 166.9.38.5/32
+      - 166.9.34.2/32
       - 166.9.34.4/32
+      - 166.9.36.2/32
       - 166.9.36.3/32
+      - 166.9.38.4/32
+      - 166.9.38.5/32
       ports:
+      - 80
       - 443
     protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: EU GB nets
+      - 166.9.34.18/32
+      - 166.9.36.5/32
+      - 166.9.38.20/32
+      ports:
+      - 514
+      - 6514
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: EU GB nets
+      - 166.9.34.19/32
+      - 166.9.36.6/32
+      - 166.9.38.21/32
+      ports:
+      - 514
+    protocol: UDP
     source: {}
   order: 1900
   selector: ibm.role == 'worker_private'

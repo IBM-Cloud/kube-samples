@@ -40,11 +40,35 @@ spec:
     destination:
       nets:
       # IBM Log Analysis with LogDNA: EU DE nets
-      - 166.9.32.21/32
+      - 166.9.28.2/32
       - 166.9.28.3/32
+      - 166.9.32.21/32
+      - 166.9.32.7/32
       ports:
+      - 80
       - 443
     protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: EU DE nets
+      - 166.9.28.5/32
+      - 166.9.32.23/32
+      ports:
+      - 514
+      - 6514
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: EU DE nets
+      - 166.9.28.7/32
+      - 166.9.32.24/32
+      ports:
+      - 514
+    protocol: UDP
     source: {}
   order: 1900
   selector: projectcalico.org/orchestrator == 'k8s'
