@@ -7,6 +7,21 @@ kind: GlobalNetworkPolicy
 metadata:
   name: allow-sys-mgmt-private
 spec:
+  egress:
+  - action: Allow
+    destination:
+      nets:
+      # Required nets for all clusters: dal01, dal10, wdc04
+      - 10.0.64.0/19
+      - 10.200.80.0/20
+      - 10.3.160.0/20
+      - 10.201.0.0/20
+      # Nets for US East zones
+      - 10.3.112.0/20 # mon01
+      - 10.2.48.0/20 # tor01
+      - 10.200.160.0/20 # wdc06
+      - 10.200.176.0/20 # wdc07
+    source: {}
   ingress:
   - action: Allow
     destination: {}
@@ -25,4 +40,5 @@ spec:
   order: 1800
   selector: ibm.role == 'worker_private'
   types:
+  - Egress
   - Ingress
