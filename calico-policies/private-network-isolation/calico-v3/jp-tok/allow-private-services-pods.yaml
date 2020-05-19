@@ -1,6 +1,7 @@
 # This policy allows outgoing network traffic from pods to other
 # IBM Cloud services that support private service endpoints.
-# The example nets in this policy are for IBM Cloud Container Registry.
+# The example nets in this policy are for IBM Cloud Container Registry,
+# IBM Cloud Monitoring with Sysdig, and IBM Log Analysis with LogDNA.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -12,17 +13,70 @@ spec:
     destination:
       nets:
       # IBM Cloud Container Registry: Global registry
-      - 166.9.20.4/32
-      - 166.9.22.3/32
-      - 166.9.24.2/32
+      - 166.9.20.31/32
+      - 166.9.22.22/32
+      - 166.9.24.16/32
       # IBM Cloud Container Registry: AP North nets for your own registry
-      - 166.9.40.3/32
-      - 166.9.42.3/32
-      - 166.9.44.3/32
+      - 166.9.40.20/32
+      - 166.9.42.21/32
+      - 166.9.44.12/32
       ports:
       - 443
       - 4443
     protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Monitoring with Sysdig: JP Tok nets
+    	- 166.9.40.35/32
+    	- 166.9.42.48/32
+    	- 166.9.44.38/32
+      ports:
+      - 6443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: JP Tok nets
+      - 166.9.40.2/32
+      - 166.9.40.3/32
+      - 166.9.42.3/32
+      - 166.9.42.4/32
+      - 166.9.46.5/32
+      - 166.9.46.6/32
+      - 166.9.60.6/32
+      - 166.9.60.7/32
+      ports:
+      - 80
+      - 443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: JP Tok nets
+      - 166.9.40.23/32
+      - 166.9.42.26/32
+      - 166.9.46.8/32
+      - 166.9.60.9/32
+      ports:
+      - 514
+      - 6514
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: JP Tok nets
+      - 166.9.40.24/32
+      - 166.9.42.27/32
+      - 166.9.46.9/32
+      - 166.9.60.10/32
+      ports:
+      - 514
+    protocol: UDP
     source: {}
   order: 1900
   selector: projectcalico.org/orchestrator == 'k8s'

@@ -1,6 +1,7 @@
 # This policy allows outgoing network traffic from pods to other
 # IBM Cloud services that support private service endpoints.
-# The example nets in this policy are for IBM Cloud Container Registry.
+# The example nets in this policy are for IBM Cloud Container Registry,
+# IBM Cloud Monitoring with Sysdig, and IBM Log Analysis with LogDNA.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -12,17 +13,62 @@ spec:
     destination:
       nets:
       # IBM Cloud Container Registry: Global registry
-      - 166.9.20.4/32
-      - 166.9.22.3/32
-      - 166.9.24.2/32
+      - 166.9.20.31/32
+      - 166.9.22.22/32
+      - 166.9.24.16/32
       # IBM Cloud Container Registry: EU Central nets for your own registry
-      - 166.9.28.12/32
-      - 166.9.30.9/32
-      - 166.9.32.5/32
+      - 166.9.28.35/32
+      - 166.9.30.2/32
+      - 166.9.32.2/32
       ports:
       - 443
       - 4443
     protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Monitoring with Sysdig: EU Central nets
+      - 166.9.28.71/32
+      - 166.9.30.53/32
+      - 166.9.32.51/32
+      ports:
+      - 6443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: EU DE nets
+      - 166.9.28.2/32
+      - 166.9.28.3/32
+      - 166.9.32.21/32
+      - 166.9.32.7/32
+      ports:
+      - 80
+      - 443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: EU DE nets
+      - 166.9.28.5/32
+      - 166.9.32.23/32
+      ports:
+      - 514
+      - 6514
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: EU DE nets
+      - 166.9.28.7/32
+      - 166.9.32.24/32
+      ports:
+      - 514
+    protocol: UDP
     source: {}
   order: 1900
   selector: projectcalico.org/orchestrator == 'k8s'

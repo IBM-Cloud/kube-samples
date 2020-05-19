@@ -24,6 +24,32 @@ spec:
       - 4443
     protocol: TCP
     source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Monitoring with Sysdig: AU Syd nets
+      - 130.198.80.155/32
+      - 135.90.73.100/32
+      - 168.1.213.78/32
+      ports:
+      - 6443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: AU Syd nets
+      - 130.198.89.43/32
+      - 130.198.89.45/32
+      - 135.90.67.187/32
+      - 135.90.70.75/32
+      - 168.1.38.90/32
+      - 168.1.38.92/32
+      ports:
+      - 443
+      - 80
+    protocol: TCP
+    source: {}
   order: 1800
   selector: projectcalico.org/orchestrator == 'k8s'
   types:
