@@ -1,6 +1,6 @@
 # This policy allows outgoing network traffic from worker
 # nodes to other IBM Cloud services. The example nets in this
-# policy are for IBM Cloud Container Registry and IBM Cloud
+# policy are for IBM Cloud Container Registry, IBM Cloud
 # Monitoring with Sysdig, and IBM Log Analysis with LogDNA.
 
 apiVersion: projectcalico.org/v3
