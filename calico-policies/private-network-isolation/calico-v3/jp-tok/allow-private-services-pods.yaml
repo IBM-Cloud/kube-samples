@@ -29,9 +29,9 @@ spec:
     destination:
       nets:
       # IBM Cloud Monitoring with Sysdig: JP Tok nets
-    	- 166.9.40.35/32
-    	- 166.9.42.48/32
-    	- 166.9.44.38/32
+      - 166.9.40.35/32
+      - 166.9.42.48/32
+      - 166.9.44.38/32
       ports:
       - 6443
     protocol: TCP
