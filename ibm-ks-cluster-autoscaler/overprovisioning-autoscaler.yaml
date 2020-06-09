@@ -64,7 +64,9 @@ spec:
         image: k8s.gcr.io/pause
         resources:
           requests:
-            cpu: "1"
+            cpu: "200m"
+      nodeSelector:
+        ibm-cloud.kubernetes.io/worker-pool-name: default
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -84,7 +86,7 @@ spec:
         app: overprovisioning-autoscaler
     spec:
       containers:
-        - image: k8s.gcr.io/cluster-proportional-autoscaler-amd64:1.1.2
+        - image: k8s.gcr.io/cluster-proportional-autoscaler-amd64:1.7.1
           name: autoscaler
           command:
             - /cluster-proportional-autoscaler
@@ -93,5 +95,6 @@ spec:
             - --default-params={"linear":{"nodesPerReplica":1}}
             - --target=deployment/overprovisioning
             - --logtostderr=true
+            - --nodelabels=ibm-cloud.kubernetes.io/worker-pool-name=default
             - --v=2
       serviceAccountName: cluster-proportional-autoscaler-service-account
