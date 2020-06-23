@@ -1,4 +1,3 @@
-#If you are not logged into the US-South region, change the image registry location to match your region.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,4 +14,4 @@ spec:
     spec:
       containers:
       - name: ibmliberty
-        image: registry.bluemix.net/ibmliberty
+        image: icr.io/ibmliberty
