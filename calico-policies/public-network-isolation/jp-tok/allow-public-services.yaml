@@ -1,7 +1,6 @@
-# This policy allows outgoing network traffic from worker
-# nodes to other IBM Cloud services. The example nets in this
-# policy are for IBM Cloud Container Registry, IBM Cloud
-# Monitoring with Sysdig, and IBM Log Analysis with LogDNA.
+# This policy allows outgoing network traffic from worker nodes to other IBM Cloud services.
+# The example nets and ports in this policy are for IBM Cloud Container Registry, IBM Cloud
+# Monitoring with Sysdig, IBM Log Analysis with LogDNA, and the managed Istio add-on.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -65,7 +64,32 @@ spec:
       - 80
     protocol: TCP
     source: {}
+  - action: Allow
+    destination:
+      ports:
+      # Managed Istio add-on: Egress gateway
+      - 80
+      - 15443
+      protocol: TCP
+    source: {}
+  ingress:
+  - action: Allow
+    destination:
+      ports:
+      # Managed Istio add-on: Ingress gateway and istiod control plane
+      - 443
+      - 853
+      - 15010
+      - 15012
+      - 15014
+      # Managed Istio add-on: Knative cluster local gateway
+      - 80
+      - 15021
+      - 15443
+      protocol: TCP
+    source: {}
   order: 1800
   selector: ibm.role == 'worker_public'
   types:
   - Egress
+  - Ingress
