@@ -62,7 +62,7 @@ spec:
       # Managed Istio add-on: Egress gateway
       - 80
       - 15443
-      protocol: TCP
+    protocol: TCP
     source: {}
   ingress:
   - action: Allow
