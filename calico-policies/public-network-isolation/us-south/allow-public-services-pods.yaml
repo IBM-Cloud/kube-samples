@@ -76,7 +76,7 @@ spec:
       - 80
       - 15021
       - 15443
-      protocol: TCP
+    protocol: TCP
     source: {}
   order: 1800
   selector: projectcalico.org/orchestrator == 'k8s'
