@@ -12,25 +12,25 @@ rules:
     namespaces: ["kube-system"]
     verbs: ["get"]
     resources:
-      - group: ""
+      - group: "" # core
         resources: ["configmaps"]
   - level: None
-    users: ["kubelet"]
+    users: ["kubelet"] # legacy kubelet identity
     verbs: ["get"]
     resources:
-      - group: ""
+      - group: "" # core
         resources: ["nodes"]
   - level: None
     userGroups: ["system:nodes"]
     verbs: ["get", "patch"]
     resources:
-      - group: ""
+      - group: "" # core
         resources: ["nodes"]
   - level: None
     userGroups: ["system:nodes"]
     verbs: ["get"]
     resources:
-      - group: ""
+      - group: "" # core
         resources: ["secrets"]
   - level: None
     users:
@@ -40,13 +40,13 @@ rules:
     verbs: ["get", "update"]
     namespaces: ["kube-system"]
     resources:
-      - group: ""
+      - group: "" # core
         resources: ["endpoints"]
   - level: None
     users: ["system:apiserver"]
     verbs: ["get"]
     resources:
-      - group: ""
+      - group: "" # core
         resources: ["namespaces"]
   # Don't log these read-only URLs.
   - level: None
@@ -56,9 +56,7 @@ rules:
 {% if k8s_release_style is version_compare('1.14', '<') %}
       - /swagger*
 {% endif %}
-{% if k8s_release_style is version_compare('1.10', '>=') %}
       - /openapi/v2*
-{% endif %}
 {% if k8s_release_style is version_compare('1.16', '>=') %}
       - /readyz*
       - /livez*
@@ -72,34 +70,33 @@ rules:
   # so only log at the Metadata level.
   - level: Metadata
     resources:
-      - group: "" # core
+      - group: ""  # core
         resources: ["secrets", "configmaps"]
+      - group: authentication.k8s.io
+        resources: ["tokenreviews"]
+  # Log pvc/pv requests to capture volume details
+  - level: Request
+    verbs: ["create", "delete", "update", "patch"]
+    resources:
+      - group: ""  # core
+        resources: ["persistentvolumeclaims", "persistentvolumes"]
   # Log pod create requests to capture container images, etc.
   - level: Request
     verbs: ["create", "update", "patch"]
     resources:
-    - group: "" #core
-      resources: ["pods", "replicacontrollers", "container"]
-    - group: "apps"
-      resources: ["daemonsets", "deployments", "replicasets", "statefulsets"]
-    - group: "batch"
-      resources: ["jobs", "cronjobs"]
-    - group: "extensions" # necessary for pre-1.12 clusters
-      resources: ["daemonsets", "deployments", "replicasets"]
+      - group: ""  # core
+        resources: ["pods", "replicacontrollers", "container"]
+      - group: "apps"
+        resources: ["daemonsets", "deployments", "replicasets", "statefulsets"]
+      - group: "batch"
+        resources: ["jobs", "cronjobs"]
+      - group: "extensions" # necessary for pre-1.12 clusters
+        resources: ["daemonsets", "deployments", "replicasets"]
+  # Excludes the following apigroups from logs
+  - level: None
+    resources:
+      - group: "apiregistration.k8s.io"
+      - group: "coordination.k8s.io"
   # Get repsonses can be large; skip them.
   - level: Metadata
     verbs: ["create", "update", "delete", "patch"]
-    resources:
-      - group: "" # core
-      - group: "admissionregistration.k8s.io"
-      - group: "apps"
-      - group: "authentication.k8s.io"
-      - group: "authorization.k8s.io"
-      - group: "autoscaling"
-      - group: "batch"
-      - group: "certificates.k8s.io"
-      - group: "extensions"
-      - group: "networking.k8s.io"
-      - group: "policy"
-      - group: "rbac.authorization.k8s.io"
-      - group: "settings.k8s.io"
