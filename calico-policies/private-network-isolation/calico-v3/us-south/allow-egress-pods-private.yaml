@@ -1,4 +1,4 @@
-# This policy opens port 53 for DNS (5353 for OpenShift 4.3 and later),
+# This policy opens port 53 and 5353 for DNS,
 # port 2049 for communication with NFS file servers, ports 443 and 3260
 # for communication to block storage, port 10250 for VPN communication,
 # and port 2040 and 2041 on 172.20.0.0 for the master API server local proxy. It also
