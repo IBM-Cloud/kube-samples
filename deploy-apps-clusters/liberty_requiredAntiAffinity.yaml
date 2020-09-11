@@ -31,7 +31,7 @@ spec:
             topologyKey: kubernetes.io/hostname
       containers:
       - name: wasliberty
-        image: registry.bluemix.net/ibmliberty
+        image: icr.io/ibm/liberty:latest
         ports:
         - containerPort: 9080
         resources:

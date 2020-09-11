@@ -15,4 +15,4 @@ spec:
     spec:
       containers:
       - name: ibmliberty
-        image: registry.bluemix.net/ibmliberty
+        image: icr.io/ibm/liberty:latest

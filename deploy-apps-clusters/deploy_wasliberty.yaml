@@ -28,7 +28,7 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
       - name: wasliberty
-        image: registry.bluemix.net/ibmliberty
+        image: icr.io/ibm/liberty:latest
         env:
           - name: VERSION
             valueFrom:
