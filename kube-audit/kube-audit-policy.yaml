@@ -1,5 +1,5 @@
 # This policy is used by the audit webhook to collect and forward any events that are passed
-# through your Kubernetes API server to IBM Log Analysis with LogDNA. Fore more information,
+# through your Kubernetes API server to IBM Log Analysis with LogDNA. For more information,
 # see the docs: https://cloud.ibm.com/docs/containers?topic=containers-health#webhook_logdna
 apiVersion: audit.k8s.io/v1
 kind: Policy
@@ -66,6 +66,10 @@ rules:
     resources:
       - group: "" # core
         resources: ["events"]
+{% if k8s_release_style is version_compare('1.19', '>=') %}
+      - group: "events.k8s.io"
+        resources: ["events"]
+{% endif %}        
   # Secrets, ConfigMaps, and TokenReviews can contain sensitive & binary data,
   # so only log at the Metadata level.
   - level: Metadata
@@ -92,6 +96,13 @@ rules:
         resources: ["jobs", "cronjobs"]
       - group: "extensions" # necessary for pre-1.12 clusters
         resources: ["daemonsets", "deployments", "replicasets"]
+{% if k8s_release_style is version_compare('1.19', '>=') %}
+  # Log changes to Calico resources
+  - level: RequestResponse
+    verbs: ["create", "update", "delete", "patch"]
+    resources:
+      - group: crd.projectcalico.org
+{% endif %}
   # Excludes the following apigroups from logs
   - level: None
     resources:
