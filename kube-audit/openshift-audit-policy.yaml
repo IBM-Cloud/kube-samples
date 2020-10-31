@@ -1,6 +1,14 @@
+# ******************************************************************************
+# * Licensed Materials - Property of IBM
+# * IBM Cloud Kubernetes Service, 5737-D43
+# * (C) Copyright IBM Corp. 2020 All Rights Reserved.
+# * US Government Users Restricted Rights - Use, duplication or
+# * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+# ******************************************************************************
 # This policy is used by the audit webhook to collect and forward any events that are passed
 # through your Kubernetes API server to IBM Log Analysis with LogDNA. For more information,
 # see the docs: https://cloud.ibm.com/docs/containers?topic=containers-health#webhook_logdna
+
 apiVersion: audit.k8s.io/v1
 kind: Policy
 rules:
@@ -100,6 +108,6 @@ rules:
     resources:
       - group: "apiregistration.k8s.io"
       - group: "coordination.k8s.io"
-  # Get responses can be large; skip them.
+  # Get repsonses can be large; skip them.
   - level: Metadata
     verbs: ["create", "update", "delete", "patch"]
