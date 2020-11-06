@@ -1,6 +1,6 @@
 # iks-life-preserver
 
-## What is this?
+## About
 The Life Preserver project uses IBM Cloud Schematics to 
 quickly invite a member of IBM Cloud Support to your IBM 
 Cloud account. With this temporary access, IBM Cloud Support 
