@@ -22,7 +22,7 @@ Follow the steps below to invite a user to your account and grant them:
 
 ### Step 2 
 
-Browse to the IBM Cloud Schematics offering at https://cloud.ibm.com/schematics
+[Open the IBM Cloud Schematics dashboard.](https://cloud.ibm.com/schematics)
 
 ### Step 3
 
