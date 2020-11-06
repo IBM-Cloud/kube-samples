@@ -18,7 +18,7 @@ Follow the steps below to invite a user to your account and grant them:
 
 ### Step 1
 
- Login to the IBM Cloud web console at https://cloud.ibm.com.
+[Log in to your IBM Cloud account.](https://cloud.ibm.com)
 
 ### Step 2 
 
