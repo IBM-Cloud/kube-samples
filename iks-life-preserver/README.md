@@ -26,7 +26,7 @@ Follow the steps below to invite a user to your account and grant them:
 
 ### Step 3
 
-Click `Create workspace` and give your new workspace a relevant name and pick a location and click `Create`. 
+Click **Create Workspace**. Enter a name, select a location, and click **Create**.
 
 ### Step 4
 
