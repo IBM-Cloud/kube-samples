@@ -1,11 +1,11 @@
 # iks-life-preserver
 
 ## What is this?
-Life Preserver is a simple project designed to be used with the 
-IBM Cloud Schematics service to make the process of inviting 
-someone to your IBM Cloud account for the purpose of helping you 
-troubleshoot issues with your IBM Cloud Kubernetes Service Clusters
- (including OpenShift on IBM Cloud clusters).
+The Life Preserver project uses IBM Cloud Schematics to 
+quickly invite a member of IBM Cloud Support to your IBM 
+Cloud account. With this temporary access, IBM Cloud Support 
+can help you troubleshoot issues with your IBM Cloud Kubernetes 
+Service and Red Hat OpenShift on IBM Cloud clusters.
 
 ## How it works
 Follow the steps below to invite a user to your account and grant them: 
