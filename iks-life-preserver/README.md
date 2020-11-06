@@ -13,7 +13,7 @@ Follow the steps below to invite a user to your account and grant them:
 * A `Viewer` IAM platform policy that allows the user to see only Kubernetes and OpenShift clusters
 * A `Reader` IAM service policy that allows the user to have **view-only** access to the **specific cluster you grant them access to**. 
 
-> Note: In terms of Kubernetes RBAC, this user will not have access to any Secrets or RBAC resources inside the cluster.
+> Note: These IAM policies do not grant the user access to any Kubernetes secrets or RBAC resources inside the cluster.
 
 
 ### Step 1
