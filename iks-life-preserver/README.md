@@ -57,7 +57,7 @@ At this point, if the `apply` operation was successful you should be able to bro
 
 
 
-### Step 9 (roll-back/revert the process)
+### Step 9 (Revoke access)
 
 From the main workspace page, click on the `Actions` drop-down button near the top-right part of the screen and select `Delete`:
 
