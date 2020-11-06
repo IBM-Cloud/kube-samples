@@ -64,4 +64,4 @@ From the main workspace page, click on the `Actions` drop-down button near the t
 * To remove all changes and delete the workspace completely, select both checkboxes.
 * To remove all changes and keep the workspace for re-use at a later time, select only the second checkbox. 
 
-Confirm the operation by typing in the workspace name and then clicking `Delete`
+Confirm the operation by entering the workspace name and clicking **Delete**.
