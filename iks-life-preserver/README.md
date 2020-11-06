@@ -61,7 +61,7 @@ At this point, if the `apply` operation was successful you should be able to bro
 
 From the main workspace page, click on the `Actions` drop-down button near the top-right part of the screen and select `Delete`:
 
-* If you want to remove all the changes and delete the workspace completely, check both boxes.
+* To remove all changes and delete the workspace completely, select both checkboxes.
 * If you want to remove all the changes and keep the workspace around for re-use at a later time, just check the second box. 
 
 Confirm the operation by typing in the workspace name and then clicking `Delete`
