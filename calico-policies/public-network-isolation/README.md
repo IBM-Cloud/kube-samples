@@ -4,7 +4,7 @@ This set of Calico policies work in conjunction with the [default Calico policie
 
 For more information on how to use these policies, see the [IBM Cloud Kubernetes Service documentation](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#isolate_workers_public).
 
-**Tip**: In addition to these policies, you can also create a [Calico preDNAT network policy to allowlist or denylist traffic from specific IP ranges](https://cloud.ibm.com/docs/containers?topic=containers-policy_tutorial#policy_tutorial).
+**Tip**: In addition to these policies, you can also create a [Calico preDNAT network policy to allow or deny traffic from specific IP ranges](https://cloud.ibm.com/docs/containers?topic=containers-policy_tutorial#policy_tutorial).
 
 ## Regions
 
