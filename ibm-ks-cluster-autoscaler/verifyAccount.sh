@@ -35,8 +35,8 @@ cat temp | grep $WORKER_POOL_ID > /dev/null 2>&1
 
 if [ $? == 0 ];
 then
-  echo "${GREEN}Your account is whitelisted and you can use IBM Cluster Autoscaler${NC}"
+  echo "${GREEN}Your account is allowlisted and you can use IBM Cluster Autoscaler${NC}"
 else
-  echo "${RED}Your account is not whitelisted you can't use IBM Cluster Autoscaler${NC}"
+  echo "${RED}Your account is not allowlisted you can't use IBM Cluster Autoscaler${NC}"
 fi
 rm -rf temp
