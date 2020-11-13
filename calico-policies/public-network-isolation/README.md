@@ -38,6 +38,7 @@ Along with the default Calico policies that are applied to the public interface 
   * TCP/UDP 443 on 172.21.0.1 (or 10.10.10.1 for clusters created more than 2 years ago) for the Kubernetes master API server local proxy
   * TCP/UDP 2040 and 2041 on 172.20.0.0 for the etcd local proxy
   * TCP/UDP 20000:32767 and 443 for communication with the Kubernetes master
+  * TCP 4443 for metrics-server
   * Specified ports for other IBM Cloud services
 * Ingress network traffic on the public network interface for pods is permitted from network load balancer (NLB), Ingress application load balancer (ALB), and NodePort services.
 
