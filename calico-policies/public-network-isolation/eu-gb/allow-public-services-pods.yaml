@@ -66,6 +66,10 @@ spec:
       # Managed Istio add-on: Egress gateway
       - 80
       - 15443
+      # Istiod certificate handshake
+      - 15012
+      # Istiod webhook
+      - 15017
     protocol: TCP
     source: {}
   ingress:
@@ -75,9 +79,11 @@ spec:
       # Managed Istio add-on: Ingress gateway and istiod control plane
       - 443
       - 853
+      - 8443
       - 15010
       - 15012
       - 15014
+      - 15017
       # Managed Istio add-on: Knative cluster local gateway
       - 80
       - 15021
