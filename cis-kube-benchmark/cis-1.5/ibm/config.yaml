@@ -1,0 +1,26 @@
+---
+node:
+  kubelet:
+    bins:
+    - hyperkube kubelet
+    - kubelet
+    svc:
+    - /lib/systemd/system/kubelet.service
+    confs:
+    - /etc/kubernetes/kubelet.conf
+    - /etc/kubernetes/kubelet-config.yaml
+    - /lib/systemd/system/kubelet.service
+    defaultconf: /etc/kubernetes/kubelet.conf
+    defaultkubeconfig: /etc/kubernetes/kubelet-kubeconfig
+    defaultsvc: /lib/systemd/system/kubelet.service
+
+  proxy:
+    bins:
+    - hyperkube proxy
+    - hyperkube kube-proxy
+    - kube-proxy
+    svc:
+    - /lib/systemd/system/kube-proxy.service
+    defaultconf: /etc/kubernetes/kubelet.conf
+    defaultkubeconfig: /etc/kubernetes/kubelet-kubeconfig
+    defaultsvc: /lib/systemd/system/kube-proxy.service
