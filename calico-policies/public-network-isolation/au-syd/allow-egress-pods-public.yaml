@@ -48,7 +48,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for AP South: mel01, syd01, syd04, syd05
+      # Nets for AP South: syd01, syd04, syd05
       - 130.198.102.82/32
       - 130.198.64.19/32
       - 130.198.66.26/32
@@ -63,9 +63,7 @@ spec:
       - 168.1.39.34/32
       - 168.1.58.66/32
       - 168.1.6.106/32
-      - 168.1.71.178/32
       - 168.1.8.195/32
-      - 168.1.97.67/32
       ports:
       - 20000:32767
     protocol: UDP
@@ -73,7 +71,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for AP South: mel01, syd01, syd04, syd05
+      # Nets for AP South: syd01, syd04, syd05
       - 130.198.102.82/32
       - 130.198.64.19/32
       - 130.198.66.26/32
@@ -88,9 +86,7 @@ spec:
       - 168.1.39.34/32
       - 168.1.58.66/32
       - 168.1.6.106/32
-      - 168.1.71.178/32
       - 168.1.8.195/32
-      - 168.1.97.67/32
       ports:
       - 20000:32767
     protocol: TCP
