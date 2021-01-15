@@ -80,6 +80,7 @@ func createSecret(secret *corev1.Secret, name string, namespace string) (*corev1
 			Annotations: annotations,
 		},
 		Data: secret.Data,
+		Type: secret.Type,
 	}, nil
 }
 
