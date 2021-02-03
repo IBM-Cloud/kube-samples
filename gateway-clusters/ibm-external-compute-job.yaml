@@ -77,7 +77,7 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
       containers:
       - name: provision
-        image: &image us.icr.io/armada-master/armada-stranger:v1.0.17
+        image: &image us.icr.io/armada-master/armada-stranger:v1.0.18
         env:
         - name: IMAGE_URL
           value: *image
