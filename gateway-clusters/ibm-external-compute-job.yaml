@@ -70,9 +70,14 @@ spec:
     spec:
       imagePullSecrets:
       - name: ibm-external-compute-image-pull
+      securityContext:
+        runAsUser: 2000
+        runAsGroup: 2000
+        fsGroup: 2000
+        fsGroupChangePolicy: "OnRootMismatch"
       containers:
       - name: provision
-        image: &image us.icr.io/armada-master/armada-stranger:v1.0.14
+        image: &image us.icr.io/armada-master/armada-stranger:v1.0.20
         env:
         - name: IMAGE_URL
           value: *image
@@ -90,7 +95,7 @@ spec:
           mountPath: /ansible/roles/calico-node/files
           readOnly: true
         - name: ibm-external-compute-pk
-          mountPath: /root/.ssh
+          mountPath: /home/appuser/.ssh
           readOnly: true
         - name: ibm-external-compute-config
           mountPath: /config

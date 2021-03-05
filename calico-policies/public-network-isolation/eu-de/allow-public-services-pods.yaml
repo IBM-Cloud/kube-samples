@@ -80,10 +80,6 @@ spec:
       - 15012
       - 15014
       - 15017
-      # Managed Istio add-on: Knative cluster local gateway
-      - 80
-      - 15021
-      - 15443
     protocol: TCP
     source: {}
   order: 1800

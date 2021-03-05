@@ -1,0 +1,83 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kube-bench-node
+---
+# IBM Cloud Kubernetes Services uses pod security policies (PSPs) for pod security.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kube-bench-node-psp
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ibm-privileged-psp-user
+subjects:
+- kind: ServiceAccount
+  name: kube-bench-node
+---
+# Red Hat OpenShift on IBM Cloud uses security context constraints (SCCs) for pod security.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: kube-bench-node-scc
+rules:
+- apiGroups:
+  - security.openshift.io
+  resourceNames:
+  - ibm-privileged-scc
+  resources:
+  - securitycontextconstraints
+  verbs:
+  - use
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kube-bench-node-scc
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: kube-bench-node-scc
+subjects:
+- kind: ServiceAccount
+  name: kube-bench-node
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kube-bench-node
+spec:
+  template:
+    spec:
+      serviceAccountName: kube-bench-node
+      hostPID: true
+      containers:
+      - name: kube-bench
+        image: aquasec/kube-bench:0.2.3
+        command: ["kube-bench", "--v=2", "node", "--benchmark", "ibm"]
+        volumeMounts:
+        - name: var-lib-kubelet
+          mountPath: /var/lib/kubelet
+        - name: lib-systemd-system
+          mountPath: /lib/systemd/system
+        - name: etc-kubernetes
+          mountPath: /etc/kubernetes
+        - name: config
+          mountPath: /opt/kube-bench/cfg/ibm
+          readOnly: true
+      restartPolicy: Never
+      volumes:
+      - name: var-lib-kubelet
+        hostPath:
+          path: "/var/lib/kubelet"
+      - name: lib-systemd-system
+        hostPath:
+          path: "/lib/systemd/system"
+      - name: etc-kubernetes
+        hostPath:
+          path: "/etc/kubernetes"
+      - name: config
+        configMap:
+          name: kube-bench-node
