@@ -1,7 +1,9 @@
 # This policy opens port 53 and 5353 for DNS,
 # port 2049 for communication with NFS file servers, ports 443 and 3260,
-# for communication to block storage, port 2040 and 443 for the master
+# for communication to block storage, port 5473 for communication to the
+# calico-typha ClusterIP, port 2040 and 443 for the master
 # API server local proxy, and port 2041 for the etcd local proxy.
+# Port 52311 for Bigfix.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -17,6 +19,7 @@ spec:
       - 443
       - 2049
       - 3260
+      - 5473
     protocol: UDP
     source: {}
   - action: Allow
@@ -27,6 +30,7 @@ spec:
       - 443
       - 2049
       - 3260
+      - 5473
     protocol: TCP
     source: {}
   - action: Allow
