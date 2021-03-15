@@ -13,7 +13,8 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Allows communication to pod IPs
+      # Allows communication to pod IP addresses. If you specified a custom subnet when you created
+      # the cluster that provides the private IP addresses for your pods, use that CIDR instead.
       - 172.30.0.0/16
     source: {}
   ingress:

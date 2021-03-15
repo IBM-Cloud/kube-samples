@@ -35,6 +35,7 @@ The Calico policies are organized by region. Choose the directory for the region
   * TCP/UDP 443 on 172.21.0.1 (or 10.10.10.1 for clusters created more than 2 years ago) for the Kubernetes master API server local proxy
   * TCP/UDP 2040 and 2041 on 172.20.0.0 for the etcd local proxy
   * TCP/UDP 20000:32767 and 443 for communication with the Kubernetes master
+  * TCP 4443 for metrics-server for Kubernetes version 1.19 or later, or TCP 6443 for OpenShift version 4.3 or later
   * Specified ports for other IBM Cloud services
 * Ingress network traffic on the private network interface for pods is permitted from workers in the cluster.
 
