@@ -1,7 +1,7 @@
 # This policy opens port 53 and 5353 for DNS,
-# port 2049 for communication with NFS file servers, ports 443 and 3260
-# for communication to block storage 10250 for VPN pod, port 4443 for
-# communication to metrics-server and 
+# port 2049 for communication with NFS file servers,
+# ports 443 and 3260 for communication to block storage,
+# port 10250 for the openVPN pod, port 4443 or 6443 for metrics-server, and
 # port 2040 and 2041 on 172.21.0.0/24 for the master API server local proxy.
 
 apiVersion: projectcalico.org/v3
@@ -27,7 +27,8 @@ spec:
       - 53
       - 5353
       - 443
-      - 4443
+      - 4443 # Kubernetes 1.19 or later
+      - 6443 # OpenShift 4.3 or later
       - 2049
       - 3260
       - 10250
