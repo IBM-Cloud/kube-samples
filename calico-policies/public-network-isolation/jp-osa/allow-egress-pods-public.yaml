@@ -1,0 +1,82 @@
+# This policy opens port 53 and 5353 for DNS,
+# port 2049 for communication with NFS file servers,
+# ports 443 and 3260 for communication to block storage,
+# port 10250 for the openVPN pod, port 4443 or 6443 for metrics-server, and
+# port 2040 and 2041 on 172.21.0.0/24 for the master API server local proxy.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-egress-pods-public
+spec:
+  egress:
+  - action: Allow
+    destination:
+      ports:
+      - 53
+      - 5353
+      - 443
+      - 2049
+      - 3260
+      - 10250
+    protocol: UDP
+    source: {}
+  - action: Allow
+    destination:
+      ports:
+      - 53
+      - 5353
+      - 443
+      - 4443 # Kubernetes 1.19 or later
+      - 6443 # OpenShift 4.3 or later
+      - 2049
+      - 3260
+      - 10250
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      ports:
+      - 2040:2041
+      nets:
+      - 172.20.0.0/24
+    protocol: UDP
+  - action: Allow
+    destination:
+      ports:
+      - 2040:2041
+      nets:
+      - 172.20.0.0/24
+    protocol: TCP
+  - action: Allow
+    destination:
+      nets:
+      # Nets for js-osa: osa21, osa22, osa23
+      - 163.68.69.114/32
+      - 163.68.69.122/32
+      - 163.69.65.114/32
+      - 163.69.65.122/32
+      - 163.73.64.250/32
+      - 163.73.65.194/32
+      ports:
+      - 20000:32767
+    protocol: UDP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # Nets for js-osa: osa21, osa22, osa23
+      - 163.68.69.114/32
+      - 163.68.69.122/32
+      - 163.69.65.114/32
+      - 163.69.65.122/32
+      - 163.73.64.250/32
+      - 163.73.65.194/32
+      ports:
+      - 20000:32767
+    protocol: TCP
+    source: {}
+  order: 1500
+  selector: projectcalico.org/orchestrator == 'k8s'
+  types:
+  - Egress
