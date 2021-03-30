@@ -66,7 +66,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for AP North: che01, hkg02, osa21, osa22, osa23, seo01, sng01, tok02, tok04, tok05
+      # Nets for AP North: che01, hkg02, seo01, sng01, tok02, tok04, tok05
       - 166.9.40.21/32
       - 166.9.40.36/32
       - 166.9.40.39/32
@@ -85,12 +85,6 @@ spec:
       - 166.9.44.5/32
       - 166.9.46.4/32
       - 166.9.60.2/32
-      - 166.9.70.6/32
-      - 166.9.70.8/32
-      - 166.9.71.8/32
-      - 166.9.71.10/32
-      - 166.9.72.9/32
-      - 166.9.72.10/32
       ports:
       - 20000:32767
     protocol: UDP
@@ -98,7 +92,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for AP North: che01, hkg02, osa21, osa22, osa23, seo01, sng01, tok02, tok04, tok05
+      # Nets for AP North: che01, hkg02, seo01, sng01, tok02, tok04, tok05
       - 166.9.40.21/32
       - 166.9.40.36/32
       - 166.9.40.39/32
@@ -117,12 +111,6 @@ spec:
       - 166.9.44.5/32
       - 166.9.46.4/32
       - 166.9.60.2/32
-      - 166.9.70.6/32
-      - 166.9.70.8/32
-      - 166.9.71.8/32
-      - 166.9.71.10/32
-      - 166.9.72.9/32
-      - 166.9.72.10/32
       ports:
       - 20000:32767
     protocol: TCP
