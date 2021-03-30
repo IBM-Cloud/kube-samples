@@ -1,0 +1,14 @@
+# For more information, see https://cloud.ibm.com/docs/openshift?topic=openshift-compliance-operator
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ScanSettingBinding
+metadata:
+  name: hourly-roks-cis-node
+  namespace: openshift-compliance
+profiles:
+  - name: roks-cis-node
+    kind: TailoredProfile
+    apiGroup: compliance.openshift.io/v1alpha1
+settingsRef:
+  name: hourly-scan-setting-1
+  kind: ScanSetting
+  apiGroup: compliance.openshift.io/v1alpha1

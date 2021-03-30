@@ -1,0 +1,13 @@
+# For more information, see https://cloud.ibm.com/docs/openshift?topic=openshift-compliance-operator
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ScanSetting
+metadata:
+  name: hourly-scan-setting-1
+  namespace: openshift-compliance
+autoApplyRemediations: false
+schedule: "0 */1 * * *"
+rawResultStorage:
+  size: "2Gi"
+  rotation: 3
+roles:
+  - worker

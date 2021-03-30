@@ -1,0 +1,169 @@
+# For more information, see https://cloud.ibm.com/docs/openshift?topic=openshift-compliance-operator
+apiVersion: compliance.openshift.io/v1alpha1
+kind: TailoredProfile
+metadata:
+  name: roks-cis-node
+  namespace: openshift-compliance
+spec:
+  setValues:
+    - name: ocp4-var-kubelet-evictionhard-imagefs-available
+      rationale: "stricter than default"
+      value: "5%"
+    - name: ocp4-var-kubelet-evictionhard-memory-available
+      rationale: "stricter than default"
+      value: "100Mi"
+    - name: ocp4-var-kubelet-evictionhard-nodefs-inodesfree
+      rationale: "stricter than default"
+      value: "5%"
+    - name: ocp4-var-kubelet-evictionsoft-imagefs-available
+      rationale: "stricter than default"
+      value: "10%"
+    - name: ocp4-var-kubelet-evictionsoft-memory-available
+      rationale: "stricter than default"
+      value: "100Mi"
+    - name: ocp4-var-kubelet-evictionsoft-nodefs-inodesfree
+      rationale: "stricter than default"
+      value: "10%"
+  disableRules:
+    - name: ocp4-kubelet-authorization-mode
+      rationale: Open issue with upstream repo to correct check https://github.com/ComplianceAsCode/content/issues/6658 
+    - name: ocp4-file-permissions-kube-apiserver
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-owner-kube-apiserver
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-groupowner-kube-apiserver
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-permissions-kube-controller-manager
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-owner-kube-controller-manager
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-groupowner-kube-controller-manager
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-permissions-scheduler
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-owner-kube-scheduler
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-groupowner-kube-scheduler
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-permissions-etcd-member
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-owner-etcd-member
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-groupowner-etcd-member
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-permissions-ip-allocations
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-perms-openshift-sdn-cniserver-config
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-permissions-ovs-pid
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-permissions-ovs-conf-db
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-permissions-ovs-sys-id-conf
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-permissions-ovs-conf-db-lock
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-permissions-ovs-vswitchd-pid
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-permissions-ovsdb-server-pid
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-owner-ip-allocations
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-groupowner-ip-allocations
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-owner-openshift-sdn-cniserver-config
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-groupowner-openshift-sdn-cniserver-config
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-owner-ovs-pid
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-groupowner-ovs-pid
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-owner-ovs-conf-db
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-groupowner-ovs-conf-db
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-owner-ovs-sys-id-conf
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-groupowner-ovs-sys-id-conf
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-owner-ovs-conf-db-lock
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-groupowner-ovs-conf-db-lock
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-owner-ovs-vswitchd-pid
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-groupowner-ovs-vswitchd-pid
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-owner-ovsdb-server-pid
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-groupowner-ovsdb-server-pid
+      rationale: Target file is not applicable in calico deployments.
+    - name: ocp4-file-permissions-etcd-data-dir
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-permissions-etcd-data-files
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-owner-etcd-data-dir
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-groupowner-etcd-data-dir
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-owner-etcd-data-files
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-groupowner-etcd-data-files
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-permissions-master-admin-kubeconfigs
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-owner-master-admin-kubeconfigs
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-groupowner-master-admin-kubeconfigs
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-permissions-scheduler-kubeconfig
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-owner-scheduler-kubeconfig
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-groupowner-scheduler-kubeconfig
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-permissions-controller-manager-kubeconfig
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-owner-controller-manager-kubeconfig
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-groupowner-controller-manager-kubeconfig
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-owner-openshift-pki-key-files
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-groupowner-openshift-pki-key-files
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-owner-openshift-pki-cert-files
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-groupowner-openshift-pki-cert-files
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-owner-etcd-pki-cert-files
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-groupowner-etcd-pki-cert-files
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-permissions-openshift-pki-cert-files
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-permissions-etcd-pki-cert-files
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-permissions-openshift-pki-key-files
+      rationale: Target file is protected by managed service.
+    - name: ocp4-file-permissions-worker-service
+      rationale: Filepath at different location than where check is expecting.
+    - name: ocp4-file-owner-worker-service
+      rationale: Filepath at different location than where check is expecting.
+    - name: ocp4-file-groupowner-worker-service
+      rationale: Filepath at different location than where check is expecting.
+    - name: ocp4-file-permissions-worker-kubeconfig
+      rationale: Filepath at different location than where check is expecting.
+    - name: ocp4-file-owner-worker-kubeconfig
+      rationale: Filepath at different location than where check is expecting.
+    - name: ocp4-file-groupowner-worker-kubeconfig
+      rationale: Filepath at different location than where check is expecting.
+    - name: ocp4-kubelet-enable-server-cert-rotation
+      rationale: Red Hat Openshift on IBM Cloud rotates certs on every worker reload/update/provision/replace.
+    - name: ocp4-kubelet-enable-client-cert-rotation
+      rationale: Red Hat Openshift on IBM Cloud rotates certs on every worker reload/update/provision/replace.
+    - name: ocp4-kubelet-enable-cert-rotation
+      rationale: Red Hat Openshift on IBM Cloud rotates certs on every worker reload/update/provision/replace.
+  extends: ocp4-cis-node
+  title: CIS Benchmark for OpenShift - Red Hat Openshift on IBM Cloud node
