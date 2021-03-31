@@ -165,5 +165,7 @@ spec:
       rationale: Red Hat Openshift on IBM Cloud rotates certs on every worker reload/update/provision/replace.
     - name: ocp4-kubelet-enable-cert-rotation
       rationale: Red Hat Openshift on IBM Cloud rotates certs on every worker reload/update/provision/replace.
+    - name: ocp4-kubelet-enable-protect-kernel-defaults
+      rationale: Red Hat Openshift on IBM Cloud does not enable this flag so that you can optionally tune kernel parameters. 
   extends: ocp4-cis-node
   title: CIS Benchmark for OpenShift - Red Hat Openshift on IBM Cloud node
