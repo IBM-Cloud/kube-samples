@@ -1,0 +1,29 @@
+# This policy limits communication on the private network to worker nodes within the cluster.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-all-workers-private
+spec:
+  egress:
+  - action: Allow
+    destination:
+      selector: ibm.role == 'worker_private'
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # Allows communication to pod IP addresses. If you specified a custom subnet when you created
+      # the cluster that provides the private IP addresses for your pods, use that CIDR instead.
+      - 172.30.0.0/16
+    source: {}
+  ingress:
+  - action: Allow
+    destination: {}
+    source:
+      selector: ibm.role == 'worker_private'
+  order: 1950
+  selector: ibm.role == 'worker_private'
+  types:
+  - Egress
+  - Ingress
