@@ -1,4 +1,4 @@
-# List all worker node names on your private network.
+# **OpenShift 3.11 clusters only**: List all worker node names on your private network.
 
 # worker node 1
 apiVersion: projectcalico.org/v3
