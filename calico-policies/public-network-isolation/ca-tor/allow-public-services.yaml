@@ -1,0 +1,87 @@
+# This policy allows outgoing network traffic from worker nodes to other IBM Cloud services.
+# The example nets and ports in this policy are for IBM Cloud Container Registry, IBM Cloud
+# Monitoring with Sysdig, IBM Log Analysis with LogDNA, and the managed Istio add-on.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-public-services
+spec:
+  egress:
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Container Registry: Global registry
+      - 169.60.98.80/29
+      - 169.62.37.240/29
+      - 169.63.104.232/29
+      # IBM Cloud Container Registry: US South & US East nets for your own registry
+      - 169.61.46.80/29
+      - 169.61.135.160/29
+      - 169.61.234.224/29
+      ports:
+      - 443
+      - 4443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Monitoring with Sysdig: US East nets
+      - 169.47.136.237/32
+      - 169.47.35.174/32
+      - 169.55.109.114/32
+      - 169.60.112.74/32
+      - 169.61.109.59/32
+      - 169.61.65.234/32
+      - 169.62.3.82/32
+      - 169.63.158.254/32
+      - 169.63.163.50/32
+      ports:
+      - 6443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: US East nets
+      - 169.47.43.67/32
+      - 169.47.52.83/32
+      - 169.60.95.75/32
+      - 169.61.65.235/32
+      - 169.62.55.212/32
+      - 169.63.163.51/32
+      ports:
+      - 443
+      - 80
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      ports:
+      # Managed Istio add-on: Egress gateway
+      - 80
+      - 15443
+    protocol: TCP
+    source: {}
+  ingress:
+  - action: Allow
+    destination:
+      ports:
+      # Managed Istio add-on: Ingress gateway and istiod control plane
+      - 443
+      - 853
+      - 15010
+      - 15012
+      - 15014
+      # Managed Istio add-on: Knative cluster local gateway
+      - 80
+      - 15021
+      - 15443
+    protocol: TCP
+    source: {}
+  order: 1800
+  selector: ibm.role == 'worker_public'
+  types:
+  - Egress
+  - Ingress
