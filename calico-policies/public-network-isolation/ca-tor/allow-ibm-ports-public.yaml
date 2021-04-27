@@ -38,16 +38,14 @@ spec:
       ports:
       - 443
       nets:
-      - 172.21.0.1/32 # For clusters created <3 years ago
-      - 10.10.10.1/32 # For clusters created >3 years ago
+      - 172.21.0.1/32
     protocol: UDP
   - action: Allow
     destination:
       ports:
       - 443
       nets:
-      - 172.21.0.1/32 # For clusters created <3 years ago
-      - 10.10.10.1/32 # For clusters created >3 years ago
+      - 172.21.0.1/32
     protocol: TCP
   - action: Allow
     destination:
