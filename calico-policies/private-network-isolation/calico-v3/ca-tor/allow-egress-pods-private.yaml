@@ -6,6 +6,9 @@
 # allows pod access to other pods, denies access to private networks but allows access to
 # public networks, and allows access in each zone of the region to the master.
 
+# NOTE: The policies in the ca-tor directory are meant for use with the Toronto multizone location.
+# For the Toronto single zone location, use the policies in the us-east directory instead.
+
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
@@ -66,32 +69,13 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for US East: mon01, tor01, wdc04, wdc06, wdc07
-      - 166.9.20.11/32
-      - 166.9.20.12/32
-      - 166.9.20.13/32
-      - 166.9.20.38/32
-      - 166.9.20.42/32
-      - 166.9.20.80/32
-      - 166.9.20.116/32
-      - 166.9.20.117/32
-      - 166.9.20.187/32
-      - 166.9.22.8/32
-      - 166.9.22.9/32
-      - 166.9.22.10/32
-      - 166.9.22.26/32
-      - 166.9.22.43/32
-      - 166.9.22.52/32
-      - 166.9.22.54/32
-      - 166.9.22.109/32
-      - 166.9.24.19/32
-      - 166.9.24.22/32
-      - 166.9.24.35/32
-      - 166.9.24.4/32
-      - 166.9.24.46/32
-      - 166.9.24.47/32
-      - 166.9.24.5/32
-      - 166.9.24.90/32
+      # Nets for Toronto multizone location: tor01, tor04, tor05
+      - 166.9.76.5/32
+      - 166.9.76.7/32
+      - 166.9.77.5/32
+      - 166.9.77.7/32
+      - 166.9.78.5/32
+      - 166.9.78.7/32
       ports:
       - 20000:32767
     protocol: UDP
@@ -99,31 +83,13 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for US East: mon01, tor01, wdc04, wdc06, wdc07
-      - 166.9.20.11/32
-      - 166.9.20.12/32
-      - 166.9.20.13/32
-      - 166.9.20.38/32
-      - 166.9.20.80/32
-      - 166.9.20.116/32
-      - 166.9.20.117/32
-      - 166.9.20.187/32
-      - 166.9.22.8/32
-      - 166.9.22.9/32
-      - 166.9.22.10/32
-      - 166.9.22.26/32
-      - 166.9.22.43/32
-      - 166.9.22.52/32
-      - 166.9.22.54/32
-      - 166.9.22.109/32
-      - 166.9.24.19/32
-      - 166.9.24.22/32
-      - 166.9.24.35/32
-      - 166.9.24.4/32
-      - 166.9.24.46/32
-      - 166.9.24.47/32
-      - 166.9.24.5/32
-      - 166.9.24.90/32
+      # Nets for Toronto multizone location: tor01, tor04, tor05
+      - 166.9.76.5/32
+      - 166.9.76.7/32
+      - 166.9.77.5/32
+      - 166.9.77.7/32
+      - 166.9.78.5/32
+      - 166.9.78.7/32
       ports:
       - 20000:32767
     protocol: TCP

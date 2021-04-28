@@ -10,6 +10,8 @@ For more information on how to use these policies, see the [IBM Cloud Kubernetes
 
 The Calico policies are organized by region. Choose the directory for the region that your cluster is in when applying these policies.
 
+> NOTE: The policies in the ca-tor directory are meant for use with the Toronto multizone location. For the Toronto single zone location, use the policies in the us-east directory instead.
+
 ## Summary of changes made by the Calico policies
 
 Along with the default Calico policies that are applied to the public interface of worker nodes, the Calico policies in this set configure the public network for worker node and pods as follows:
