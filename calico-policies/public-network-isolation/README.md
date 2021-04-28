@@ -14,7 +14,7 @@ The Calico policies are organized by region. Choose the directory for the region
 
 ## Deployment Notes
 
-If your cluster uses a custom pod subnet (something other than 172.30.0.0/16), including if the cluster is a VPC cluster (which doesn't use the standard pod subnet by default), then before applying the policies, change the instances of 172.30.0.0/16 in these policies to the pod subnet for this cluster
+These policies specify worker node egress to `172.30.0.0/16` as the default pod subnet. If you specified a custom pod subnet when you created a classic cluster, or if you use a VPC cluster (which doesn't use the standard pod subnet by default), you must edit the `allow-ibm-ports-public.yaml` policy to change `172.30.0.0/16` to the pod subnet CIDR for this cluster instead. To find your cluster's pod subnet, run `ibmcloud ks cluster get -c <cluster_name_or_ID>`.
 
 ## Summary of changes made by the Calico policies
 

@@ -64,9 +64,10 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Allows communication from host to a cluster IP service.  This is need in these public
-      # policies for now due to https://github.com/projectcalico/felix/pull/2582
-      # If you specified a custom pod subnet when you created the cluster, use that CIDR instead.
+      # Allows communication from a worker node to a ClusterIP service.  This rule is
+      # required in these public policies due to https://github.com/projectcalico/felix/pull/2582
+      # If you specified a custom pod subnet when you created a classic cluster, or if
+      # you use a VPC cluster, use the cluster's pod CIDR instead.
       - 172.30.0.0/16
   ingress:
   - action: Allow
