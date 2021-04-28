@@ -63,6 +63,13 @@ spec:
       nets:
       - 172.20.0.0/24
     protocol: TCP
+  - action: Allow
+    destination:
+      nets:
+      # Allows communication from host to a cluster IP service.  This is need in these public
+      # policies for now due to https://github.com/projectcalico/felix/pull/2582
+      # If you specified a custom pod subnet when you created the cluster, use that CIDR instead.
+      - 172.30.0.0/16
   ingress:
   - action: Allow
     destination:
