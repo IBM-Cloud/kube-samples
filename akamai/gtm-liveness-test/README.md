@@ -4,6 +4,8 @@ You may have a firewall located in front of the servers on which you want GTM to
 
 This document lists the IP addresses of all systems that might need to access your servers. If you have an ACL, make sure that you enter all of the systems listed here into your ACL.
 
+For more information see the [Akamai GTM Documentation](https://learn.akamai.com/en-us/webhelp/global-traffic-management/global-traffic-management-user-guide/GUID-C1995591-5D7D-42B9-B54F-0CF6C7BD2532.html).
+
 Service Name | CIDR Block | Port
 -------------|------------|-----
 "Global Traffic Management"|"193.108.155.118/32"|"25,80,110,443,995"
