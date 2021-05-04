@@ -1,8 +1,8 @@
 # Akamai GTM Firewall Rules
 
-You may have a firewall located in front of the servers on which you want GTM to perform liveness tests. To permit liveness tests, your firewalls must have entries added to their Access Control Lists (ACLs).
+To secure your IBM Cloud Kubernetes Service or Red Hat OpenShift on IBM Cloud cluster, you might use [Calico pre-DNAT network policies](https://cloud.ibm.com/docs/containers?topic=containers-network_policies), [VPC security groups](https://cloud.ibm.com/docs/containers?topic=containers-vpc-network-policy#security_groups), [VPC access control lists (ACLs)](https://cloud.ibm.com/docs/containers?topic=containers-vpc-network-policy#acls), or another custom firewall solution to block incoming traffic to Ingress or router services.
 
-This document lists the IP addresses of all systems that might need to access your servers. If you have an ACL, make sure that you enter all of the systems listed here into your ACL.
+To ensure that the Kubernetes or OpenShift control plane can check the health of your ALBs or routers, you must allow inbound access from the following Akamai addresses and ports.
 
 For more information see the [Akamai GTM Documentation](https://learn.akamai.com/en-us/webhelp/global-traffic-management/global-traffic-management-user-guide/GUID-C1995591-5D7D-42B9-B54F-0CF6C7BD2532.html).
 
