@@ -2,7 +2,7 @@
 
 To secure your IBM Cloud Kubernetes Service or Red Hat OpenShift on IBM Cloud cluster, you might use [Calico pre-DNAT network policies](https://cloud.ibm.com/docs/containers?topic=containers-network_policies), [VPC security groups](https://cloud.ibm.com/docs/containers?topic=containers-vpc-network-policy#security_groups), [VPC access control lists (ACLs)](https://cloud.ibm.com/docs/containers?topic=containers-vpc-network-policy#acls), or another custom firewall solution to block incoming traffic to Ingress or router services.
 
-To ensure that the Akamai Global Traffic Management liveness test can check the health of your ALBs or routers, you must allow inbound access from the following Akamai addresses. You must allow inbound access on the port based on the protocol which is configured for the liveness test. The default protocol is HTTP which means port 80. If you configure HTTPS the corresponding port is 443. 
+To ensure that the Akamai Global Traffic Management liveness test can check the health of your ALBs or routers, you must allow inbound access from the following Akamai IP addresses. To use the default HTTP protocol, allow inbound traffic through port 80. If you configure your ALBs or routers to listen for the HTTPS protocol, such as with the [`ibmcloud ks nlb-dns monitor configure` command](https://cloud.ibm.com/docs/containers?topic=containers-cli-plugin-kubernetes-service-cli#cs_nlb-dns-monitor-configure), allow inbound traffic through port 443. 
 
 For more information see the [Akamai GTM Documentation](https://learn.akamai.com/en-us/webhelp/global-traffic-management/global-traffic-management-user-guide/GUID-C1995591-5D7D-42B9-B54F-0CF6C7BD2532.html).
 
