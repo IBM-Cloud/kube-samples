@@ -16,10 +16,10 @@ spec:
       - 166.9.20.31/32
       - 166.9.22.22/32
       - 166.9.24.16/32
-      # IBM Cloud Container Registry: US South & US East nets for your own registry
-      - 166.9.12.227/32
-      - 166.9.15.116/32
-      - 166.9.16.244/32
+      # IBM Cloud Container Registry: Toronto nets for your own registry
+      - 166.9.76.12/32
+      - 166.9.77.11/32
+      - 166.9.78.11/32
       ports:
       - 443
       - 4443
