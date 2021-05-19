@@ -1,0 +1,43 @@
+# For more information, see the IBM Cloud docs: https://cloud.ibm.com/docs/containers?topic=containers-health-monitor#autorecovery
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ibm-worker-recovery-checks
+  namespace: kube-system
+data:
+  checknode.json: |
+    {
+      "Check":"KUBEAPI",
+      "Resource":"NODE",
+      "FailureThreshold":3,
+      "CorrectiveAction":"RELOAD",
+      "CooloffSeconds":1800,
+      "IntervalSeconds":180,
+      "TimeoutSeconds":10,
+      "Enabled":true
+    }
+  checkpod.json: |
+    {
+      "Check":"KUBEAPI",
+      "Resource":"POD",
+      "PodFailureThresholdPercent":50,
+      "FailureThreshold":3,
+      "CorrectiveAction":"RELOAD",
+      "CooloffSeconds":1800,
+      "IntervalSeconds":180,
+      "TimeoutSeconds":10,
+      "Enabled":true
+    }
+  checkhttp.json: |
+    {
+      "Check":"HTTP",
+      "FailureThreshold":3,
+      "CorrectiveAction":"REBOOT",
+      "CooloffSeconds":1800,
+      "IntervalSeconds":180,
+      "TimeoutSeconds":10,
+      "Port":80,
+      "ExpectedStatus":200,
+      "Route":"/myhealth",
+      "Enabled":false
+    }
