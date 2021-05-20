@@ -16,8 +16,8 @@ spec:
       - 169.62.37.240/29
       - 169.63.104.232/29
       # IBM Cloud Container Registry: AP North nets for your own registry
-      - 161.202.146.80/29
       - 128.168.71.64/29
+      - 161.202.146.80/29
       - 165.192.71.216/29
       ports:
       - 443
