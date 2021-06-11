@@ -74,6 +74,29 @@ spec:
       - 514
     protocol: UDP
     source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM ATracker API : Prod US South
+      - 166.9.58.136/32
+      - 166.9.48.211/32
+      - 166.9.51.140/32
+      # IBM ATracker API : Stage US South
+      - 166.9.51.58/32
+      - 166.9.48.161/32
+      - 166.9.58.81/32
+      # IBM ATracker Ingester : Prod US South
+      - 166.9.51.124/32
+      - 166.9.58.121/32
+      - 166.9.48.212/32
+      # IBM ATracker Ingester : Stage US South
+      - 166.9.48.167/32
+      - 166.9.51.87/32
+      - 166.9.58.88/32
+      ports:
+      - 443
+    protocol: TCP
+    source: {}
   order: 1900
   selector: projectcalico.org/orchestrator == 'k8s'
   types:
