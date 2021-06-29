@@ -70,6 +70,21 @@ spec:
       - 514
     protocol: UDP
     source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM ATracker API : US East
+      - 166.9.24.96/32
+      - 166.9.20.212/32
+      - 166.9.22.84/32
+      # IBM ATracker Ingester : US East
+      - 166.9.24.98/32
+      - 166.9.22.89/32
+      - 166.9.20.213/32
+      ports:
+      - 443
+    protocol: TCP
+    source: {}
   order: 1900
   selector: ibm.role == 'worker_private'
   types:
