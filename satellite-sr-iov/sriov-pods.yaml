@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-sriov-1
+  namespace: openshift-sriov-network-operator
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[
+        {
+                "name": "roksbmsriov",
+                "namespace": "openshift-sriov-network-operator",
+                "ips": ["192.168.99.11/24"]
+        }
+]'
+spec:
+  containers:
+  - name: example-pod
+    command: ["/bin/bash", "-c", "sleep 9000000"]
+    image: centos/tools
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-sriov-2
+  namespace: openshift-sriov-network-operator
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[
+        {
+                "name": "roksbmsriov",
+                "namespace": "openshift-sriov-network-operator",
+                "ips": ["192.168.99.12/24"]
+        }
+]'
+spec:
+  containers:
+  - name: example-pod
+    command: ["/bin/bash", "-c", "sleep 9000000"]
+    image: centos/tools

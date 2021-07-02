@@ -1,0 +1,27 @@
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetwork
+metadata:
+  name: roksbmsriov
+  namespace: openshift-sriov-network-operator
+spec:
+  ipam: |
+    {
+      "type": "static",
+      "addresses": [
+        {
+          "address": "192.168.99.0/24",
+          "gateway": "192.168.99.11"
+        }
+      ],
+      "dns": {
+        "nameservers": ["8.8.8.8"],
+        "domain": "test.lablocal",
+        "search": ["test.lablocal"]
+      }
+    }
+  vlan: 0
+  spoofChk: 'off'
+  trust: 'on'
+  resourceName: roksbmsriov
+  networkNamespace: openshift-sriov-network-operator
+  capabilities: '{ "mac": true, "ips": true }'

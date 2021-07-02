@@ -1,0 +1,19 @@
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetworkNodePolicy
+metadata:
+  name: roksbmsriov
+  namespace: openshift-sriov-network-operator
+spec:
+  resourceName: roksbmsriov
+  nodeSelector:
+    feature.node.kubernetes.io/network-sriov.capable: "true"
+  priority: 99
+  mtu: 1500
+  numVfs: 32
+  nicSelector:
+    #ID for Intel NIC
+    vendor: "8086"
+    #Private interface adapters
+    pfNames: ["int0#0-31"]
+  deviceType: netdevice
+  isRdma: false
