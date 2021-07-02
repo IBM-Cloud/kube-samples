@@ -118,15 +118,15 @@ To test out SR-IOV functions, deploy the following resources.
 1. Create node policy.
     The node policy selects which nodes are part of the SR-IOV network.
 
-    `kubectl apply -f  https://raw.github.com<url>`
+    `kubectl apply -f  https://raw.githubusercontent.com/IBM-Cloud/kube-samples/master/satellite-sr-iov/sriov-node-policy.yaml`
 
 2. Apply the SR-IOV network
     
-    `kubectl apply -f https://raw.github.com<url>`
+    `kubectl apply -f https://raw.githubusercontent.com/IBM-Cloud/kube-samples/master/satellite-sr-iov/sriov-network.yaml`
 
 3. Create two pods that use the SR-IOV network.
     
-    `kubectl apply -f https://raw.github.com/<url>`
+    `kubectl apply -f https://raw.githubusercontent.com/IBM-Cloud/kube-samples/master/satellite-sr-iov/sriov-pods.yaml`
 
 4. Run tests to confirm pods can communicate.
 
