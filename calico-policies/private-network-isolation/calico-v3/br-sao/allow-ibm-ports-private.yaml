@@ -3,8 +3,7 @@
 # worker node updates, port 2049 forcommunication with NFS file servers,
 # port 3260 for communication to block storage, port 5473 for communication to
 # the calico-typha ClusterIP, port 2040 and 2041 on 172.20.0.0/24 for the master
-# API server local proxy, and port 443 on 172.21.0.1 (or 10.10.10.1 for clusters
-# created more than 3 years ago) for the etcd local proxy.
+# API server local proxy, and port 443 on 172.21.0.1 for the etcd local proxy.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -51,16 +50,14 @@ spec:
       ports:
       - 443
       nets:
-      - 172.21.0.1/32 # For clusters created <3 years ago
-      - 10.10.10.1/32 # For clusters created >3 years ago
+      - 172.21.0.1/32
     protocol: UDP
   - action: Allow
     destination:
       ports:
       - 443
       nets:
-      - 172.21.0.1/32 # For clusters created <3 years ago
-      - 10.10.10.1/32 # For clusters created >3 years ago
+      - 172.21.0.1/32
     protocol: TCP
   ingress:
   - action: Allow

@@ -2,8 +2,8 @@
 # port 2049 for communication with NFS file servers, ports 443 and 3260,
 # for communication to block storage, port 5473 for communication to the
 # calico-typha ClusterIP, port 2040 and 443 for the master
-# API server local proxy, and port 2041 for the etcd local proxy.
-# Port 52311 for Bigfix.
+# API server local proxy, port 2041 for the etcd local proxy,
+# and port 52311 for Bigfix.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
