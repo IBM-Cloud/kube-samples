@@ -1,0 +1,83 @@
+# This policy allows outgoing network traffic from worker nodes to other
+# IBM Cloud services that support private service endpoints.
+# The example nets in this policy are for IBM Cloud Container Registry,
+# IBM Cloud Monitoring with Sysdig, and IBM Log Analysis with LogDNA.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-private-services
+spec:
+  egress:
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Container Registry: Global registry
+      - 166.9.20.31/32
+      - 166.9.22.22/32
+      - 166.9.24.16/32
+      # IBM Cloud Container Registry: US South, US East, and São Paulo nets for your own registry
+      - 166.9.12.227/32
+      - 166.9.15.116/32
+      - 166.9.16.244/32
+      - 166.9.82.13/32
+      - 166.9.83.13/32
+      - 166.9.84.13/32
+      ports:
+      - 443
+      - 4443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Monitoring with Sysdig: US South nets
+      - 166.9.13.52/32
+      - 166.9.14.170/32
+      - 166.9.17.11/32
+      ports:
+      - 6443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: US South nets
+      - 166.9.12.12/32
+      - 166.9.12.13/32
+      - 166.9.14.2/32
+      - 166.9.14.3/32
+      - 166.9.16.11/32
+      - 166.9.16.12/32
+      ports:
+      - 80
+      - 443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: US South nets
+      - 166.9.12.15/32
+      - 166.9.14.5/32
+      - 166.9.16.14/32
+      ports:
+      - 514
+      - 6514
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: US South nets
+      - 166.9.12.16/32
+      - 166.9.14.6/32
+      - 166.9.16.15/32
+      ports:
+      - 514
+    protocol: UDP
+    source: {}
+  order: 1900
+  selector: ibm.role == 'worker_private'
+  types:
+  - Egress

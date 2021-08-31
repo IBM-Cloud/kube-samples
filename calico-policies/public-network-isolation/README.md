@@ -10,7 +10,7 @@ For more information on how to use these policies, see the [IBM Cloud Kubernetes
 
 The Calico policies are organized by region. Choose the directory for the region that your cluster is in when applying these policies.
 
-> NOTE: The policies in the ca-tor directory are meant for use with the Toronto multizone location. For the Toronto single zone location, use the policies in the us-east directory instead.
+> NOTE: The policies in the ca-tor and br-sao directories are meant for use with the Toronto and São Paulo multizone locations. For the Toronto single zone location, use the policies in the us-east directory instead. For the São Paulo single zone location, use the policies in the us-south directory instead.
 
 ## Deployment Notes
 
