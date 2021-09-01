@@ -80,6 +80,10 @@ You can try out the SR-IOV operator in IBM Cloud Satellite by using IBM Cloud ba
     8. List virtual functions.
         If the set up was successful, you see a list of virtual functions.
 
+        Install `lscpi` if not installed already (optional)
+
+        `yum install pciutils`
+
         `lspci | grep "Virtual Function"`
 
         ```
