@@ -25,8 +25,6 @@ spec:
       rationale: "stricter than default"
       value: "10%"
   disableRules:
-    - name: ocp4-kubelet-authorization-mode
-      rationale: Open issue with upstream repo to correct check https://github.com/ComplianceAsCode/content/issues/6658 
     - name: ocp4-file-permissions-kube-apiserver
       rationale: Target file is protected by managed service.
     - name: ocp4-file-owner-kube-apiserver
