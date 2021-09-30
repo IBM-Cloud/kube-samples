@@ -5,6 +5,7 @@ metadata:
   name: roks-cis-node
   namespace: openshift-compliance
 spec:
+  description: "ROKS specific tailoring for CO's cis-node profile"
   setValues:
     - name: ocp4-var-kubelet-evictionhard-imagefs-available
       rationale: "stricter than default"
