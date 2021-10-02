@@ -1,7 +1,7 @@
 # ******************************************************************************
 # * Licensed Materials - Property of IBM
 # * IBM Cloud Kubernetes Service, 5737-D43
-# * (C) Copyright IBM Corp. 2020 All Rights Reserved.
+# * (C) Copyright IBM Corp. 2020, 2021 All Rights Reserved.
 # * US Government Users Restricted Rights - Use, duplication or
 # * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 # ******************************************************************************
@@ -108,6 +108,6 @@ rules:
     resources:
       - group: "apiregistration.k8s.io"
       - group: "coordination.k8s.io"
-  # Get repsonses can be large; skip them.
+  # Get responses can be large; skip them.
   - level: Metadata
     verbs: ["create", "update", "delete", "patch"]
