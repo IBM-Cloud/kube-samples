@@ -1,0 +1,45 @@
+# ******************************************************************************
+# * Licensed Materials - Property of IBM
+# * IBM Cloud Kubernetes Service, 5737-D43
+# * (C) Copyright IBM Corp. 2021 All Rights Reserved.
+# * US Government Users Restricted Rights - Use, duplication or
+# * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+# ******************************************************************************
+# This policy is used by the audit webhook to collect and forward any events that are passed
+# through your Kubernetes API server to IBM Log Analysis with LogDNA. For more information,
+# see the docs: https://cloud.ibm.com/docs/containers?topic=containers-health#webhook_logdna
+
+{% if k8s_release_style is version_compare('1.14', '>=') %}
+apiVersion: audit.k8s.io/v1
+{% else %}
+apiVersion: audit.k8s.io/v1beta1
+{% endif %}
+kind: Policy
+rules:
+  # Log pvc/pv requests to capture volume details
+  - level: Request
+    verbs: ["create", "delete", "update", "patch"]
+    resources:
+      - group: ""  # core
+        resources: ["persistentvolumeclaims", "persistentvolumes"]
+  # Log pod create requests to capture container images, etc.
+  - level: Request
+    verbs: ["create", "update", "patch"]
+    resources:
+      - group: ""  # core
+        resources: ["pods", "replicacontrollers", "container"]
+      - group: "apps"
+        resources: ["daemonsets", "deployments", "replicasets", "statefulsets"]
+      - group: "batch"
+        resources: ["jobs", "cronjobs"]
+      - group: "extensions" # necessary for pre-1.12 clusters
+        resources: ["daemonsets", "deployments", "replicasets"]
+{% if k8s_release_style is version_compare('1.19', '>=') %}
+  # Log changes to Calico resources
+  - level: RequestResponse
+    verbs: ["create", "update", "delete", "patch"]
+    resources:
+      - group: crd.projectcalico.org
+{% endif %}
+  # Log everything not covered above as Metadata
+  - level: Metadata
