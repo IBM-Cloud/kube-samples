@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    name: containerd-dockerhub-registry-config
+  name: containerd-dockerhub-registry-config
+spec:
+  selector:
+    matchLabels:
+      name: containerd-dockerhub-registry-config
+  template:
+    metadata:
+      labels:
+        name: containerd-dockerhub-registry-config
+    spec:
+      containers:
+      - image: alpine:latest
+        name: containerd-dockerhub-registry-config
+        command:
+          - /bin/sh
+          - -c
+          - |
+            #!/bin/sh
+            set -uo pipefail
+            while true; do
+              cat << EOF > /etc/containerd/certs.d/docker.io/hosts.toml
+            server = "https://docker.io"
+            [host."https://registry-1.docker.io"]
+            capabilities = ["pull", "resolve"]
+            EOF
+              sleep 60s
+            done
+        volumeMounts:
+        - mountPath: /etc/containerd/certs.d/docker.io/
+          name: test-volume
+      volumes:
+      - name: test-volume
+        hostPath:
+          path: /etc/containerd/certs.d/docker.io/
