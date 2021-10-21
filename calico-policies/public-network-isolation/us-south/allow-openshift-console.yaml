@@ -1,0 +1,42 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: allow-kube-system-to-olm
+  namespace: kube-system
+spec:
+  order: 1000
+  selector: projectcalico.org/orchestrator == 'k8s'
+  types:
+  - Egress
+  egress:
+  # Allow the VPN client pod to forward connections from the
+  # API server to the operator lifecycle manager pods
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: app == 'vpn'
+    destination:
+      namespaceSelector: projectcalico.org/name == 'openshift-operator-lifecycle-manager'
+      # These are the ports used by the catalog operator and package server
+      ports:
+      - 5443
+      - 8081
+---
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: allow-openshift-console
+  namespace: openshift-ingress
+spec:
+  order: 1000
+  selector: projectcalico.org/orchestrator == 'k8s'
+  types:
+  - Egress
+  egress:
+  # Allow TCP traffic to console pods from ingress (L7 LB)
+  - action: Allow
+    protocol: TCP
+    # Source is implicitly the pods selected by the label selector
+    destination:
+      namespaceSelector: projectcalico.org/name == 'openshift-console'
+      selector: app == 'console'

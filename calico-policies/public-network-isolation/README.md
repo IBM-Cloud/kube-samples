@@ -60,6 +60,7 @@ Along with the default Calico policies that are applied to the public interface 
 | `allow-ibm-ports-public` | Opens ports that are necessary for worker nodes to function properly. |
 | `allow-public-service-endpoint` | Allows worker nodes to communicate with the cluster master through the public service endpoint. |
 | `deny-all-outbound-public` | Denies all egress from worker nodes. Because this policy has a high order, `1850`, its rule is applied last in the chain of Iptables rules that an outgoing packet from a worker node matches against. Other policies in this set have lower orders, so if an outgoing packet matches one of those rules, the packet is permitted. The `deny-all-outbound` policy ensures that if an outgoing packet does not match any polices as it moves through the Iptables rules chain, the packet is denied by this policy. Note that this policy has a lower order then the default policy `allow-all-outbound`.|
+| `allow-openshift-console` | Opens ports that are necessary for Openshift Console to function. Allows traffic from ALB to console and VPN client pod to Operator Lifecycle Manager. NOTE: ***Required for OpenShift***|
 
 ### Optional policies
 
