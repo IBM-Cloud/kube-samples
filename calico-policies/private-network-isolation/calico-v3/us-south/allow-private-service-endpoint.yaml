@@ -11,6 +11,7 @@ spec:
   - action: Allow
     destination:
       nets:
+      # Nets for US South: hou02, mex01, sao01, sjc03, sjc04, dal10, dal12, dal13
       - 166.9.12.140/32
       - 166.9.12.141/32
       - 166.9.12.142/32
@@ -74,6 +75,7 @@ spec:
   - action: Allow
     destination:
       nets:
+      # Nets for US South: hou02, mex01, sao01, sjc03, sjc04, dal10, dal12, dal13
       - 166.9.12.140/32
       - 166.9.12.141/32
       - 166.9.12.142/32
