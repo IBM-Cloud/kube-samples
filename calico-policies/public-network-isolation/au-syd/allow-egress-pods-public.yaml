@@ -51,10 +51,11 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for AP South: syd01, syd04, syd05
+      # Control plane IP addresses for ap-south: syd01, syd04, syd05
       - 130.198.102.82/32
       - 130.198.64.19/32
       - 130.198.66.26/32
+      - 130.198.66.34/32
       - 130.198.79.170/32
       - 130.198.83.34/32
       - 135.90.66.2/32
@@ -74,10 +75,11 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for AP South: syd01, syd04, syd05
+      # Control plane IP addresses for ap-south: syd01, syd04, syd05
       - 130.198.102.82/32
       - 130.198.64.19/32
       - 130.198.66.26/32
+      - 130.198.66.34/32
       - 130.198.79.170/32
       - 130.198.83.34/32
       - 135.90.66.2/32
