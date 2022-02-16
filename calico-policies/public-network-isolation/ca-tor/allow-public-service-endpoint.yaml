@@ -14,13 +14,16 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for Toronto multizone location: tor01, tor04, tor05
-      - 158.85.77.114/32
+      # Control plane IP addresses for ca-tor: tor01, tor04, tor05
       - 158.85.110.18/32
+      - 158.85.65.194/32
+      - 158.85.77.114/32
+      - 163.74.65.18/32
       - 163.74.65.242/32
       - 163.74.65.250/32
-      - 163.75.64.162/32
+      - 163.75.64.114/32
       - 163.75.64.122/32
+      - 163.75.64.162/32
       ports:
       - 20000:32767
       - 443
@@ -29,13 +32,16 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for Toronto multizone location: tor01, tor04, tor05
-      - 158.85.77.114/32
+      # Control plane IP addresses for ca-tor: tor01, tor04, tor05
       - 158.85.110.18/32
+      - 158.85.65.194/32
+      - 158.85.77.114/32
+      - 163.74.65.18/32
       - 163.74.65.242/32
       - 163.74.65.250/32
-      - 163.75.64.162/32
+      - 163.75.64.114/32
       - 163.75.64.122/32
+      - 163.75.64.162/32
       ports:
       - 20000:32767
       - 443

@@ -51,12 +51,15 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for js-osa: osa21, osa22, osa23
+      # Control plane IP addresses for jp-osa: osa21, osa22, osa23
       - 163.68.69.114/32
       - 163.68.69.122/32
+      - 163.68.69.2/32
+      - 163.69.64.250/32
       - 163.69.65.114/32
       - 163.69.65.122/32
       - 163.73.64.250/32
+      - 163.73.65.154/32
       - 163.73.65.194/32
       ports:
       - 20000:32767
@@ -65,12 +68,15 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for js-osa: osa21, osa22, osa23
+      # Control plane IP addresses for jp-osa: osa21, osa22, osa23
       - 163.68.69.114/32
       - 163.68.69.122/32
+      - 163.68.69.2/32
+      - 163.69.64.250/32
       - 163.69.65.114/32
       - 163.69.65.122/32
       - 163.73.64.250/32
+      - 163.73.65.154/32
       - 163.73.65.194/32
       ports:
       - 20000:32767

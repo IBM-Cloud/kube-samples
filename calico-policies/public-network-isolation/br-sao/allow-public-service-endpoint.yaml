@@ -11,12 +11,15 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for São Paulo multizone location: sao01, sao04, sao05
+      # Control plane IP addresses for br-sao: sao01, sao04, sao05
       - 163.107.65.194/32
       - 163.107.65.202/32
+      - 163.107.65.74/32
+      - 163.109.65.146/32
       - 163.109.65.154/32
       - 163.109.65.242/32
       - 169.57.159.130/32
+      - 169.57.161.130/32
       - 169.57.254.50/32
       ports:
       - 20000:32767
@@ -26,12 +29,15 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Nets for São Paulo multizone location: sao01, sao04, sao05
+      # Control plane IP addresses for br-sao: sao01, sao04, sao05
       - 163.107.65.194/32
       - 163.107.65.202/32
+      - 163.107.65.74/32
+      - 163.109.65.146/32
       - 163.109.65.154/32
       - 163.109.65.242/32
       - 169.57.159.130/32
+      - 169.57.161.130/32
       - 169.57.254.50/32
       ports:
       - 20000:32767
