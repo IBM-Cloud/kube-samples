@@ -28,10 +28,11 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Monitoring with Sysdig: US South nets
-      - 166.9.13.52/32
+      # IBM Cloud Monitoring with Sysdig: us-south
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
       - 166.9.14.170/32
       - 166.9.17.11/32
+      - 166.9.48.41/32
       ports:
       - 6443
     protocol: TCP
@@ -39,7 +40,8 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Log Analysis with LogDNA: US South nets
+      # IBM Log Analysis with LogDNA: us-south
+      # Taken from: https://cloud.ibm.com/docs/log-analysis?topic=log-analysis-endpoints
       - 166.9.12.12/32
       - 166.9.12.13/32
       - 166.9.14.2/32

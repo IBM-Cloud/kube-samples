@@ -28,7 +28,8 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Monitoring with Sysdig: EU GB nets
+      # IBM Cloud Monitoring with Sysdig: eu-gb
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
       - 166.9.34.56/32
       - 166.9.36.71/32
       ports:
@@ -38,7 +39,8 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Log Analysis with LogDNA: EU GB nets
+      # IBM Log Analysis with LogDNA: eu-gb
+      # Taken from: https://cloud.ibm.com/docs/log-analysis?topic=log-analysis-endpoints
       - 166.9.34.2/32
       - 166.9.34.4/32
       - 166.9.36.2/32

@@ -28,7 +28,8 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Monitoring with Sysdig: JP Tok nets
+      # IBM Cloud Monitoring with Sysdig: jp-tok
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
       - 166.9.40.35/32
       - 166.9.42.48/32
       - 166.9.44.38/32
@@ -39,10 +40,10 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Log Analysis with LogDNA: JP Tok nets
+      # IBM Log Analysis with LogDNA: jp-tok
+      # Taken from: https://cloud.ibm.com/docs/log-analysis?topic=log-analysis-endpoints
       - 166.9.40.2/32
       - 166.9.40.3/32
-      - 166.9.42.3/32
       - 166.9.42.4/32
       - 166.9.46.5/32
       - 166.9.46.6/32
