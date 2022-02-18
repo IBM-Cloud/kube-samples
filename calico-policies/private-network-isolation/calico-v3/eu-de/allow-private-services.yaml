@@ -28,7 +28,8 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Monitoring with Sysdig: EU Central nets
+      # IBM Cloud Monitoring with Sysdig: eu-de
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
       - 166.9.28.71/32
       - 166.9.30.53/32
       - 166.9.32.51/32
@@ -39,7 +40,8 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Log Analysis with LogDNA: EU DE nets
+      # IBM Log Analysis with LogDNA: eu-de
+      # Taken from: https://cloud.ibm.com/docs/log-analysis?topic=log-analysis-endpoints
       - 166.9.28.2/32
       - 166.9.28.3/32
       - 166.9.32.21/32

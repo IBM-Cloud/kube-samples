@@ -28,7 +28,8 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Monitoring with Sysdig: US East nets
+      # IBM Cloud Monitoring with Sysdig: us-east
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
       - 166.9.20.53/32
       - 166.9.22.50/32
       - 166.9.24.43/32
@@ -39,7 +40,8 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Log Analysis with LogDNA: US East nets
+      # IBM Log Analysis with LogDNA: us-east
+      # Taken from: https://cloud.ibm.com/docs/log-analysis?topic=log-analysis-endpoints
       - 166.9.20.72/32
       - 166.9.20.73/32
       - 166.9.22.35/32

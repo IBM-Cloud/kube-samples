@@ -31,10 +31,11 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Monitoring with Sysdig: JP Tok nets
-      - 166.9.40.35/32
-      - 166.9.42.48/32
-      - 166.9.44.38/32
+      # IBM Cloud Monitoring with Sysdig: jp-osa
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
+      - 166.9.70.14/32
+      - 166.9.71.15/32
+      - 166.9.72.14/32
       ports:
       - 6443
     protocol: TCP
@@ -42,15 +43,14 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Log Analysis with LogDNA: JP Tok nets
-      - 166.9.40.2/32
-      - 166.9.40.3/32
-      - 166.9.42.3/32
-      - 166.9.42.4/32
-      - 166.9.46.5/32
-      - 166.9.46.6/32
-      - 166.9.60.6/32
-      - 166.9.60.7/32
+      # IBM Log Analysis with LogDNA: jp-osa
+      # Taken from: https://cloud.ibm.com/docs/log-analysis?topic=log-analysis-endpoints
+      - 166.9.70.19/32
+      - 166.9.70.21/32
+      - 166.9.71.20/32
+      - 166.9.71.21/32
+      - 166.9.72.19/32
+      - 166.9.72.21/32
       ports:
       - 80
       - 443
