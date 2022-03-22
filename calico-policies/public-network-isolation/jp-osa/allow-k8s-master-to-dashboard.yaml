@@ -1,0 +1,25 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: allow-k8s-master-to-dashboard-via-vpn
+  namespace: kube-system
+spec:
+  order: 1000
+  # NOTE: We select the OpenVPN client/konnectivity agent pods specifically.
+  # This means they are the implicit source for egress traffic
+  # and implicit destination for ingress traffic designations.
+  selector: kubernetes-dashboard-policy == 'allow'
+  types:
+  - Egress
+  egress:
+  # Allow the vpn/konnectivity pods to forward connections
+  # from the API server to the kube-dashboard pod
+  - action: Allow
+    protocol: TCP
+    # Source is implicitly the pods selected by the policy level label selector.
+    destination:
+      selector: k8s-app == 'kubernetes-dashboard'
+      # These are the ports used by the kubernetes dashboard pod and service
+      ports:
+      - 8443
+      - 443
