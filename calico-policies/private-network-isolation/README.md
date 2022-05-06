@@ -2,7 +2,7 @@
 
 This set of Calico policies and host endpoints isolate the private network traffic of a cluster from other resources in the account's private network, while allowing communication on the private network that is necessary for the cluster to function. The policies target the private interface (eth0) and the pod network of a cluster.
 
-> NOTE: Upcoming change to folder structure of the private network Calico policies. We are removing the empty `calico-v3` directory to match the public network policy structure. The v3 folder will be removed on 20 May 2022.
+> NOTE: Upcoming change to folder structure of the private network Calico policies. We are removing the empty `calico-v3` directory to match the public network policy structure. The v3 folder will be removed on 20 May 2022. The change will be merged with PR: https://github.com/IBM-Cloud/kube-samples/pull/195
 
 For more information on how to use these policies, see the [IBM Cloud Kubernetes Service documentation](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#isolate_workers).
 
