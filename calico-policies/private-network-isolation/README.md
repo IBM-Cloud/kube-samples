@@ -2,9 +2,11 @@
 
 This set of Calico policies and host endpoints isolate the private network traffic of a cluster from other resources in the account's private network, while allowing communication on the private network that is necessary for the cluster to function. The policies target the private interface (eth0) and the pod network of a cluster.
 
+> NOTE: Upcoming change to folder structure of the private network Calico policies. We are removing the empty `calico-v3` directory to match the public network policy structure. The v3 folder will be removed on 20 May 2022.
+
 For more information on how to use these policies, see the [IBM Cloud Kubernetes Service documentation](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#isolate_workers).
 
-**NOTE**: If your worker nodes are attached to both a public and private VLAN, a public NodePort is still open on every worker node. In addition to these policies, you can also create a [Calico preDNAT network policy to block traffic to the public NodePorts](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#block_ingress).
+> NOTE: If your worker nodes are attached to both a public and private VLAN, a public NodePort is still open on every worker node. In addition to these policies, you can also create a [Calico preDNAT network policy to block traffic to the public NodePorts](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#block_ingress).
 
 ## Regions
 
@@ -60,7 +62,7 @@ These policies specify worker node egress to `172.30.0.0/16` as the default pod 
 | `allow-private-service-endpoint` | Allows worker nodes to communicate with the cluster master through the private service endpoint. |
 | `allow-sys-mgmt-private` | Allows egress and ingress to the IBM Cloud Classic infrastructure private subnets so that you can create worker nodes in your cluster. |
 | `generic-privatehostendpoint` | **OpenShift 3.11 clusters only**: Sets up private host endpoints for your worker nodes so that the other policies in this set can target the worker node private interface (eth0) of worker nodes. Each time you add a worker node to a cluster, you must update the host endpoints file with the new entries. |
-| `deny-all-private-default` | Denies all ingress to and egress from worker nodes on the private network. Because this policy has a high order, its rule is applied last in the chain of Iptables rules that an outgoing packet from a worker node matches against. Other policies in this set have lower orders, so if an outgoing packet matches one of those rules, the packet is permitted. The `deny-all-private-default` policy ensures that if traffic does not match any polices as it moves through the Iptables rules chain, the packet is denied by this policy.|
+| `deny-all-private-default` | Denies all ingress to and egress from worker nodes on the private network. Because this policy has a high order, its rule is applied last in the chain of Iptables rules that an outgoing packet from a worker node matches against. Other policies in this set have lower orders, so if an outgoing packet matches one of those rules, the packet is permitted. The `deny-all-private-default` policy ensures that if traffic does not match any policies as it moves through the Iptables rules chain, the packet is denied by this policy.|
 
 ### Optional policies
 
@@ -69,3 +71,9 @@ These policies specify worker node egress to `172.30.0.0/16` as the default pod 
 | `allow-private-services` | Allows workers to access other IBM Cloud services that support communication over the private network through private service endpoints. |
 | `allow-private-services-pods` | Allows pods to access other IBM Cloud services that support communication over the private network through private service endpoints. |
 | `allow-vrrp-private` | Opens the VRRP protocol to use Kubernetes load balancer services. |
+
+
+### Other files
+|Policy name|Description|
+|-----------|-----------|
+| `private-ips.md` | Include a raw list of the private IPs needed to allow worker nodes to communicate with the cluster master through the private service endpoint. |
