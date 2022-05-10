@@ -68,3 +68,8 @@ Along with the default Calico policies that are applied to the public interface 
 |-----------|-----------|
 | `allow-public-services` | Allows workers to access specified IBM Cloud services over the public network. |
 | `allow-public-services-pods` | Allows pods to access specified IBM Cloud services over the public network. |
+
+### Other files
+|Policy name|Description|
+|-----------|-----------|
+| `public-ips.md` | Include a raw list of the public IPs needed to allow worker nodes to communicate with the cluster master through the private service endpoint. |
