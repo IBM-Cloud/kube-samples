@@ -12,6 +12,7 @@ spec:
     destination:
       nets:
       # Control plane IP addresses for us-east: mon01, tor01, wdc04, wdc06, wdc07
+      - 158.85.97.34/32
       - 169.47.162.130/32
       - 169.47.174.106/32
       - 169.53.167.50/32
@@ -49,6 +50,7 @@ spec:
     destination:
       nets:
       # Control plane IP addresses for us-east: mon01, tor01, wdc04, wdc06, wdc07
+      - 158.85.97.34/32
       - 169.47.162.130/32
       - 169.47.174.106/32
       - 169.53.167.50/32
