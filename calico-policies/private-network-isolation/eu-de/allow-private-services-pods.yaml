@@ -20,6 +20,14 @@ spec:
       - 166.9.28.35/32
       - 166.9.30.2/32
       - 166.9.32.2/32
+      # IBM Cloud Container Registry: New Global registry
+      - 166.9.251.49/32
+      - 166.9.251.82/32
+      - 166.9.251.113/32
+      # IBM Cloud Container Registry: New EU Central nets for your own registry
+      - 166.9.248.76/32
+      - 166.9.248.105/32
+      - 166.9.248.136/32
       ports:
       - 443
       - 4443

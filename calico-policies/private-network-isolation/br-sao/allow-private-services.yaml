@@ -23,6 +23,17 @@ spec:
       - 166.9.82.13/32
       - 166.9.83.13/32
       - 166.9.84.13/32
+      # IBM Cloud Container Registry: New Global registry
+      - 166.9.251.49/32
+      - 166.9.251.82/32
+      - 166.9.251.113/32
+      # IBM Cloud Container Registry: New US South, US East, and São Paulo nets for your own registry
+      - 166.9.250.214/32
+      - 166.9.250.246/32
+      - 166.9.251.21/32
+      - 166.9.246.72/32
+      - 166.9.246.104/32
+      - 166.9.246.130/32
       ports:
       - 443
       - 4443
