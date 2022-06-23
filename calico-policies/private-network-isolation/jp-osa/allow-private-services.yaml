@@ -23,6 +23,17 @@ spec:
       - 166.9.40.20/32
       - 166.9.42.21/32
       - 166.9.44.12/32
+      # IBM Cloud Container Registry: New Global registry
+      - 166.9.251.49/32
+      - 166.9.251.82/32
+      - 166.9.251.113/32
+      # IBM Cloud Container Registry: New AP North, Osaka nets for your own registry
+      - 166.9.247.39/32
+      - 166.9.247.73/32
+      - 166.9.247.105/32
+      - 166.9.249.104/32
+      - 166.9.249.157/32
+      - 166.9.249.168/32
       ports:
       - 443
       - 4443
