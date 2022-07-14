@@ -24,10 +24,13 @@ spec:
       - 166.9.251.49/32
       - 166.9.251.82/32
       - 166.9.251.113/32
-      # IBM Cloud Container Registry: New AP North nets for your own registry
+      # IBM Cloud Container Registry: New AP North, AP South nets for your own registry
       - 166.9.249.104/32
       - 166.9.249.157/32
       - 166.9.249.168/32
+      - 166.9.244.106/32
+      - 166.9.244.136/32
+      - 166.9.244.170/32
       ports:
       - 443
       - 4443
