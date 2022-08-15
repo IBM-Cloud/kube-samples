@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ibm-k8s-controller-config
+  namespace: kube-system
+data:
+  allow-snippet-annotations: "false"
+  client-body-buffer-size: 128k
+  enable-multi-accept: "false"
+  enable-underscores-in-headers: "true"
+  http-snippet: |
+    server {
+    	listen %[1]d;
+    	listen [::]:%[1]d;
+    	location / {
+    		add_header Content-Type text/plain;
+    		return 200 'healthy';
+    	}
+    }
+    server {
+    	listen %[2]d default_server;
+    	listen [::]:%[2]d default_server;
+    	location / {
+    		default_type text/html;
+    		return 404 '<html><h1>Error 404</h1><br/>Page Not Found</html>';
+    	}
+    }
+    map $upstream_status $sanitized_upstream_status {
+    	default  $upstream_status;
+    	''       -1;
+    	'-'      -1;
+    }
+    map $upstream_response_time $sanitized_upstream_response_time {
+    	default  $upstream_response_time;
+    	''       -1;
+    	'-'      -1;
+    }
+    map $upstream_connect_time $sanitized_upstream_connect_time {
+    	default  $upstream_connect_time;
+    	''       -1;
+    	'-'      -1;
+    }
+    map $upstream_header_time $sanitized_upstream_header_time {
+    	default  $upstream_header_time;
+    	''       -1;
+    	'-'      -1;
+    }
+  map-hash-bucket-size: "128"
+  max-worker-connections: "64510"
+  proxy-body-size: 2m
+  proxy-ssl-location-only: "true"
+  server-name-hash-bucket-size: "1024"
+  server-name-hash-max-size: "16384"
+  server-tokens: "false"
+  ssl-ciphers: HIGH:!aNULL:!MD5:!CAMELLIA:!AESCCM:!ECDH+CHACHA20:!ARIA:!CBC:!SHA1:!SHA256:!SHA384:!DHE-RSA-CHACHA20-POLY1305:!GOST2001-GOST89-GOST89:!GOST2012256-GOST89-GOST89
+  ssl-session-cache: "true"
+  ssl-session-cache-size: 10m
