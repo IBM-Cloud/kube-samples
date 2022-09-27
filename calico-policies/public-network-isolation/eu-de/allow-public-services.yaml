@@ -15,6 +15,7 @@ spec:
       - 169.60.98.80/29
       - 169.62.37.240/29
       - 169.63.104.232/29
+      - 169.47.153.160/28 
       # IBM Cloud Container Registry: EU Central nets for your own registry
       - 149.81.79.152/29
       - 161.156.93.16/29

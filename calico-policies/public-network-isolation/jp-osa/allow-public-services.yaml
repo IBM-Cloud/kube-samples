@@ -15,6 +15,7 @@ spec:
       - 169.60.98.80/29
       - 169.62.37.240/29
       - 169.63.104.232/29
+      - 169.47.153.160/28 
       # IBM Cloud Container Registry: AP North, Osaka, AP South nets for your own registry
       - 163.68.67.32/28
       - 163.69.67.0/28
