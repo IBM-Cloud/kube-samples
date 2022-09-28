@@ -15,6 +15,7 @@ spec:
       - 169.60.98.80/29
       - 169.62.37.240/29
       - 169.63.104.232/29
+      - 169.47.153.160/28 
       # IBM Cloud Container Registry: US South, US East, and São Paulo nets for your own registry
       - 163.107.68.16/29
       - 163.109.67.96/29
