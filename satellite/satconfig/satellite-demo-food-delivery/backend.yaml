@@ -1,0 +1,254 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apiservice
+  namespace: {{YOUR_NAMESPACE}}
+  labels:
+    razee/watch-resource: detail
+spec:
+  selector:
+    matchLabels:
+      name: apiservice
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: apiservice
+    spec:
+      containers:
+        - image: anthonyamanse/apiservice:1.0.ddc
+          name: apiservice
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: STATUS_SERVICE
+              value: 'http://status:8080'
+            - name: BOOTSTRAP_SERVERS
+              value: 'kafka:9092'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apiservice
+  namespace: {{YOUR_NAMESPACE}}
+  labels:
+    razee/watch-resource: detail
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    name: apiservice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: courier
+  namespace: {{YOUR_NAMESPACE}}
+  labels:
+    razee/watch-resource: detail
+spec:
+  selector:
+    matchLabels:
+      name: courier
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: courier
+    spec:
+      containers:
+        - image: anthonyamanse/courierconsumer:1.0.ddc
+          imagePullPolicy: Always
+          name: courier
+          env:
+            - name: MONGODB_REPLICA_HOSTNAMES
+              value: 'mongo:27017'
+            - name: BOOTSTRAP_SERVERS
+              value: 'kafka:9092'
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kitchen
+  namespace: {{YOUR_NAMESPACE}}
+  labels:
+    razee/watch-resource: detail
+spec:
+  selector:
+    matchLabels:
+      name: kitchen
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: kitchen
+    spec:
+      containers:
+        - image: anthonyamanse/kitchenconsumer:1.0.ddc
+          imagePullPolicy: Always
+          name: kitchen
+          env:
+            - name: MONGODB_REPLICA_HOSTNAMES
+              value: 'mongo:27017'
+            - name: BOOTSTRAP_SERVERS
+              value: 'kafka:9092'
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders
+  namespace: {{YOUR_NAMESPACE}}
+  labels:
+    razee/watch-resource: detail
+spec:
+  selector:
+    matchLabels:
+      name: orders
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: orders
+    spec:
+      containers:
+        - image: anthonyamanse/orderconsumer:1.0.ddc
+          imagePullPolicy: Always
+          name: orders
+          env:
+            - name: MONGODB_REPLICA_HOSTNAMES
+              value: 'mongo:27017'
+            - name: BOOTSTRAP_SERVERS
+              value: 'kafka:9092'
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podconsumerdata
+  namespace: {{YOUR_NAMESPACE}}
+  labels:
+    razee/watch-resource: detail
+spec:
+  selector:
+    matchLabels:
+      name: podconsumerdata
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: podconsumerdata
+    spec:
+      serviceAccountName: deployer
+      containers:
+        - image: anthonyamanse/poddata:1.0.ddc
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          name: podconsumerdata
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: podconsumerdata
+  namespace: {{YOUR_NAMESPACE}}
+  labels:
+    razee/watch-resource: detail
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    name: podconsumerdata
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: realtimedata
+  namespace: {{YOUR_NAMESPACE}}
+  labels:
+    razee/watch-resource: detail
+spec:
+  selector:
+    matchLabels:
+      name: realtimedata
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: realtimedata
+    spec:
+      containers:
+        - image: anthonyamanse/realtimedata:1.0.ddc
+          imagePullPolicy: Always
+          name: realtimedata
+          ports:
+            - containerPort: 8080
+          env:
+            - name: BOOTSTRAP_SERVERS
+              value: 'kafka:9092'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: realtimedata
+  namespace: {{YOUR_NAMESPACE}}
+  labels:
+    razee/watch-resource: detail
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    name: realtimedata
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: status
+  namespace: {{YOUR_NAMESPACE}}
+  labels:
+    razee/watch-resource: detail
+spec:
+  selector:
+    matchLabels:
+      name: status
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: status
+    spec:
+      containers:
+        - image: anthonyamanse/statusservice:1.0.ddc
+          imagePullPolicy: Always
+          name: status
+          ports:
+            - containerPort: 8080
+          env:
+            - name: REDIS_URL
+              value: 'redis'
+            - name: REDIS_PORT
+              value: '6379'
+            - name: BOOTSTRAP_SERVERS
+              value: 'kafka:9092'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: status
+  namespace: {{YOUR_NAMESPACE}}
+  labels:
+    razee/watch-resource: detail
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    name: status

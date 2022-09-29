@@ -1,0 +1,135 @@
+# single replica - no persistence
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+  namespace: {{YOUR_NAMESPACE}}
+spec:
+  selector:
+    matchLabels:
+      name: mongo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: mongo
+        version: v1
+    spec:
+      containers:
+        - image: mongo
+          name: mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - mountPath: /data/db
+              name: data
+      volumes:
+      - name: data
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  namespace: {{YOUR_NAMESPACE}}
+spec:
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    name: mongo
+# no persistence
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: {{YOUR_NAMESPACE}}
+spec:
+  selector:
+    matchLabels:
+      name: redis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: redis
+        version: v1
+    spec:
+      containers:
+        - image: redis
+          name: redis
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - mountPath: /data
+              name: data
+      volumes:
+      - name: data
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: {{YOUR_NAMESPACE}}
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+  selector:
+    name: redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+  namespace: {{YOUR_NAMESPACE}}
+spec:
+  ports:
+    - port: 9092
+      protocol: TCP
+      targetPort: 9092
+  selector:
+    name: kafka
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka
+  namespace: {{YOUR_NAMESPACE}}
+spec:
+  selector:
+    matchLabels:
+      name: kafka
+  template:
+    metadata:
+      labels:
+        name: kafka
+    spec:
+      containers:
+      - image: bitnami/zookeeper:3.6.3
+        name: zookeeper
+        env:
+        - name: ALLOW_ANONYMOUS_LOGIN
+          value: 'yes'
+        ports:
+        - containerPort: 2181
+          name: zookeeper
+      - image: bitnami/kafka:2.8.0
+        name: kafka
+        env:
+        - name: KAFKA_BROKER_ID
+          value: '1'
+        - name: KAFKA_CFG_LISTENERS
+          value: 'PLAINTEXT://:9092'
+        - name: KAFKA_CFG_ADVERTISED_LISTENERS
+          value: 'PLAINTEXT://kafka:9092'
+        - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+          value: 'localhost:2181'
+        - name: ALLOW_PLAINTEXT_LISTENER
+          value: 'yes'
+        ports:
+        - containerPort: 9092
+          name: kafka

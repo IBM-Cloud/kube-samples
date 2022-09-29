@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-food
+  namespace: {{YOUR_NAMESPACE}}
+  labels:
+    razee/watch-resource: detail
+spec:
+  selector:
+    matchLabels:
+      name: example-food
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: example-food
+    spec:
+      containers:
+        - image: anthonyamanse/example-food-frontend:1.0.ddc
+          name: example-food
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8090
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-food
+  namespace: {{YOUR_NAMESPACE}}
+  labels:
+    razee/watch-resource: detail
+spec:
+  ports:
+    - port: 8090
+      targetPort: 8090
+  selector:
+    name: example-food
