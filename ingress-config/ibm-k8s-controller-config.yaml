@@ -8,6 +8,13 @@ data:
   client-body-buffer-size: 128k
   enable-multi-accept: "false"
   enable-underscores-in-headers: "true"
+  log-format-escape-json: "true"
+  log-format-upstream: '{"time_date": "$time_iso8601", "client": "$remote_addr", "host":
+    "$http_host", "scheme": "$scheme", "request_method": "$request_method", "request_uri":
+    "$uri", "request_id": "$request_id", "status": $status, "upstream_addr": "$upstream_addr",
+    "upstream_status": $sanitized_upstream_status, "request_time": $request_time,
+    "upstream_response_time": $sanitized_upstream_response_time, "upstream_connect_time":
+    $sanitized_upstream_connect_time, "upstream_header_time": $sanitized_upstream_header_time}'
   map-hash-bucket-size: "128"
   max-worker-connections: "64510"
   proxy-body-size: 2m
