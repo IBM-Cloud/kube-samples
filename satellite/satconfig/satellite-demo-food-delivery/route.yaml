@@ -1,0 +1,119 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: example-food
+  namespace: food-app-demo
+  labels:
+    razee/watch-resource: lite
+spec:
+  port:
+    targetPort: 8090
+  to:
+    kind: Service
+    name: example-food
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: apiservice-path-creatorder
+  namespace: food-app-demo
+  labels:
+    razee/watch-resource: lite
+spec:
+  path: "/createOrder"
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: apiservice
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: apiservice-path-status
+  namespace: food-app-demo
+  labels:
+    razee/watch-resource: lite
+spec:
+  path: "/status"
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: apiservice
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: apiservice-path-restaurants
+  namespace: food-app-demo
+  labels:
+    razee/watch-resource: lite
+spec:
+  path: "/restaurants"
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: apiservice
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: apiservice-path-user
+  namespace: food-app-demo
+  labels:
+    razee/watch-resource: lite
+spec:
+  path: "/user"
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: apiservice
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: realtimedata-path-events
+  namespace: food-app-demo
+  labels:
+    razee/watch-resource: lite
+spec:
+  path: "/events"
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: realtimedata
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: podconsumerdata-path-consumers
+  namespace: food-app-demo
+  labels:
+    razee/watch-resource: lite
+spec:
+  path: "/consumers"
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: podconsumerdata
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: favorites-path
+  namespace: food-app-demo
+  labels:
+    razee/watch-resource: lite
+spec:
+  path: "/favorites"
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: ksql-controller
+---
