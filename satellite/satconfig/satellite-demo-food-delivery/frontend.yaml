@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: example-food
-  namespace: {{YOUR_NAMESPACE}}
+  namespace: food-app-demo
   labels:
     razee/watch-resource: detail
 spec:
@@ -27,7 +27,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: example-food
-  namespace: {{YOUR_NAMESPACE}}
+  namespace: food-app-demo
   labels:
     razee/watch-resource: detail
 spec:
