@@ -5,7 +5,7 @@ metadata:
   name: roks-cis-node
   namespace: openshift-compliance
 spec:
-description: "IBM ROKS tailored scan"
+  description: "IBM ROKS tailored scan"
   setValues:
     - name: ocp4-var-kubelet-evictionhard-imagefs-available
       rationale: "stricter than default"
