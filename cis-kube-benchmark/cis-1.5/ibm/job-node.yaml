@@ -48,6 +48,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: kube-bench-node
+  namespace: ibm-kube-bench-test
 spec:
   template:
     spec:
