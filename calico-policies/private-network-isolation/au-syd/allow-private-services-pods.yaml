@@ -12,19 +12,11 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Container Registry: Global registry
-      - 166.9.20.31/32
-      - 166.9.22.22/32
-      - 166.9.24.16/32
-      # IBM Cloud Container Registry: AP South nets for your own registry
-      - 166.9.52.20/32
-      - 166.9.54.19/32
-      - 166.9.56.13/32
-      # IBM Cloud Container Registry: Global registry new subnets
+      # IBM Cloud Container Registry: Global (US East) registry subnets
       - 166.9.251.49/32
       - 166.9.251.82/32
       - 166.9.251.113/32
-      # IBM Cloud Container Registry: AP South registry new subnets
+      # IBM Cloud Container Registry: AP South registry subnets
       - 166.9.244.106/32
       - 166.9.244.136/32
       - 166.9.244.170/32
