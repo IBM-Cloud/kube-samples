@@ -5,7 +5,7 @@ metadata:
   name: roks-cis-node
   namespace: openshift-compliance
 spec:
-description: "IBM ROKS tailored scan"
+  description: "IBM ROKS tailored scan"
   setValues:
     - name: ocp4-var-kubelet-evictionhard-imagefs-available
       rationale: "stricter than default"
@@ -27,7 +27,7 @@ description: "IBM ROKS tailored scan"
       value: "10%"
   disableRules:
     - name: ocp4-kubelet-authorization-mode
-      rationale: Open issue with upstream repo to correct check https://github.com/ComplianceAsCode/content/issues/6658 
+      rationale: Open issue with upstream repo to correct check https://github.com/ComplianceAsCode/content/issues/6658
     - name: ocp4-file-permissions-kube-apiserver
       rationale: Target file is protected by managed service.
     - name: ocp4-file-owner-kube-apiserver
@@ -167,6 +167,6 @@ description: "IBM ROKS tailored scan"
     - name: ocp4-kubelet-enable-cert-rotation
       rationale: Red Hat Openshift on IBM Cloud rotates certs on every worker reload/update/provision/replace.
     - name: ocp4-kubelet-enable-protect-kernel-defaults
-      rationale: Red Hat Openshift on IBM Cloud does not enable this flag so that you can optionally tune kernel parameters. 
+      rationale: Red Hat Openshift on IBM Cloud does not enable this flag so that you can optionally tune kernel parameters.
   extends: ocp4-cis-node
   title: CIS Benchmark for OpenShift - Red Hat Openshift on IBM Cloud node
