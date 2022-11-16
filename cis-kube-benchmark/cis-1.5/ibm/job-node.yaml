@@ -1,3 +1,11 @@
+# NOTE(Evan-Reilly): IBM Cloud Kubernetes Services versions 1.23 and earlier
+# use pod security policies (PSPs) for pod security. Version 1.24 uses
+# PSPs by default and can optionally use pod security admission. Versions
+# 1.25 and later use pod security admission only. Red Hat OpenShift on
+# IBM Cloud uses security context constraints (SCCs) for pod security.
+# And starting with version 4.11, pod security admission is also used.
+# The Kubernetes resources in this file handle all of these pod security
+# use cases.
 ---
 apiVersion: v1
 kind: Namespace
@@ -18,7 +26,6 @@ metadata:
   name: kube-bench-node
   namespace: ibm-kube-bench-test
 ---
-# IBM Cloud Kubernetes Services uses pod security policies (PSPs) for pod security.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
@@ -32,7 +39,6 @@ subjects:
 - kind: ServiceAccount
   name: kube-bench-node
 ---
-# Red Hat OpenShift on IBM Cloud uses security context constraints (SCCs) for pod security.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
