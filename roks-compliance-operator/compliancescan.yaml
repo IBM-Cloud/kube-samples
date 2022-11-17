@@ -15,4 +15,4 @@ spec:
   scanTolerations:
     - operator: Exists
   content: ssg-rhcos4-ds.xml
-  profile: xccdf_org.ssgproject.content_profile_moderate
+  profile: roks-cis-node
