@@ -1,0 +1,18 @@
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ComplianceScan
+metadata:
+  name: example-compliancescan-node
+  namespace: openshift-compliance
+spec:
+  strictNodeScan: true
+  showNotApplicable: false
+  rawResultStorage:
+    pvAccessModes:
+      - ReadWriteOnce
+    rotation: 3
+    size: 1Gi
+  scanType: Node
+  scanTolerations:
+    - operator: Exists
+  content: ssg-rhcos4-ds.xml
+  profile: xccdf_org.ssgproject.content_profile_moderate
