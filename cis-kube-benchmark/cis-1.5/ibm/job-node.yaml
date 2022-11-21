@@ -1,14 +1,36 @@
+# NOTE(Evan-Reilly): IBM Cloud Kubernetes Services versions 1.23 and earlier
+# use pod security policies (PSPs) for pod security. Version 1.24 uses
+# PSPs by default and can optionally use pod security admission. Versions
+# 1.25 and later use pod security admission only. Red Hat OpenShift on
+# IBM Cloud uses security context constraints (SCCs) for pod security.
+# And starting with version 4.11, pod security admission is also used.
+# The Kubernetes resources in this file handle all of these pod security
+# use cases.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ibm-kube-bench-test
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/audit: privileged
+    pod-security.kubernetes.io/audit-version: latest
+    pod-security.kubernetes.io/warn: privileged
+    pod-security.kubernetes.io/warn-version: latest
+    security.openshift.io/scc.podSecurityLabelSync: "false"
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: kube-bench-node
+  namespace: ibm-kube-bench-test
 ---
-# IBM Cloud Kubernetes Services uses pod security policies (PSPs) for pod security.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: kube-bench-node-psp
+  namespace: ibm-kube-bench-test
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -17,11 +39,11 @@ subjects:
 - kind: ServiceAccount
   name: kube-bench-node
 ---
-# Red Hat OpenShift on IBM Cloud uses security context constraints (SCCs) for pod security.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: kube-bench-node-scc
+  namespace: ibm-kube-bench-test
 rules:
 - apiGroups:
   - security.openshift.io
@@ -36,6 +58,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: kube-bench-node-scc
+  namespace: ibm-kube-bench-test
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -48,6 +71,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: kube-bench-node
+  namespace: ibm-kube-bench-test
 spec:
   template:
     spec:
@@ -55,7 +79,7 @@ spec:
       hostPID: true
       containers:
       - name: kube-bench
-        image: aquasec/kube-bench:0.2.3
+        image: docker.io/aquasec/kube-bench:0.2.3
         command: ["kube-bench", "--v=2", "node", "--benchmark", "ibm"]
         volumeMounts:
         - name: var-lib-kubelet
