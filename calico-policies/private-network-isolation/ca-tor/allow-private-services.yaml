@@ -12,22 +12,11 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Container Registry: Global registry
-      - 166.9.20.31/32
-      - 166.9.22.22/32
-      - 166.9.24.16/32
-      # IBM Cloud Container Registry: US South, US East, Toronto nets for your own registry
-      - 166.9.76.12/32
-      - 166.9.77.11/32
-      - 166.9.78.11/32
-      - 166.9.12.227/32
-      - 166.9.15.116/32
-      - 166.9.16.244/32
-      # IBM Cloud Container Registry: New Global registry
+      # IBM Cloud Container Registry: Global (US East) registry subnets
       - 166.9.251.49/32
       - 166.9.251.82/32
       - 166.9.251.113/32
-      # IBM Cloud Container Registry: New US South, US East, Toronto nets for your own registry
+      # IBM Cloud Container Registry: US South, Toronto subnets
       - 166.9.250.214/32
       - 166.9.250.246/32
       - 166.9.251.21/32
