@@ -37,16 +37,11 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Monitoring with Sysdig: EU Central nets
+      # IBM Cloud Monitoring with Sysdig: eu-de
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
       - 149.81.77.78/32
-      - 149.81.96.226/32
-      - 149.81.96.229/32
-      - 158.177.136.58/32
-      - 158.177.136.59/32
-      - 159.122.102.38/32
       - 161.156.102.206/32
-      - 161.156.75.98/32
-      - 161.156.75.99/32
+      - 159.122.102.38/32
       ports:
       - 6443
     protocol: TCP
