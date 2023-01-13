@@ -43,6 +43,11 @@ spec:
   - action: Allow
     destination:
       nets:
+      # IBM Cloud Monitoring with Sysdig: ca-tor
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
+      - 163.74.69.186/32
+      - 158.85.94.130/32
+      - 163.75.65.237/32
       # IBM Cloud Monitoring with Sysdig: US East nets
       - 169.47.136.237/32
       - 169.47.35.174/32

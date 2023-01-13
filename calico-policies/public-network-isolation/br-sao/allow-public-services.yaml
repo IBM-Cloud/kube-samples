@@ -43,6 +43,11 @@ spec:
   - action: Allow
     destination:
       nets:
+      # IBM Cloud Monitoring with Sysdig: br-sao
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
+      - 163.107.66.98/32
+      - 163.109.67.242/32
+      - 169.57.141.43/32
       # IBM Cloud Monitoring with Sysdig: US South nets
       - 169.46.0.70/32
       - 169.47.102.30/32

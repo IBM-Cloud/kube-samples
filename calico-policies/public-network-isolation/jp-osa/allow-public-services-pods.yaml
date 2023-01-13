@@ -49,7 +49,12 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Monitoring with Sysdig: AP North nets
+      # IBM Cloud Monitoring with Sysdig: jp-osa
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
+      - 163.68.67.98/32
+      - 163.69.66.170/32
+      - 163.73.67.180/32
+      # backup pools IBM Cloud Monitoring with Sysdig: AP North nets
       - 128.168.75.14/32
       - 128.168.91.236/32
       - 128.168.91.238/32
