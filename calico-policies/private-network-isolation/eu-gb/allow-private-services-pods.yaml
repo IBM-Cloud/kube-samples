@@ -47,11 +47,11 @@ spec:
       - 166.9.36.3/32
       - 166.9.38.4/32
       - 166.9.38.5/32
-      # New IPs added by perik@us.ibm.com 1/19/2023
+      # New IP addresses added by perik@us.ibm.com 1/19/2023
       - 166.9.36.105/32 
       - 166.9.34.79/32 
       - 166.9.38.84/32
-      # End New IP list
+      # End new IP address list
       ports:
       - 80
       - 443
