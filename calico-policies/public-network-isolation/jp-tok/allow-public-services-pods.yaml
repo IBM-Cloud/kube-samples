@@ -85,7 +85,7 @@ spec:
       ports:
       - 443
       - 80
-    prEtocol: TCP
+    protocol: TCP
     source: {}
   - action: Allow
     destination:
