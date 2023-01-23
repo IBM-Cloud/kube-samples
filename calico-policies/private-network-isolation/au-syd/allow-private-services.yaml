@@ -46,7 +46,7 @@ spec:
       - 166.9.52.5/32
       - 166.9.56.3/32
       - 166.9.56.20/32
-      # New IP addresses added by perik@us.ibm.com 1/20/2023
+      # New IP addresses added on 1/20/2023
       - 166.9.56.79/32
       - 166.9.52.82/32 
       - 166.9.54.129/32
