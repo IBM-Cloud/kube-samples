@@ -42,6 +42,11 @@ spec:
       nets:
       # IBM Log Analysis with LogDNA: au-syd
       # Taken from: https://cloud.ibm.com/docs/log-analysis?topic=log-analysis-endpoints
+      # New IP addresses added on 1/19/2023
+      - 166.9.56.79/32
+      - 166.9.52.82/32 
+      - 166.9.54.129/32
+      # End new IP address list
       - 166.9.52.2/32
       - 166.9.52.5/32
       - 166.9.56.3/32
