@@ -68,7 +68,7 @@ spec:
       # New IP addresses added on 1/19/2023
       - 52.117.134.204/32
       - 50.22.151.6/32
-      - 67.228.208.253/21
+      - 67.228.208.253/32
       # End new IP address list
       ports:
       - 443
