@@ -1,0 +1,50 @@
+# This policy allows outgoing network traffic from worker nodes in each zone of
+# your cluster to the cluster master through the public service endpoint. Note
+# that you must allow outgoing traffic for all of the zones within the region.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-public-service-endpoint
+spec:
+  egress:
+  - action: Allow
+    destination:
+      nets:
+      # Control plane IP addresses for eu-es: mad02, mad04, mad05
+      - 13.120.127.250/32
+      - 13.120.127.26/32
+      - 13.120.65.98/32
+      - 13.121.64.178/32
+      - 13.121.64.186/32
+      - 13.121.64.26/32
+      - 13.122.64.138/32
+      - 13.122.65.10/32
+      - 13.122.65.34/32
+      ports:
+      - 20000:32767
+      - 443
+    protocol: UDP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # Control plane IP addresses for eu-es: mad02, mad04, mad05
+      - 13.120.127.250/32
+      - 13.120.127.26/32
+      - 13.120.65.98/32
+      - 13.121.64.178/32
+      - 13.121.64.186/32
+      - 13.121.64.26/32
+      - 13.122.64.138/32
+      - 13.122.65.10/32
+      - 13.122.65.34/32
+      ports:
+      - 20000:32767
+      - 443
+    protocol: TCP
+    source: {}
+  order: 1500
+  selector: ibm.role == 'worker_public'
+  types:
+  - Egress
