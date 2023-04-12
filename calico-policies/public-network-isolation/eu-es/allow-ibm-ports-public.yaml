@@ -1,0 +1,93 @@
+# This policy opens port 53 and 5353 for DNS,
+# port 2049 for communication with NFS file servers, ports 443 and 3260,
+# for communication to block storage, port 5473 for communication to the
+# calico-typha ClusterIP, port 2040 and 443 for the master
+# API server local proxy, port 2041 for the etcd local proxy,
+# and port 52311 for Bigfix.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-ibm-ports-public
+spec:
+  egress:
+  - action: Allow
+    destination:
+      ports:
+      - 53
+      - 5353
+      - 443
+      - 2049
+      - 3260
+      - 5473
+    protocol: UDP
+    source: {}
+  - action: Allow
+    destination:
+      ports:
+      - 53
+      - 5353
+      - 443
+      - 2049
+      - 3260
+      - 5473
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      ports:
+      - 443
+      nets:
+      - 172.21.0.1/32
+    protocol: UDP
+  - action: Allow
+    destination:
+      ports:
+      - 443
+      nets:
+      - 172.21.0.1/32
+    protocol: TCP
+  - action: Allow
+    destination:
+      ports:
+      - 2040:2041
+      nets:
+      - 172.20.0.0/24
+    protocol: UDP
+  - action: Allow
+    destination:
+      ports:
+      - 2040:2041
+      nets:
+      - 172.20.0.0/24
+    protocol: TCP
+  - action: Allow
+    destination:
+      nets:
+      # Allows communication from a worker node to a ClusterIP service.  This rule is
+      # required in these public policies due to https://github.com/projectcalico/felix/pull/2582
+      # If you specified a custom pod subnet when you created a classic cluster, or if
+      # you use a VPC cluster, use the cluster's pod CIDR instead.
+      - 172.30.0.0/16
+  ingress:
+  - action: Allow
+    destination:
+      ports:
+      - 53
+      - 5353
+      - 52311
+    protocol: UDP
+    source: {}
+  - action: Allow
+    destination:
+      ports:
+      - 53
+      - 5353
+      - 52311
+    protocol: TCP
+    source: {}
+  order: 1500
+  selector: ibm.role == 'worker_public'
+  types:
+  - Ingress
+  - Egress
