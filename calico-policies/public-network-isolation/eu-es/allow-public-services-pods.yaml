@@ -1,0 +1,87 @@
+# This policy allows outgoing network traffic from pods to other IBM Cloud services.
+# The example nets and ports in this policy are for IBM Cloud Container Registry, IBM Cloud
+# Monitoring with Sysdig, IBM Log Analysis with LogDNA, and the managed Istio add-on.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-public-services-pods
+spec:
+  egress:
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Container Registry: Global registry
+      - 169.60.98.80/29
+      - 169.62.37.240/29
+      - 169.63.104.232/29
+      - 169.47.153.160/28
+      - 103.41.69.127/32
+      - 103.41.69.114/32
+      - 103.41.69.115/32 
+      # IBM Cloud Container Registry: EU Central nets for your own registry
+      - 149.81.79.152/29
+      - 161.156.93.16/29
+      - 169.50.58.104/29
+      - 103.41.70.147/32
+      - 103.41.70.149/32
+      - 103.41.70.150/32
+      - 103.41.70.153/32
+      - 103.41.70.154/32
+      - 103.41.70.156/32
+      ports:
+      - 443
+      - 4443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Monitoring with Sysdig: eu-de
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
+      - 149.81.77.78/32
+      - 161.156.102.206/32
+      - 159.122.102.38/32
+      # backup pools IBM Cloud Monitoring with Sysdig: EU Central nets
+      - 149.81.96.226/32
+      - 149.81.96.229/32
+      - 158.177.136.58/32
+      - 158.177.136.59/32
+      - 161.156.75.98/32
+      - 161.156.75.99/32
+      ports:
+      - 6443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: EU Central nets
+      - 149.81.86.66/32
+      - 149.81.86.68/32
+      - 158.177.129.34/32
+      - 158.177.129.36/32
+      - 161.156.89.11/32
+      - 161.156.89.12/32
+      # New IP addresses added on 1/19/2023
+      - 158.177.133.235/32 
+      - 161.156.28.220/32 
+      - 149.81.169.206/32
+      # End new IP address list
+      ports:
+      - 443
+      - 80
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      ports:
+      # Managed Istio add-on: Egress gateway
+      - 80
+      - 15443
+    protocol: TCP
+    source: {}
+  order: 1800
+  selector: projectcalico.org/orchestrator == 'k8s'
+  types:
+  - Egress

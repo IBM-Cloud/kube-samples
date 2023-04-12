@@ -1,0 +1,84 @@
+# This policy allows outgoing network traffic from pods to other
+# IBM Cloud services that support private service endpoints.
+# The example nets in this policy are for IBM Cloud Container Registry,
+# IBM Cloud Monitoring with Sysdig, and IBM Log Analysis with LogDNA.
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-private-services-pods
+spec:
+  egress:
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Container Registry: Global (US East) registry subnets
+      - 166.9.251.49/32
+      - 166.9.251.82/32
+      - 166.9.251.113/32
+      # IBM Cloud Container Registry: EU Central registry subnets
+      - 166.9.248.76/32
+      - 166.9.248.105/32
+      - 166.9.248.136/32
+      ports:
+      - 443
+      - 4443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Monitoring with Sysdig: eu-de
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
+      - 166.9.28.71/32
+      - 166.9.30.53/32
+      - 166.9.32.51/32
+      ports:
+      - 6443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: eu-de
+      # Taken from: https://cloud.ibm.com/docs/log-analysis?topic=log-analysis-endpoints
+      - 166.9.28.2/32
+      - 166.9.28.3/32
+      - 166.9.32.21/32
+      - 166.9.32.7/32
+      # New IP addresses added on 1/19/2023
+      - 166.9.30.45/32 
+      - 166.9.30.238/32 
+      - 166.9.28.159/32 
+      - 166.9.32.117/32
+      # End new IP address list
+      ports:
+      - 80
+      - 443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: EU DE nets
+      - 166.9.28.5/32
+      - 166.9.32.23/32
+      ports:
+      - 514
+      - 6514
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Log Analysis with LogDNA: EU DE nets
+      - 166.9.28.7/32
+      - 166.9.32.24/32
+      ports:
+      - 514
+    protocol: UDP
+    source: {}
+  order: 1900
+  selector: projectcalico.org/orchestrator == 'k8s'
+  types:
+  - Egress
