@@ -44,11 +44,12 @@ spec:
       # Taken from: https://cloud.ibm.com/docs/log-analysis?topic=log-analysis-endpoints
       - 166.9.28.2/32
       - 166.9.28.3/32
+      - 166.9.30.231/32
+      - 166.9.30.238/32
       - 166.9.32.21/32
       - 166.9.32.7/32
       # New IP addresses added on 1/19/2023
       - 166.9.30.45/32 
-      - 166.9.30.238/32 
       - 166.9.28.159/32 
       - 166.9.32.117/32
       # End new IP address list
