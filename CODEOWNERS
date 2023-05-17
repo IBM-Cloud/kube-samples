@@ -4,6 +4,6 @@
 # pull request.
 * @ghost # ghost just means "no users"
 
-# calico-policies owners
 /calico-policies/ @bradbehle @Tamas-Biro1 @kersten1 @derekpoindexter @mihivagyok @ctrath @calvinrzachman
-
+/akamai/ @attiss @lcopi
+/ingress-config/ @attiss @lcopi
