@@ -56,7 +56,6 @@ Service Name | CIDR Block | Port
 "Global Traffic Management"|"96.6.0.0/15"|"80,443"
 "Global Traffic Management"|"104.64.0.0/10"|"80,443"
 "Global Traffic Management"|"118.214.0.0/16"|"80,443"
-"Global Traffic Management"|"172.232.0.0/13"|"80,443"
 "Global Traffic Management"|"173.222.0.0/15"|"80,443"
 "Global Traffic Management"|"184.24.0.0/13"|"80,443"
 "Global Traffic Management"|"184.50.0.0/15"|"80,443"
@@ -81,3 +80,9 @@ Service Name | CIDR Block | Port
 "Global Traffic Management - Siteshield"|"184.24.0.0/13"|"80,443"
 "Global Traffic Management - Siteshield"|"184.50.0.0/15"|"80,443"
 "Global Traffic Management - Siteshield"|"184.84.0.0/14"|"80,443"
+
+## Change History
+
+Date | Action | CIDR Block
+-----|--------|-----------
+2023-05-16 00:00:00.0 | delete | 172.232.0.0/13
