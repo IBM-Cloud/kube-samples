@@ -1,6 +1,6 @@
 # IBM Cloud Kubernetes and IBM Cloud Secrets Manager Integration Sample
 
-This example is used to show an end to end integration with IBM Cloud Kubernetes and IBM Cloud Secrets Manager.
+This example shows an end-to end-integration of IBM Cloud Kubernetes and IBM Cloud Secrets Manager.
 
 1. Create an IBM Cloud Secrets Manager instance through the resource controller
 2. Set up service to service authorization through IAM
