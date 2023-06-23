@@ -1,6 +1,6 @@
-# This example template is purely for informational purposes
+# This example template is for informational purposes only and is not intended for production use
 
-### Create SM instance
+### Create the Secrets Manager instance
 resource "ibm_resource_instance" "sm_instance" {
   name = var.sm_instance_name
   service = "secrets-manager"
@@ -13,7 +13,7 @@ resource "ibm_resource_instance" "sm_instance" {
 
 }
 
-### Create SM secret group
+### Create a secret group in the Secrets Manager instance
 resource "ibm_sm_secret_group" "sm_secret_group" {
   instance_id   = ibm_resource_instance.sm_instance.guid
   region        = ibm_resource_instance.sm_instance.location
@@ -21,14 +21,14 @@ resource "ibm_sm_secret_group" "sm_secret_group" {
   description   = var.sm_secret_group_description
 }
 
-### Create service to service authorizations
+### Create service-to-service authorizations
 resource "ibm_iam_authorization_policy" "sm_auth" {
   source_service_name = "containers-kubernetes"
   target_service_name = "secrets-manager"
   roles               = ["Manager"]
 }
 
-### Register SM instance
+### Register the Secrets Manager instance to the cluster
 ### See documentation https://cloud.ibm.com/docs/containers?topic=containers-secrets-mgr#secrets-mgr_setup_create
 resource "ibm_container_ingress_instance" "instance" {
   cluster = var.cluster_name_or_id
@@ -37,7 +37,7 @@ resource "ibm_container_ingress_instance" "instance" {
   is_default = true
 }
 
-### Create SM arbitrary secret
+### Create an arbitrary secret in Secrets Manager
 ### See API https://cloud.ibm.com/apidocs/secrets-manager/secrets-manager-v2#create-secret
 resource "ibm_sm_arbitrary_secret" "sm_arbitrary_secret" {
   instance_id   = ibm_resource_instance.sm_instance.guid
@@ -51,7 +51,7 @@ resource "ibm_sm_arbitrary_secret" "sm_arbitrary_secret" {
   payload = var.sm_arbitrary_secret_payload
 }
 
-### Create ingress opaque 
+### Create an Opaque secret in the cluster
 ### Sec documentation https://cloud.ibm.com/docs/containers?topic=containers-secrets
 resource "ibm_container_ingress_secret_opaque" "secret_opaque" {
     cluster  = var.cluster_name_or_id
