@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: submariner-cni-hotfix
+  namespace: submariner-operator
+  annotations:
+    description: "A run-once script to fix reverse path filtering issues with Submariner+Calico"
+spec:
+  selector:
+    matchLabels:
+      app: submariner-cni-hotfix
+  template:
+    metadata:
+      labels:
+        app: submariner-cni-hotfix
+    spec:
+      hostNetwork: true
+      containers:
+      - name: submariner-cni-hotfix
+        image: bash
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          privileged: true
+        command:
+          - bash
+          - -c
+          - |
+            interface=$(ip route | grep default | head -1 | cut -d' ' -f5)
+            echo 2 > /proc/sys/net/ipv4/conf/${interface}/rp_filter
+            sleep 999999999
+      terminationGracePeriodSeconds: 1

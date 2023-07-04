@@ -1,0 +1,4 @@
+# https://submariner.io/operations/deployment/calico/
+spec:
+  ipipMode: Always
+  vxlanMode: Never
