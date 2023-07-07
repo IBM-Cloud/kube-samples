@@ -6,6 +6,7 @@ Choose the file for the region that your cluster's zones are located in.
 * `dal` (Dallas, US South, us-south): sao01, sjc03, sjc04, dal10, dal12, dal13
 * `fra` (Frankfurt, EU Central, eu-de): ams03, mil01, par01, fra02, fra04, fra05
 * `lon` (London, UK South, eu-gb): lon02, lon04, lon05, lon06
+* `mad` (Madrid, eu-es): mad02, mad04, mad05
 * `osa` (Osaka, jp-osa): osa21, osa22, osa23
 * `sao` (São Paulo, br-sao): sao01, sao04, sao05
 * `syd` (Sydney, AP South, ap-south): syd01, syd04, syd05
