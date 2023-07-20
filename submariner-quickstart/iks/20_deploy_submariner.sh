@@ -37,9 +37,7 @@ fi
 # Set Calico to use IP in IP encpasulation
 # https://submariner.io/operations/deployment/calico/
 for ctx in $contexts; do
-  kubectl patch --context $ctx \
-  --type=merge IPPool default-ipv4-ippool \
-  --patch-file resources/calico-ippool-patch.yaml
+  kubectl apply --context $ctx -f resources/submariner-cni-hotfix.yaml
 done
 
 # Setup cross-cluster-subnet NAT avoidance
@@ -81,6 +79,8 @@ done
 ### Setup loadbalancer for tunnels
 ###########################################
 
+wait_for_loadbalancer_creation $primary_ctx
+
 healthcheck_port=$(
   kubectl --context $primary_ctx \
     get service -n=submariner-operator \
@@ -99,7 +99,7 @@ kubectl --context $primary_ctx annotate service \
     service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-health-check-port=$healthcheck_port
 
 # it can take a while
-wait_for_loadbalancer
+wait_for_ready_loadbalancer $primary_ctx
 
 wait_for_pod $primary_ctx app=submariner-gateway
 
