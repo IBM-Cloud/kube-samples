@@ -34,16 +34,28 @@ fi
 ### Setup Calico CNI
 #############################################
 
-# Set Calico to use IP in IP encpasulation
-# https://submariner.io/operations/deployment/calico/
-for ctx in $contexts; do
-  kubectl apply --context $ctx -f resources/submariner-cni-hotfix.yaml
-done
-
 # Setup cross-cluster-subnet NAT avoidance
 # https://submariner.io/operations/deployment/calico/
 kubectl apply --context $primary_ctx -f resources/calico-no-nat.primary.yaml
 kubectl apply --context $secondary_ctx -f resources/calico-no-nat.secondary.yaml
+
+# Calico encapsulation mode: CrossSubnet or Always
+# https://submariner.io/operations/deployment/calico/
+# https://docs.tigera.io/calico/latest/networking/configuring/vxlan-ipip
+CALICO_ENCAP_MODE="${CALICO_ENCAP_MODE:-CrossSubnet}"
+
+if [ "$CALICO_ENCAP_MODE" == "Always" ]; then
+  # Set Calico to use Always encpasulation
+  for ctx in $contexts; do
+    kubectl patch --context $ctx \
+    --type=merge IPPool default-ipv4-ippool \
+    --patch-file /dev/stdin <<EOM
+spec:
+  ipipMode: Always
+  vxlanMode: Never
+EOM
+  done
+fi
 
 #############################################
 ### Deploy broker
@@ -112,6 +124,25 @@ wait_for_pod $primary_ctx app=submariner-gateway
   --clustercidr "172.17.64.0/18"
 
 wait_for_pod $secondary_ctx app=submariner-gateway
+
+
+###########################################
+### Additional fixes
+###########################################
+
+if [ "$CALICO_ENCAP_MODE" == "CrossSubnet" ]; then
+  # Configure reverse path filtering on the nodes
+  for ctx in $contexts; do
+    kubectl apply --context $ctx -f resources/submariner-cni-hotfix.yaml
+  done
+
+  ### Cross enable "external" pod subnets
+
+  primary_cluster=$(echo $clusters | head -1)
+  secondary_cluster=$(echo $clusters | tail -n 1)
+  ibmcloud is security-group-rule-add "kube-$primary_cluster" inbound all "172.17.64.0/18"
+  ibmcloud is security-group-rule-add "kube-$secondary_cluster" inbound all "172.17.0.0/18"
+fi
 
 ##################################################################
 
