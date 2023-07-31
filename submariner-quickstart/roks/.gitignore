@@ -1,0 +1,13 @@
+# Submariner
+subctl
+broker-info.subm*
+
+# Terraform
+*.lock.hcl
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+
+# kube configs
+kube.*.yaml
+*.kube

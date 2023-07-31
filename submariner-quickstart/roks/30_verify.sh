@@ -34,13 +34,15 @@ EOM
     echo -n .
     sleep 10
   done
+  echo
 fi
 
-echo -e "\nTunnel is established."
+echo "Gateway tunnel is established."
 
 ./subctl verify \
   --context $primary_ctx \
   --tocontext $secondary_ctx \
+  --insecure-skip-tls-verify=true \
   --only connectivity,service-discovery
 
 # Overview of the settings and statuses:

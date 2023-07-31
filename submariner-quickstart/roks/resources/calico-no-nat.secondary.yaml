@@ -1,0 +1,19 @@
+# https://submariner.io/operations/deployment/calico/
+---
+apiVersion: crd.projectcalico.org/v1
+kind: IPPool
+metadata:
+  name: avoid-nat-towards-cluster-primary-pods
+spec:
+  cidr: 172.17.0.0/18
+  natOutgoing: false
+  disabled: true
+---
+apiVersion: crd.projectcalico.org/v1
+kind: IPPool
+metadata:
+  name: avoid-nat-towards-cluster-primary-services
+spec:
+  cidr: 172.21.0.0/16
+  natOutgoing: false
+  disabled: true
