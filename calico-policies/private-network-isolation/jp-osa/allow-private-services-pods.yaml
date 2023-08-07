@@ -59,11 +59,6 @@ spec:
       - 166.9.71.14/32 
       - 166.9.72.13/32 
       # End new IP address list
-      # CIDR Blocks added on 7/26/2023
-      -  10.10.8.64/26
-      -  10.8.30.64/26
-      -  10.9.15.128/26
-      # End CIDR Blocks
       ports:
       - 80
       - 443
