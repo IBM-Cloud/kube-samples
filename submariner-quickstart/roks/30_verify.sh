@@ -39,11 +39,23 @@ fi
 
 echo "Gateway tunnel is established."
 
+echo "Running connectivitiy tests..."
+
 ./subctl verify \
   --context $primary_ctx \
   --tocontext $secondary_ctx \
   --insecure-skip-tls-verify=true \
-  --only connectivity,service-discovery
+  --only connectivity
+
+echo "Connectivitiy tests are DONE"
+
+echo "Running service discovery tests..."
+
+  ./subctl verify \
+  --context $primary_ctx \
+  --tocontext $secondary_ctx \
+  --insecure-skip-tls-verify=true \
+  --only service-discovery
 
 # Overview of the settings and statuses:
 #   subctl show all --context $primary_ctx

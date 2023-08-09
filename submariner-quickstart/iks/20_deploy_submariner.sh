@@ -136,7 +136,7 @@ wait_for_pod $secondary_ctx app=submariner-gateway
 if [ "$CALICO_ENCAP_MODE" == "CrossSubnet" ]; then
   # Configure reverse path filtering on the nodes
   for ctx in $contexts; do
-    kubectl apply --context $ctx -f resources/submariner-cni-hotfix.yaml
+    kubectl apply --context $ctx -f resources/submariner-calico-rpfilter-setter.yaml
   done
 
   ### Cross enable "external" pod subnets

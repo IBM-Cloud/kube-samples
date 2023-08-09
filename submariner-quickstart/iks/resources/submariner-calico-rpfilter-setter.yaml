@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: submariner-calico-rpfilter-setter
+  namespace: submariner-operator
+  annotations:
+    description: "A run-once script to fix reverse path filtering issues with Submariner+Calico for CrossSubnet encapsulation"
+spec:
+  selector:
+    matchLabels:
+      app: submariner-calico-rpfilter-setter
+  template:
+    metadata:
+      labels:
+        app: submariner-calico-rpfilter-setter
+    spec:
+      hostNetwork: true
+      containers:
+      - name: submariner-calico-rpfilter-setter
+        image: alpine
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          privileged: true
+        command:
+          - sh
+          - -c
+          - |
+            interface=$(ip route | grep default | head -1 | cut -d' ' -f5)
+            nsenter --target 1 --mount \
+              -- echo 2 > /proc/sys/net/ipv4/conf/${interface}/rp_filter
+            echo "Read rp_filter value (which should be 2): $(cat /proc/sys/net/ipv4/conf/${interface}/rp_filter)"
+            sleep 365d
+      terminationGracePeriodSeconds: 1
