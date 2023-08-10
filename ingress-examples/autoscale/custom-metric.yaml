@@ -1,0 +1,12 @@
+- type: Object
+  object:
+    metric:
+      name: nginx_ingress_controller_requests_rate
+    describedObject:
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      name: alb-autoscale-example-ingress
+      namespace: alb-autoscale-example
+    target:
+      type: Value
+      value: 2k

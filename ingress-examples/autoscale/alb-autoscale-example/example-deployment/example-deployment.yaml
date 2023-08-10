@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alb-autoscale-example-deployment
+spec:
+  selector:
+    matchLabels:
+      app: alb-autoscale-example
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: alb-autoscale-example
+    spec:
+      containers:
+        - name: alb-autoscale-example
+          image: mendhak/http-https-echo
+          ports:
+            - containerPort: 80
