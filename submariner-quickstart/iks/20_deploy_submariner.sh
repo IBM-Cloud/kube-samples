@@ -33,7 +33,7 @@ fi
 ./subctl version
 
 #############################################
-### Setup Calico CNI
+### Set up Calico CNI
 #############################################
 
 # Setup cross-cluster-subnet NAT avoidance
@@ -91,7 +91,7 @@ done
   --clustercidr "172.17.0.0/18"
 
 ###########################################
-### Setup loadbalancer for tunnels
+### Setup load balancer for tunnels
 ###########################################
 
 wait_for_loadbalancer_creation $primary_ctx
