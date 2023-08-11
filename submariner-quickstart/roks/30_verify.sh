@@ -51,7 +51,7 @@ echo "Connectivitiy tests are DONE"
 
 echo "Running service discovery tests..."
 
-  ./subctl verify \
+./subctl verify --only service-discovery \
   --context $primary_ctx \
   --tocontext $secondary_ctx \
   --insecure-skip-tls-verify=true \

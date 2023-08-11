@@ -133,8 +133,8 @@ function cluster_ids() {
 }
 primary_cluster=$(cluster_ids | head -1)
 secondary_cluster=$(cluster_ids | tail -n 1)
-ibmcloud is security-group-rule-add "kube-$primary_cluster" inbound all "172.17.64.0/18"
-ibmcloud is security-group-rule-add "kube-$secondary_cluster" inbound all "172.17.0.0/18"
+ibmcloud is security-group-rule-add "kube-$primary_cluster" inbound all --remote "172.17.64.0/18"
+ibmcloud is security-group-rule-add "kube-$secondary_cluster" inbound all --remote "172.17.0.0/18"
 
 ##################################################################
 
