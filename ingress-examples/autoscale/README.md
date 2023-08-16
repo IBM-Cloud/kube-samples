@@ -2,37 +2,46 @@
 
 When we want to use ALB metrics for autoscaling, we need a Prometheus what can scrape the ALB metrics, a Prometheus Adapter what can serve the custom metrics API to provide these metrics for the Horizontal Pod Autoscaler. This is example setup for `nginx_ingress_controller_requests_rate` custom metric with a simple, example application. Please note, the followings aren't intended to be deployed in production as-is, but rather serving as an example to help you get started configuring your setup. You can find the doc for the ALB autoscale doc [here](https://cloud.ibm.com/docs/containers?topic=containers-ingress-alb-manage#alb_replicas_autoscaler). For configuring custom metrics you can find the list of exposed metrics by the ALB in the [ingress-nginx documentation](https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/#exposed-metrics).
 
-## Custom metrics:
+## Custom metrics
 
 1. Replace the `<editme>` with your host and secret name in the `host`, `hosts` and `secretName` fields in the `example-deployment/example-ingress.yaml` file.
 
 2. Now you can deploy an example application with ingress, Prometheus, and Prometheus adapter:
-    - create `alb-autoscale-example` namespace for the new application with `kubectl apply -f alb-autoscale-example/autoscale-example-namespace.yaml` command. The new namespace will appear immediately:
-    ```
-    $ kubectl get ns alb-autoscale-example                                                              
+    * create `alb-autoscale-example` namespace for the new application with `kubectl apply -f alb-autoscale-example/autoscale-example-namespace.yaml` command. The new namespace will appear immediately:
+
+    ```bash
+    $ kubectl get ns alb-autoscale-example
     NAME                    STATUS   AGE
     alb-autoscale-example   Active   13s
     ```
-    - create Promethus with `kubectl apply --kustomize alb-autoscale-example/prometheus` command. This will create a `prometheus-server` deployment in `alb-autoscale-example` namespace:
-    ```
+
+    * create Promethus with `kubectl apply --kustomize alb-autoscale-example/prometheus` command. This will create a `prometheus-server` deployment in `alb-autoscale-example` namespace:
+
+    ```bash
     $ kubectl get deployment -n alb-autoscale-example prometheus-server
     NAME                READY   UP-TO-DATE   AVAILABLE   AGE
     prometheus-server   1/1     1            1           30s
     ```
-    - create Prometheus Adapter with `kubectl apply --kustomize alb-autoscale-example/prometheus-adapter` command. This will create a `alb-prometheus-adapter` deployment in `alb-autoscale-example` namespace. Note: the `alb-autoscale-example/prometheus-adapter/configmap.yaml` contains the description of the `nginx_ingress_controller_requests_rate` custom metric. 
-    ```
+
+    * create Prometheus Adapter with `kubectl apply --kustomize alb-autoscale-example/prometheus-adapter` command. This will create a `alb-prometheus-adapter` deployment in `alb-autoscale-example` namespace. Note: the `alb-autoscale-example/prometheus-adapter/configmap.yaml` contains the description of the `nginx_ingress_controller_requests_rate` custom metric.
+
+    ```bash
     $ kubectl get deployment -n alb-autoscale-example alb-prometheus-adapter
     NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
     alb-prometheus-adapter   1/1     1            1           50s
     ```
-    - create the test application with `kubectl apply --kustomize alb-autoscale-example/example-deployment` command. This will create a `alb-autoscale-example` deployment in `alb-autoscale-example` namespace:
-    ```
-    $ kubectl get deployment -n alb-autoscale-example alb-autoscale-example-deployment                      
+
+    * create the test application with `kubectl apply --kustomize alb-autoscale-example/example-deployment` command. This will create a `alb-autoscale-example` deployment in `alb-autoscale-example` namespace:
+
+    ```bash
+    $ kubectl get deployment -n alb-autoscale-example alb-autoscale-example-deployment
     NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
     alb-autoscale-example-deployment   1/1     1            1           81s
     ```
-    - when the deployment is ready, please open the example application to generate some metrics for the `nginx_ingress_controller_requests_rate` custom metric. It can be reachable on the host that you defined in the `example-deployment/example-ingress.yaml` file, example output:
-    ```
+
+    * when the deployment is ready, please open the example application to generate some metrics for the `nginx_ingress_controller_requests_rate` custom metric. It can be reachable on the host that you defined in the `example-deployment/example-ingress.yaml` file, example output:
+
+    ```json
     ➜ curl -s https://pvg-classic-od16r554ux7-1e7743ca80a399c9cff4eaf617434c72-0000.us-south.stg.containers.appdomain.cloud/ | jq .
     {
       "path": "/",
@@ -74,7 +83,8 @@ When we want to use ALB metrics for autoscaling, we need a Prometheus what can s
     ```
 
 3. After a few minutes, you can use the following commands to see the new custom metric: `kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta2/namespaces/alb-autoscale-example/ingress/alb-autoscale-example-ingress/nginx_ingress_controller_requests_rate" | jq .`
-    ```
+
+    ```bash
     $ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta2/namespaces/alb-autoscale-example/ingress/alb-autoscale-example-ingress/nginx_ingress_controller_requests_rate"
     {
       "kind": "MetricValueList",
@@ -98,36 +108,44 @@ When we want to use ALB metrics for autoscaling, we need a Prometheus what can s
       ]
     }
     ```
-    - When the `kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta2/namespaces/alb-autoscale-example/ingress/alb-autoscale-example-ingress/nginx_ingress_controller_requests_rate" | jq .` command is not working after 10 minutes, please review the `apiservice v1beta2.custom.metrics.k8s.io` apiservice, the `AVAILABLE` must be `true`, otherwise check the `alb-prometheus-adapter` service and `alb-prometheus-adapter` in `alb-autoscale-example` namespace:
-    ```
+
+    * When the `kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta2/namespaces/alb-autoscale-example/ingress/alb-autoscale-example-ingress/nginx_ingress_controller_requests_rate" | jq .` command is not working after 10 minutes, please review the `apiservice v1beta2.custom.metrics.k8s.io` apiservice, the `AVAILABLE` must be `true`, otherwise check the `alb-prometheus-adapter` service and `alb-prometheus-adapter` in `alb-autoscale-example` namespace:
+
+    ```bash
     ➜ kubectl get apiservice v1beta2.custom.metrics.k8s.io
     NAME                            SERVICE                                        AVAILABLE   AGE
     v1beta2.custom.metrics.k8s.io   alb-autoscale-example/alb-prometheus-adapter   True        15m
     ```
 
 4. Enable the autoscale with `ibmcloud ks ingress alb autoscale set -c <clusterID> --alb <albID> --min-replicas 1 --max-replicas 2 --custom-metrics-file custom-metric.yaml` command. After a few minutes, you should see the following output:
-    ```
+
+    ```bash
     $ kubectl get hpa -n kube-system public-cr<clusterID>-alb1
     NAME                                 REFERENCE                                       TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
     public-cr<clusterID>-alb1            Deployment/public-cr<clusterID>-alb1            0/2k      1         2         1          2h
     ```
 
+## Prometheus dashboard
 
-## Prometheus dashboard: 
-  - First you need the nodeport that the `prometheus` service uses. In the following example that is 32415.
-  ```
-  ➜  ~ kubectl get svc -n alb-autoscale-example
-  NAME                            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-  alb-autoscale-example-service   ClusterIP   172.21.41.173    <none>        80/TCP           4d20h
-  alb-prometheus-adapter          ClusterIP   172.21.246.127   <none>        443/TCP          4d20h
-  prometheus                      NodePort    172.21.252.23    <none>        9090:32415/TCP   4d20h
-  ``` 
-  - Than you need a node external IP: 
-  ```
+* First you need the nodeport that the `prometheus` service uses. In the following example that is 32415.
+
+```bash
+➜  ~ kubectl get svc -n alb-autoscale-example
+NAME                            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+alb-autoscale-example-service   ClusterIP   172.21.41.173    <none>        80/TCP           4d20h
+alb-prometheus-adapter          ClusterIP   172.21.246.127   <none>        443/TCP          4d20h
+prometheus                      NodePort    172.21.252.23    <none>        9090:32415/TCP   4d20h
+```
+
+* Than you need a node external IP:
+
+  ```bash
   ➜  ~ kubectl get nodes -o wide
   NAME             STATUS   ROLES    AGE    VERSION        INTERNAL-IP      EXTERNAL-IP      OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
   10.189.192.233   Ready    <none>   6d9h   v1.25.12+IKS   10.189.192.233   169.59.133.189   Ubuntu 20.04.6 LTS   5.4.0-155-generic   containerd://1.6.21
   10.189.192.235   Ready    <none>   6d9h   v1.25.12+IKS   10.189.192.235   169.59.133.173   Ubuntu 20.04.6 LTS   5.4.0-155-generic   containerd://1.6.21
   ```
-  - Open your browser and visit the following URL: http://{node IP address}:{prometheus-svc-nodeport} to load the Prometheus Dashboard. 
-  - You can find more details about the metrics here: https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/#prometheus-dashboard
+
+* Open your browser and visit the following URL: http://{node IP address}:{prometheus-svc-nodeport} to load the Prometheus Dashboard.
+
+* You can find more details about the metrics here: <https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/#prometheus-dashboard>
