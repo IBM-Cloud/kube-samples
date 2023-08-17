@@ -76,7 +76,7 @@ When we want to use ALB metrics for autoscaling, we need a Prometheus what can s
     }
     ```
 
-3. After a few minutes, you can use the following commands to see the new custom metric: `kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta2/namespaces/alb-autoscale-example/ingress/alb-autoscale-example-ingress/nginx_ingress_controller_requests_rate" | jq .`
+3. After a few minutes, you can use the following command to see that the custom metric is available for the Kubernetes metrics-server:
 
     ```
     $ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta2/namespaces/alb-autoscale-example/ingress/alb-autoscale-example-ingress/nginx_ingress_controller_requests_rate"
