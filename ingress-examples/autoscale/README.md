@@ -15,7 +15,7 @@ When we want to use ALB metrics for autoscaling, we need a Prometheus what can s
     alb-autoscale-example   Active   13s
     ```
 
-    * create Promethus with `kubectl apply --kustomize alb-autoscale-example/prometheus` command. This will create a `prometheus-server` deployment in `alb-autoscale-example` namespace:
+    * deploy Promethus with `kubectl apply --kustomize alb-autoscale-example/prometheus` command. This will create a `prometheus-server` deployment in `alb-autoscale-example` namespace:
 
     ```
     $ kubectl get deployment -n alb-autoscale-example prometheus-server
