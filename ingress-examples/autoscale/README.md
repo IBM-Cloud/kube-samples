@@ -122,28 +122,3 @@ For more information about autoscaling, checkout our [official documentation](ht
     NAME                                 REFERENCE                                       TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
     public-cr<clusterID>-alb1            Deployment/public-cr<clusterID>-alb1            0/2k      1         2         1          2h
     ```
-
-## Prometheus dashboard
-
-* First you need the nodeport that the `prometheus` service uses. In the following example that is 32415.
-
-```
-➜  ~ kubectl get svc -n alb-autoscale-example
-NAME                            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-alb-autoscale-example-service   ClusterIP   172.21.41.173    <none>        80/TCP           4d20h
-alb-prometheus-adapter          ClusterIP   172.21.246.127   <none>        443/TCP          4d20h
-prometheus                      NodePort    172.21.252.23    <none>        9090:32415/TCP   4d20h
-```
-
-* Than you need a node external IP:
-
-  ```
-  ➜  ~ kubectl get nodes -o wide
-  NAME             STATUS   ROLES    AGE    VERSION        INTERNAL-IP      EXTERNAL-IP      OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
-  10.189.192.233   Ready    <none>   6d9h   v1.25.12+IKS   10.189.192.233   169.59.133.189   Ubuntu 20.04.6 LTS   5.4.0-155-generic   containerd://1.6.21
-  10.189.192.235   Ready    <none>   6d9h   v1.25.12+IKS   10.189.192.235   169.59.133.173   Ubuntu 20.04.6 LTS   5.4.0-155-generic   containerd://1.6.21
-  ```
-
-* Open your browser and visit the following URL: http://{node IP address}:{prometheus-svc-nodeport} to load the Prometheus Dashboard.
-
-* You can find more details about the metrics here: <https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/#prometheus-dashboard>
