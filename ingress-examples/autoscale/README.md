@@ -2,7 +2,7 @@
 
 When we want to use ALB metrics for autoscaling, we need a Prometheus what can scrape the ALB metrics, a Prometheus Adapter what can serve the custom metrics API to provide these metrics for the Horizontal Pod Autoscaler. This is example setup for `nginx_ingress_controller_requests_rate` custom metric with a simple, example application. Please note, the followings aren't intended to be deployed in production as-is, but rather serving as an example to help you get started configuring your setup. You can find the doc for the ALB autoscale doc [here](https://cloud.ibm.com/docs/containers?topic=containers-ingress-alb-manage#alb_replicas_autoscaler). For configuring custom metrics you can find the list of exposed metrics by the ALB in the [ingress-nginx documentation](https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/#exposed-metrics).
 
-## Custom metrics
+## Setup
 
 1. Replace the `<editme>` with your host and secret name in the `host`, `hosts` and `secretName` fields in the `example-deployment/example-ingress.yaml` file.
 
