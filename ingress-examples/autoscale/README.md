@@ -103,7 +103,7 @@ When we want to use ALB metrics for autoscaling, we need a Prometheus what can s
     }
     ```
 
-    * When the `kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta2/namespaces/alb-autoscale-example/ingress/alb-autoscale-example-ingress/nginx_ingress_controller_requests_rate" | jq .` command is not working after 10 minutes, please review the `apiservice v1beta2.custom.metrics.k8s.io` apiservice, the `AVAILABLE` must be `true`, otherwise check the `alb-prometheus-adapter` service and `alb-prometheus-adapter` in `alb-autoscale-example` namespace:
+    * If the above command fails even after 10 minutes, review the `apiservice v1beta2.custom.metrics.k8s.io` APIService: `AVAILABLE` must be `True`, otherwise you will need to check the `alb-prometheus-adapter` Service and `alb-prometheus-adapter` deployment in `alb-autoscale-example` namespace:
 
     ```
     ➜ kubectl get apiservice v1beta2.custom.metrics.k8s.io
