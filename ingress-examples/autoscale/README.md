@@ -1,6 +1,10 @@
 # Enabling autoscaling based on custom metrics for IBM Cloud Kubernetes Service Ingress ALBs
 
-When we want to use ALB metrics for autoscaling, we need a Prometheus what can scrape the ALB metrics, a Prometheus Adapter what can serve the custom metrics API to provide these metrics for the Horizontal Pod Autoscaler. This is example setup for `nginx_ingress_controller_requests_rate` custom metric with a simple, example application. Please note, the followings aren't intended to be deployed in production as-is, but rather serving as an example to help you get started configuring your setup. You can find the doc for the ALB autoscale doc [here](https://cloud.ibm.com/docs/containers?topic=containers-ingress-alb-manage#alb_replicas_autoscaler). For configuring custom metrics you can find the list of exposed metrics by the ALB in the [ingress-nginx documentation](https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/#exposed-metrics).
+The ALBs expose [various metrics](https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/#exposed-metrics) including request statistics and nginx process metrics. These metrics can be captured and aggregated by a metric collector, such as [Prometheus](https://prometheus.io/docs/introduction/overview/) and made available to Kubernetes HPA using [Prometheus Adapter](https://github.com/kubernetes-sigs/prometheus-adapter).
+
+Depending on your use case, you might want to scale your ALBs based on custom metrics, for example based on the number of incoming requests per second or the number of established connections. In the followings we present an example on setting up autoscaling based on custom metrics. With this example you can get started easily on designing your custom metrics based setup. Please note that the configuration in this example is not a production ready setup, but a simple deployment for demonstration purposes.
+
+For more information about autoscaling, checkout our [official documentation](https://cloud.ibm.com/docs/containers?topic=containers-ingress-alb-manage#alb_replicas_autoscaler).
 
 ## Setup
 
