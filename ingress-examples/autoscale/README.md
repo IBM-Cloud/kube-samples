@@ -27,7 +27,7 @@ For more information about autoscaling, check out our [official documentation](h
     prometheus-server   1/1     1            1           30s
     ```
 
-    * deploy Prometheus Adapter with `kubectl apply --kustomize alb-autoscale-example/prometheus-adapter` command. This will create a `alb-prometheus-adapter` deployment in `alb-autoscale-example` namespace. Note: the `alb-autoscale-example/prometheus-adapter/configmap.yaml` contains the description of the `nginx_ingress_controller_requests_rate` custom metric.
+    * Deploy Prometheus Adapter with `kubectl apply --kustomize alb-autoscale-example/prometheus-adapter` command. This will create a `alb-prometheus-adapter` deployment in `alb-autoscale-example` namespace. Note: the `alb-autoscale-example/prometheus-adapter/configmap.yaml` contains the description of the `nginx_ingress_controller_requests_rate` custom metric.
 
     ```
     $ kubectl get deployment -n alb-autoscale-example alb-prometheus-adapter
