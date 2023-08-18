@@ -19,7 +19,7 @@ For more information about autoscaling, check out our [official documentation](h
     alb-autoscale-example   Active   13s
     ```
 
-    * deploy Promethus with `kubectl apply --kustomize alb-autoscale-example/prometheus` command. This will create a `prometheus-server` deployment in `alb-autoscale-example` namespace:
+    * Deploy Promethus with `kubectl apply --kustomize alb-autoscale-example/prometheus` command. This will create a `prometheus-server` deployment in `alb-autoscale-example` namespace:
 
     ```
     $ kubectl get deployment -n alb-autoscale-example prometheus-server
