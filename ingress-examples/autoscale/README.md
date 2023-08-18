@@ -115,7 +115,7 @@ For more information about autoscaling, check out our [official documentation](h
     v1beta2.custom.metrics.k8s.io   alb-autoscale-example/alb-prometheus-adapter   True        15m
     ```
 
-4. Enable autoscaling with `ibmcloud ks ingress alb autoscale set -c <clusterID> --alb <albID> --min-replicas 1 --max-replicas 2 --custom-metrics-file custom-metrics.yaml` command. After a few minutes, you should see the following output:
+4. Enable autoscaling with `ibmcloud ks ingress alb autoscale set -c <clusterID> --alb <albID> --min-replicas 1 --max-replicas 2 --custom-metrics-file custom-metrics.yaml` command. After a few minutes, you see the following output:
 
     ```
     $ kubectl get hpa -n kube-system public-cr<clusterID>-alb1
