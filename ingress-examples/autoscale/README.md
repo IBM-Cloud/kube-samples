@@ -1,6 +1,6 @@
 # Enabling autoscaling based on custom metrics for IBM Cloud Kubernetes Service Ingress ALBs
 
-The ALBs expose [various metrics](https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/#exposed-metrics) including request statistics and nginx process metrics. These metrics can be captured and aggregated by a metric collector, such as [Prometheus](https://prometheus.io/docs/introduction/overview/) and made available to Kubernetes HPA using [Prometheus Adapter](https://github.com/kubernetes-sigs/prometheus-adapter).
+The ALBs expose [various metrics](https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/#exposed-metrics) including request statistics and Nginx process metrics. These metrics can be captured and aggregated by a metric collector, such as [Prometheus](https://prometheus.io/docs/introduction/overview/) and made available to Kubernetes HPA by using [Prometheus Adapter](https://github.com/kubernetes-sigs/prometheus-adapter).
 
 Depending on your use case, you might want to scale your ALBs based on custom metrics, for example based on the number of incoming requests per second or the number of established connections. In the followings we present an example on setting up autoscaling based on custom metrics. With this example you can get started easily on designing your custom metrics based setup. Please note that the configuration in this example is not a production ready setup, but a simple deployment for demonstration purposes.
 
