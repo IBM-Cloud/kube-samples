@@ -4,7 +4,7 @@ The ALBs expose [various metrics](https://kubernetes.github.io/ingress-nginx/use
 
 Depending on your use case, you might want to scale your ALBs based on custom metrics, for example based on the number of incoming requests per second or the number of established connections. In the followings we present an example on setting up autoscaling based on custom metrics. With this example you can get started easily on designing your custom metrics based setup. Please note that the configuration in this example is not a production ready setup, but a simple deployment for demonstration purposes.
 
-For more information about autoscaling, checkout our [official documentation](https://cloud.ibm.com/docs/containers?topic=containers-ingress-alb-manage#alb_replicas_autoscaler).
+For more information about autoscaling, check out our [official documentation](https://cloud.ibm.com/docs/containers?topic=containers-ingress-alb-manage#alb_replicas_autoscaler).
 
 ## Setup
 
