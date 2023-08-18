@@ -8,7 +8,7 @@ For more information about autoscaling, check out our [official documentation](h
 
 ## Setup
 
-1. Replace the `<editme>` with your host and secret name in the `host`, `hosts` and `secretName` fields in the `example-deployment/example-ingress.yaml` file.
+1. Replace the `<editme>` with your host and secret name in the `host`, `hosts`, and `secretName` fields in the `example-deployment/example-ingress.yaml` file.
 
 2. Now you can deploy an example application with ingress, Prometheus, and Prometheus adapter:
     * Create the `alb-autoscale-example` namespace for the new application with `kubectl apply -f alb-autoscale-example/autoscale-example-namespace.yaml` command. The new namespace will appear immediately:
