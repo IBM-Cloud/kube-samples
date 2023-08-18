@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: alb-autoscale-example-service
+spec:
+  internalTrafficPolicy: Cluster
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: alb-autoscale-example
+    app.kubernetes.io/name: alb-autoscale-example-app
+    app.kubernetes.io/part-of: alb-autoscale-example
+  sessionAffinity: None
+  type: ClusterIP
