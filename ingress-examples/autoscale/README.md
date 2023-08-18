@@ -35,7 +35,7 @@ For more information about autoscaling, check out our [official documentation](h
     alb-prometheus-adapter   1/1     1            1           50s
     ```
 
-    * deploy the test application with `kubectl apply --kustomize alb-autoscale-example/example-deployment` command. This will create a `alb-autoscale-example` deployment in `alb-autoscale-example` namespace:
+    * Deploy the test application with `kubectl apply --kustomize alb-autoscale-example/example-deployment` command. This will create a `alb-autoscale-example` deployment in `alb-autoscale-example` namespace:
 
     ```
     $ kubectl get deployment -n alb-autoscale-example alb-autoscale-example-deployment
