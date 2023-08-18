@@ -43,7 +43,7 @@ For more information about autoscaling, check out our [official documentation](h
     alb-autoscale-example-deployment   1/1     1            1           81s
     ```
 
-    * when the deployment is ready, open the example application to generate some traffic so the `nginx_ingress_controller_requests_rate` metric has values. Use the host you defined in the `example-deployment/example-ingress.yaml` file, example output:
+    * When the deployment is ready, open the example application to generate some traffic so the `nginx_ingress_controller_requests_rate` metric has values. Use the host you defined in the `example-deployment/example-ingress.yaml` file, example output:
 
     ```json
     ➜ curl -s https://mydomain.com/ | jq .
