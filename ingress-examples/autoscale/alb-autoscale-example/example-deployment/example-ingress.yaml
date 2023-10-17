@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alb-autoscale-example-ingress
+spec:
+  ingressClassName: public-iks-k8s-nginx
+  tls:
+    - hosts:
+        - <editme>
+      secretName: <editme>
+  rules:
+    - host: <editme>
+      http:
+        paths:
+        - backend:
+            service:
+              name: alb-autoscale-example-service
+              port:
+                number: 80
+          path: /
+          pathType: ImplementationSpecific
