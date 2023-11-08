@@ -54,12 +54,15 @@ spec:
       - 172.20.0.0/24
     protocol: TCP
   - action: Allow
+    # Allows pod egress to all other pods
     destination:
       selector: projectcalico.org/orchestrator == 'k8s'
     source: {}
   # Denies pod egress to private networks. If workers are connected to a public VLAN,
   # pod egress is permitted to public networks.
   - action: Allow
+    # Allows pod egress to all destination IPs that are NOT private.  This means that pod egress to these
+    # private subnets listed below are denied (unless another policy allows it)
     destination:
       notNets:
       - 10.0.0.0/8

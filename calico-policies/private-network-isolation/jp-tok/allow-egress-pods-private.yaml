@@ -51,12 +51,15 @@ spec:
       - 172.20.0.0/24
     protocol: TCP
   - action: Allow
+    # Allows pod egress to all other pods
     destination:
       selector: projectcalico.org/orchestrator == 'k8s'
     source: {}
   # Denies pod egress to private networks. If workers are connected to a public VLAN,
   # pod egress is permitted to public networks.
   - action: Allow
+    # Allows pod egress to all destination IPs that are NOT private.  This means that pod egress to these
+    # private subnets listed below are denied (unless another policy allows it)
     destination:
       notNets:
       - 10.0.0.0/8
@@ -66,28 +69,28 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Control plane IP addresses for ap-north: che01, hkg02, seo01, sng01, tok02, tok04, tok05
-      - 166.9.40.102/32
+      # Control plane IP addresses for ap-north: che01, sng01, tok02, tok04, tok05
+      - 166.9.40.6/32
+      - 166.9.40.7/32
+      - 166.9.40.8/32
       - 166.9.40.21/32
       - 166.9.40.22/32
       - 166.9.40.38/32
       - 166.9.40.39/32
-      - 166.9.40.6/32
-      - 166.9.40.7/32
-      - 166.9.40.8/32
       - 166.9.40.88/32
       - 166.9.40.89/32
+      - 166.9.40.102/32
+      - 166.9.42.6/32
       - 166.9.42.23/32
       - 166.9.42.24/32
       - 166.9.42.28/32
       - 166.9.42.54/32
       - 166.9.42.55/32
-      - 166.9.42.6/32
       - 166.9.42.97/32
       - 166.9.42.98/32
+      - 166.9.44.4/32
       - 166.9.44.15/32
       - 166.9.44.16/32
-      - 166.9.44.4/32
       - 166.9.44.46/32
       - 166.9.44.47/32
       - 166.9.44.88/32
@@ -104,28 +107,28 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Control plane IP addresses for ap-north: che01, hkg02, seo01, sng01, tok02, tok04, tok05
-      - 166.9.40.102/32
+      # Control plane IP addresses for ap-north: che01, sng01, tok02, tok04, tok05
+      - 166.9.40.6/32
+      - 166.9.40.7/32
+      - 166.9.40.8/32
       - 166.9.40.21/32
       - 166.9.40.22/32
       - 166.9.40.38/32
       - 166.9.40.39/32
-      - 166.9.40.6/32
-      - 166.9.40.7/32
-      - 166.9.40.8/32
       - 166.9.40.88/32
       - 166.9.40.89/32
+      - 166.9.40.102/32
+      - 166.9.42.6/32
       - 166.9.42.23/32
       - 166.9.42.24/32
       - 166.9.42.28/32
       - 166.9.42.54/32
       - 166.9.42.55/32
-      - 166.9.42.6/32
       - 166.9.42.97/32
       - 166.9.42.98/32
+      - 166.9.44.4/32
       - 166.9.44.15/32
       - 166.9.44.16/32
-      - 166.9.44.4/32
       - 166.9.44.46/32
       - 166.9.44.47/32
       - 166.9.44.88/32
