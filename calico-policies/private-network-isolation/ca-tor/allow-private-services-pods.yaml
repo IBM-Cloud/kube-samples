@@ -43,7 +43,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Monitoring API: au-syd
+      # IBM Cloud Monitoring API: ca-tor
       # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_rest_api
       - 166.9.247.153/32
       - 166.9.247.185/32

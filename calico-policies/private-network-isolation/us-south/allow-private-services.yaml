@@ -42,7 +42,7 @@ spec:
       nets:
       # IBM Cloud Monitoring API: us-south
       # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_rest_api
-      - 166.9.228.45 (*)
+      - 166.9.228.45/32
       - 166.9.229.45/32
       - 166.9.230.44/32
       ports:
