@@ -31,13 +31,25 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Monitoring with Sysdig: br-sao
-      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
+      # IBM Cloud Monitoring ingest: br-sao
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion_private
       - 166.9.82.19/32
       - 166.9.83.18/32
       - 166.9.84.19/32
       ports:
       - 6443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Monitoring API: br-sao
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_rest_api
+      - 166.9.246.77/32
+      - 166.9.246.108/32
+      - 166.9.246.133/32
+      ports:
+      - 443
     protocol: TCP
     source: {}
   - action: Allow

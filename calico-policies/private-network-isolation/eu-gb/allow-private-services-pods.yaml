@@ -28,12 +28,23 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Monitoring with Sysdig: eu-gb
-      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
+      # IBM Cloud Monitoring ingest: eu-gb
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion_private
       - 166.9.34.56/32
       - 166.9.36.71/32
       ports:
       - 6443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Monitoring API: eu-gb
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_rest_api
+      - 166.9.244.29/32
+      - 166.9.244.59/32
+      ports:
+      - 443
     protocol: TCP
     source: {}
   - action: Allow
