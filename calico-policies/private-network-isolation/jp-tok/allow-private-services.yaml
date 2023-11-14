@@ -31,13 +31,25 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Monitoring with Sysdig: jp-tok
-      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
+      # IBM Cloud Monitoring ingest: jp-tok
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion_private
       - 166.9.40.35/32
       - 166.9.42.48/32
       - 166.9.44.38/32
       ports:
       - 6443
+    protocol: TCP
+    source: {}
+  - action: Allow
+    destination:
+      nets:
+      # IBM Cloud Monitoring API: jp-tok
+      # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_rest_api
+      - 166.9.249.112/32
+      - 166.9.249.141/32
+      - 166.9.249.177/32
+      ports:
+      - 443
     protocol: TCP
     source: {}
   - action: Allow
