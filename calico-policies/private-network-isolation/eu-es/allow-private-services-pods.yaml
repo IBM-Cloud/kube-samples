@@ -28,11 +28,14 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Monitoring ingest: eu-es
+      # IBM Cloud Monitoring ingest: eu-de
+      # The eu-de IPs were put here to support services in the eu-es region which were available before Monitoring was deployed to eu-es
+      # The eu-de IPs should be removed from the eu-es policies eventually
       # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion_private
       - 166.9.28.71/32
       - 166.9.30.53/32
       - 166.9.32.51/32
+      # IBM Cloud Monitoring ingest: eu-es
       - 166.9.94.31/32
       - 166.9.95.31/32
       - 166.9.96.31/32
