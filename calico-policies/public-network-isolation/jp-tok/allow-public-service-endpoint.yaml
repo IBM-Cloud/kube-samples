@@ -11,13 +11,13 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Control plane IP addresses for ap-north: che01, hkg02, seo01, sng01, tok02, tok04, tok05
+      # Control plane IP addresses for ap-north: che01, sng01, tok02, tok04, tok05
       - 119.81.194.90/32
       - 119.81.222.210/32
-      - 128.168.106.194/32
       - 128.168.71.117/32
       - 128.168.75.194/32
       - 128.168.85.154/32
+      - 128.168.106.194/32
       - 161.202.126.210/32
       - 161.202.154.10/32
       - 161.202.186.226/32
@@ -38,13 +38,13 @@ spec:
   - action: Allow
     destination:
       nets:
-      # Control plane IP addresses for ap-north: che01, hkg02, seo01, sng01, tok02, tok04, tok05
+      # Control plane IP addresses for ap-north: che01, sng01, tok02, tok04, tok05
       - 119.81.194.90/32
       - 119.81.222.210/32
-      - 128.168.106.194/32
       - 128.168.71.117/32
       - 128.168.75.194/32
       - 128.168.85.154/32
+      - 128.168.106.194/32
       - 161.202.126.210/32
       - 161.202.154.10/32
       - 161.202.186.226/32
