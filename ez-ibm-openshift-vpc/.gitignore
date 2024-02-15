@@ -1,0 +1,9 @@
+*.tfstate
+*.backup
+*.terraform*
+
+
+# Variable overrides
+*.tfvars
+
+notes.txt
