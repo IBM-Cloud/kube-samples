@@ -1,0 +1,60 @@
+# ******************************************************************************
+# * Licensed Materials - Property of IBM
+# * IBM Cloud Kubernetes Service, 5737-D43
+# * (C) Copyright IBM Corp. 2024 All Rights Reserved.
+# * US Government Users Restricted Rights - Use, duplication or
+# * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+# ******************************************************************************
+# This policy is used by the audit webhook to collect and forward any events that are passed
+# through your Kubernetes API server to IBM Log Analysis with LogDNA. For more information,
+# see the docs: https://cloud.ibm.com/docs/containers?topic=containers-health#webhook_logdna
+
+apiVersion: audit.k8s.io/v1
+kind: Policy
+metadata:
+  creationTimestamp: null
+  name: policy
+omitManagedFields: true
+omitStages:
+- RequestReceived
+rules:
+- level: None
+  resources:
+  - resources:
+    - events
+- level: None
+  nonResourceURLs:
+  - /api*
+  - /version
+  - /healthz
+  - /readyz
+  userGroups:
+  - system:authenticated
+  - system:unauthenticated
+- level: None
+  namespaces:
+  - ""
+  resources:
+  - group: apiserver.openshift.io
+    resources:
+    - apirequestcounts
+    - apirequestcounts/*
+  users:
+  - system:apiserver
+- level: RequestResponse
+  resources:
+  - group: user.openshift.io
+    resources:
+    - identities
+  - group: oauth.openshift.io
+    resources:
+    - oauthaccesstokens
+    - oauthauthorizetokens
+  verbs:
+  - create
+  - update
+  - patch
+  - delete
+- level: Metadata
+  omitStages:
+  - RequestReceived
