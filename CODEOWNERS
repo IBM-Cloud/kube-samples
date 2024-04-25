@@ -5,7 +5,7 @@
 * @ghost # ghost just means "no users"
 
 /calico-policies/ @bradbehle @Tamas-Biro1 @kersten1 @derekpoindexter @mihivagyok @ctrath
-/akamai/ @attiss @lcopi @jared-hayes-dev @warned @theodoracheng @szombi @SzekeresB @SzucsAti @marcsello
-/ingress-config/ @attiss @lcopi @jared-hayes-dev @warned @theodoracheng @szombi @SzekeresB @SzucsAti @marcsello
-/ingress-secrets-manager/ @attiss @lcopi @jared-hayes-dev @warned @theodoracheng @szombi @SzekeresB @SzucsAti @marcsello
-/ingress-examples/ @attiss @lcopi @jared-hayes-dev @warned @theodoracheng @szombi @SzekeresB @SzucsAti @marcsello
+/akamai/ @attiss @szombi @SzekeresB @SzucsAti @marcsello
+/ingress-config/ @attiss @szombi @SzekeresB @SzucsAti @marcsello
+/ingress-secrets-manager/ @attiss @szombi @SzekeresB @SzucsAti @marcsello
+/ingress-examples/ @attiss @szombi @SzekeresB @SzucsAti @marcsello
