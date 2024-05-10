@@ -1,4 +1,4 @@
-# NOTE(Evan-Reilly): IBM Cloud Kubernetes Services versions 1.23 and earlier
+# NOTE: IBM Cloud Kubernetes Services versions 1.23 and earlier
 # use pod security policies (PSPs) for pod security. Version 1.24 uses
 # PSPs by default and can optionally use pod security admission. Versions
 # 1.25 and later use pod security admission only. Red Hat OpenShift on
@@ -86,6 +86,8 @@ spec:
           mountPath: /var/lib/kubelet
         - name: lib-systemd-system
           mountPath: /lib/systemd/system
+        - name: etc-systemd-system
+          mountPath: /etc/systemd/system
         - name: etc-kubernetes
           mountPath: /etc/kubernetes
         - name: config
@@ -99,6 +101,9 @@ spec:
       - name: lib-systemd-system
         hostPath:
           path: "/lib/systemd/system"
+      - name: etc-systemd-system
+        hostPath:
+          path: "/etc/systemd/system"
       - name: etc-kubernetes
         hostPath:
           path: "/etc/kubernetes"

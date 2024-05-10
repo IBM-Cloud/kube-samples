@@ -192,7 +192,7 @@ groups:
 
       - id: 4.1.7
         text: "Ensure that the certificate authorities file permissions are set to 644 or more restrictive (Scored)"
-        audit: "/bin/sh -c 'if test -e /etc/kubernetes/cert/ca.pem; then stat -c %a /etc/kubernetes/cert/ca.pem; fi'"
+        audit: "/bin/sh -c 'tmpkubeletcafile=$(readlink -f $kubeletcafile); if test -e $tmpkubeletcafile; then stat -c %a $tmpkubeletcafile; fi'"
         tests:
           bin_op: or
           test_items:
@@ -213,7 +213,7 @@ groups:
             set: true
         remediation: |
           Run the following command to modify the file permissions of the
-          --client-ca-file chmod 644 /etc/kubernetes/cert/ca.pem
+          --client-ca-file chmod 644 $kubeletcafile
         scored: true
 
       - id: 4.1.8
@@ -228,7 +228,7 @@ groups:
                 value: root:root
         remediation: |
           Run the following command to modify the ownership of the --client-ca-file.
-          chown root:root <filename>
+          chown root:root $kubeletcafile
         scored: true
 
       - id: 4.1.9
@@ -328,6 +328,10 @@ groups:
               compare:
                 op: nothave
                 value: AlwaysAllow
+            - flag: --authorization-mode
+              path: '{.authorization.mode}'
+              set: false
+          bin_op: or
         remediation: |
           If using a Kubelet config file, edit the file to set authorization: mode to Webhook. If
           using executable arguments, edit the kubelet service file
@@ -372,6 +376,11 @@ groups:
               compare:
                 op: eq
                 value: 0
+            - flag: "--read-only-port"
+              path: '{.readOnlyPort}'
+              set: false
+          bin_op: or
+
         remediation: |
           If using a Kubelet config file, edit the file to set readOnlyPort to 0.
           If using command line arguments, edit the kubelet service file
@@ -521,6 +530,9 @@ groups:
             - flag: --tls-private-key-file
               path: '{.tlsPrivateKeyFile}'
               set: true
+            - path: '{.serverTLSBootstrap}'
+              set: true
+          bin_op: or
         remediation: |
           If using a Kubelet config file, edit the file to set tlsCertFile to the location
           of the certificate file to use to identify this Kubelet, and tlsPrivateKeyFile
@@ -608,3 +620,4 @@ groups:
           systemctl daemon-reload
           systemctl restart kubelet.service
         scored: false
+        
