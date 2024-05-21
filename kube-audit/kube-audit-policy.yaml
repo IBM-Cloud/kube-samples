@@ -1,7 +1,7 @@
 # ******************************************************************************
 # * Licensed Materials - Property of IBM
 # * IBM Cloud Kubernetes Service, 5737-D43
-# * (C) Copyright IBM Corp. 2020, 2021 All Rights Reserved.
+# * (C) Copyright IBM Corp. 2020, 2024 All Rights Reserved.
 # * US Government Users Restricted Rights - Use, duplication or
 # * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 # ******************************************************************************
@@ -9,11 +9,8 @@
 # through your Kubernetes API server to IBM Log Analysis with LogDNA. For more information,
 # see the docs: https://cloud.ibm.com/docs/containers?topic=containers-health#webhook_logdna
 
-{% if k8s_release_style is version_compare('1.14', '>=') %}
+{% if k8s_release_style is version_compare("1.29", "<=") %}
 apiVersion: audit.k8s.io/v1
-{% else %}
-apiVersion: audit.k8s.io/v1beta1
-{% endif %}
 kind: Policy
 rules:
   - level: None
@@ -65,23 +62,16 @@ rules:
     nonResourceURLs:
       - /healthz*
       - /version
-{% if k8s_release_style is version_compare('1.14', '<') %}
-      - /swagger*
-{% endif %}
       - /openapi/v2*
-{% if k8s_release_style is version_compare('1.16', '>=') %}
       - /readyz*
       - /livez*
-{% endif %}
   # Don't log events requests.
   - level: None
     resources:
       - group: "" # core
         resources: ["events"]
-{% if k8s_release_style is version_compare('1.19', '>=') %}
       - group: "events.k8s.io"
         resources: ["events"]
-{% endif %}        
   # Secrets, ConfigMaps, and TokenReviews can contain sensitive & binary data,
   # so only log at the Metadata level.
   - level: Metadata
@@ -108,13 +98,11 @@ rules:
         resources: ["jobs", "cronjobs"]
       - group: "extensions" # necessary for pre-1.12 clusters
         resources: ["daemonsets", "deployments", "replicasets"]
-{% if k8s_release_style is version_compare('1.19', '>=') %}
   # Log changes to Calico resources
   - level: RequestResponse
     verbs: ["create", "update", "delete", "patch"]
     resources:
       - group: crd.projectcalico.org
-{% endif %}
   # Excludes the following apigroups from logs
   - level: None
     resources:
@@ -123,3 +111,55 @@ rules:
   # Get responses can be large; skip them.
   - level: Metadata
     verbs: ["create", "update", "delete", "patch"]
+
+{% else %}
+# This policy is copied from openshift's audit policy https://github.com/openshift/library-go/tree/master/pkg/operator/apiserver/audit/manifests
+# Where base-policy.yaml is combined with default-rules.yaml.
+apiVersion: audit.k8s.io/v1
+kind: Policy
+metadata:
+  name: policy
+# drop managed fields from audit, this is at global scope.
+omitManagedFields: true
+# Don't generate audit events for all requests in RequestReceived stage.
+omitStages:
+- "RequestReceived"
+rules:
+# Don't log requests for events
+- level: None
+  resources:
+  - group: ""
+    resources: ["events"]
+# Don't log authenticated requests to certain non-resource URL paths.
+- level: None
+  userGroups: ["system:authenticated", "system:unauthenticated"]
+  nonResourceURLs:
+  - "/api*" # Wildcard matching.
+  - "/version"
+  - "/healthz"
+  - "/readyz"
+  - "/livez"
+  # Don't log requests by "system:apiserver" on apirequestcounts
+- level: None
+  users: ["system:apiserver"]
+  resources:
+    - group: "apiserver.openshift.io"
+      resources: ["apirequestcounts", "apirequestcounts/*"]
+  namespaces: [""]
+# Log the full Identity API resource object so that the audit trail
+# allows us to match the username with the IDP identity.
+- level: RequestResponse
+  verbs: ["create", "update", "patch", "delete"]
+  resources:
+    - group: "user.openshift.io"
+      resources: ["identities"]
+    - group: "oauth.openshift.io"
+      resources: ["oauthaccesstokens", "oauthauthorizetokens"]
+# A catch-all rule to log all other requests at the Metadata level.
+- level: Metadata
+  # Long-running requests like watches that fall under this rule will not
+  # generate an audit event in RequestReceived.
+  omitStages:
+  - "RequestReceived"
+
+{% endif %}
