@@ -66,23 +66,11 @@ rules:
   - "/healthz"
   - "/readyz"
   - "/livez"
-# Don't log requests by "system:apiserver" on apirequestcounts
-- level: None
-  users: ["system:apiserver"]
-  resources:
-    - group: "apiserver.openshift.io"
-      resources: ["apirequestcounts", "apirequestcounts/*"]
-  namespaces: [""]
 # exclude resources where the body is security-sensitive
 - level: Metadata
   resources:
-  - group: "route.openshift.io"
-    resources: ["routes", "routes/status"]
-  - resources: ["secrets", "serviceaccounts/token"]
   - group: "authentication.k8s.io"
     resources: ["tokenreviews", "tokenrequests"]
-  - group: "oauth.openshift.io"
-    resources: ["oauthclients", "tokenreviews"]
 # log request and response payloads for all write requests
 - level: RequestResponse
   verbs:
