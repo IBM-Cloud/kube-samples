@@ -8,7 +8,7 @@ metadata:
   namespace: kube-system
 spec:
   order: 1000
-  selector: app == 'konnectivity-agent' 
+  selector: app == 'konnectivity-agent' || k8s-app == 'konnectivity-agent'
   types:
   - Egress
   egress:
