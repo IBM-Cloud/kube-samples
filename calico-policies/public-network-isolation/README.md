@@ -37,7 +37,7 @@ Along with the default Calico policies that are applied to the public interface 
 
 **Pods**
 
-* Egress network traffic on the public network interface for pods is permitted to the following ports:
+* Egress network traffic on the network interface for pods is permitted to the following ports:
   * TCP/UDP 53 and 5353 for OpenShift version 4.3 or later for DNS
   * TCP/UDP 2049 for communication with NFS file servers
   * TCP/UDP 443 and 3260 for communication to block storage
@@ -46,7 +46,10 @@ Along with the default Calico policies that are applied to the public interface 
   * TCP/UDP 20000:32767 and 443 for communication with the Kubernetes master
   * TCP 4443 for metrics-server for Kubernetes version 1.19 or later, or TCP 6443 for OpenShift version 4.3 or later
   * Specified ports for other IBM Cloud services
-* Ingress network traffic on the public network interface for pods is permitted from network load balancer (NLB), Ingress application load balancer (ALB), and NodePort services.
+* Konnectivity agent pods are allowed to connect out to everything
+* Openshift monitoring pods are allowed to connect out to everything
+* Ingress pods are allowed to connect out to openshift console pods
+* Ingress operator pod is allowed to health check the Ingress Load Balancer
 
 > **IMPORTANT**: When you apply the egress pod policies that are included in this policy set, only network traffic to the subnets and ports that are specified in the pod policies is permitted. All traffic to any subnets or ports that are not specified in the policies is blocked for all pods in all namespaces. Because only the ports and subnets that are necessary for the pods to function in IBM Cloud Kubernetes Service are specified in these policies, your pods cannot send network traffic over the private network until you add or change the Calico policy to allow them to. For example, if you use any in-cluster webhooks, you must add policies to ensure that the webhooks can make the required connections. You also must create policies for any non-local services that extend the Kubernetes API. You can find these services by running `kubectl get apiservices`. For OpenShift clusters, `default/openshift-apiserver` is included as a local service and does not require a network policy.
 
@@ -60,7 +63,10 @@ Along with the default Calico policies that are applied to the public interface 
 | `allow-ibm-ports-public` | Opens ports that are necessary for worker nodes to function properly. |
 | `allow-public-service-endpoint` | Allows worker nodes to communicate with the cluster master through the public service endpoint. |
 | `deny-all-outbound-public` | Denies all egress from worker nodes. Because this policy has a high order, `1850`, its rule is applied last in the chain of Iptables rules that an outgoing packet from a worker node matches against. Other policies in this set have lower orders, so if an outgoing packet matches one of those rules, the packet is permitted. The `deny-all-outbound` policy ensures that if an outgoing packet does not match any polices as it moves through the Iptables rules chain, the packet is denied by this policy. Note that this policy has a lower order then the default policy `allow-all-outbound`.|
-| `allow-openshift-console` | Opens ports that are necessary for Openshift Console to function. Allows traffic from ALB to console and VPN client pod to Operator Lifecycle Manager. NOTE: ***Required for OpenShift***|
+| `allow-konnectivity` | Allows konnectivity agent pods to connect out to everything so that kubectl functions such as `logs`, `exec`, `proxy`, `top`, and also webhook calls will work correctly |
+| `allow-openshift-console` | Opens ports that are necessary for Openshift Console to function. Allows traffic from ALB to console and VPN client pod to Operator Lifecycle Manager. NOTE: ***Only for OpenShift***|
+| `allow-openshift-metrics` | Allows Openshift monitoring pods to connect out to everything so that they can collect the necessary data. NOTE: ***Only for OpenShift***|
+| `allow-k8s-master-to-dashboard-via-vpn` | Allows konnectivity traffic to access kubernetes dashboard. NOTE: ***Only for Kubernetes***|
 
 ### Optional policies
 

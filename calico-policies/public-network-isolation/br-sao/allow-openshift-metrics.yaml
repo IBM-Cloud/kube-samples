@@ -1,0 +1,17 @@
+# This policy allows all pods in the openshift-monitoring namespace to connect
+# out to everything, so that openshift monitoring and things like `kubectl top...`
+# will work correctly
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: allow-openshift-metrics
+  namespace: openshift-monitoring
+spec:
+  order: 1000
+  selector: projectcalico.org/orchestrator == 'k8s'
+  types:
+  - Egress
+  egress:
+  - action: Allow
+    source: { }
+    destination: { }

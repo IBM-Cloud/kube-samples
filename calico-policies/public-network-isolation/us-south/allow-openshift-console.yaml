@@ -1,3 +1,5 @@
+# This policy allows various connections needed for Openshift Console
+# to function correctly
 apiVersion: projectcalico.org/v3
 kind: NetworkPolicy
 metadata:
@@ -15,6 +17,18 @@ spec:
     protocol: TCP
     source:
       selector: app == 'vpn'
+    destination:
+      namespaceSelector: projectcalico.org/name == 'openshift-operator-lifecycle-manager'
+      # These are the ports used by the catalog operator and package server
+      ports:
+      - 5443
+      - 8081
+  # Allow the konnectivity agent pod to forward connections from the
+  # API server to the operator lifecycle manager pods
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: app == 'konnectivity-agent'
     destination:
       namespaceSelector: projectcalico.org/name == 'openshift-operator-lifecycle-manager'
       # These are the ports used by the catalog operator and package server
@@ -40,3 +54,10 @@ spec:
     destination:
       namespaceSelector: projectcalico.org/name == 'openshift-console'
       selector: app == 'console'
+  # Allow TCP traffic to ingress canary pods from ingress (L7 LB) for health check
+  - action: Allow
+    protocol: TCP
+    # Source is implicitly the pods selected by the label selector
+    destination:
+      namespaceSelector: projectcalico.org/name == 'openshift-ingress-canary'
+      selector: ingresscanary.operator.openshift.io/daemonset-ingresscanary == 'canary_controller'
