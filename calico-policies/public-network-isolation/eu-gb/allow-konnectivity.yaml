@@ -1,0 +1,17 @@
+# This policy allows the konnectivity-agent pods to connect out to everything
+# This allows webhook calls, logs, exec, proxy, and metrics requests from the
+# cluster's master apiserver to get out to the cluster pods and kubelet
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: allow-konnectivity
+  namespace: kube-system
+spec:
+  order: 1000
+  selector: app == 'konnectivity-agent' || k8s-app == 'konnectivity-agent'
+  types:
+  - Egress
+  egress:
+  - action: Allow
+    source: { }
+    destination: { }

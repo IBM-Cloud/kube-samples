@@ -1,3 +1,5 @@
+# This policy allows various connections needed for the Kubernetes Dashboard
+# to function correctly
 apiVersion: projectcalico.org/v3
 kind: NetworkPolicy
 metadata:
@@ -5,14 +7,14 @@ metadata:
   namespace: kube-system
 spec:
   order: 1000
-  # NOTE: We select the OpenVPN client/konnectivity agent pods specifically.
+  # NOTE: This selects the konnectivity agent pods specifically.
   # This means they are the implicit source for egress traffic
   # and implicit destination for ingress traffic designations.
   selector: kubernetes-dashboard-policy == 'allow'
   types:
   - Egress
   egress:
-  # Allow the vpn/konnectivity pods to forward connections
+  # Allow the konnectivity pods to forward connections
   # from the API server to the kube-dashboard pod
   - action: Allow
     protocol: TCP
