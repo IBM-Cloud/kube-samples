@@ -41,6 +41,7 @@ node:
     - hyperkube proxy
     - hyperkube kube-proxy
     - kube-proxy
+    - ovnkube
     svc:
     - /lib/systemd/system/kube-proxy.service
     kubeconfig:
