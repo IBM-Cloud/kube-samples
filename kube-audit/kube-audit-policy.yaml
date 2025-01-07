@@ -1,7 +1,7 @@
 # ******************************************************************************
 # * Licensed Materials - Property of IBM
 # * IBM Cloud Kubernetes Service, 5737-D43
-# * (C) Copyright IBM Corp. 2020, 2024 All Rights Reserved.
+# * (C) Copyright IBM Corp. 2020, 2025 All Rights Reserved.
 # * US Government Users Restricted Rights - Use, duplication or
 # * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 # ******************************************************************************
@@ -125,11 +125,13 @@ omitManagedFields: true
 omitStages:
 - "RequestReceived"
 rules:
+{% if k8s_release_style is version_compare("1.31", "<=") %}
 # Don't log requests for events
 - level: None
   resources:
   - group: ""
     resources: ["events"]
+{% endif %}
 # Don't log authenticated requests to certain non-resource URL paths.
 - level: None
   userGroups: ["system:authenticated", "system:unauthenticated"]
