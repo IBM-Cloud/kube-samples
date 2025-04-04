@@ -4,7 +4,9 @@ metadata:
   name: ibm-k8s-controller-config
   namespace: kube-system
 data:
+  allow-cross-namespace-resources: "true"
   allow-snippet-annotations: "false"
+  annotations-risk-level: Critical
   client-body-buffer-size: 128k
   enable-multi-accept: "false"
   enable-underscores-in-headers: "true"
