@@ -2,7 +2,7 @@
 
 To secure your IBM Cloud Kubernetes Service or Red Hat OpenShift on IBM Cloud cluster, you might use [Calico pre-DNAT network policies](https://cloud.ibm.com/docs/containers?topic=containers-network_policies), [VPC security groups](https://cloud.ibm.com/docs/containers?topic=containers-vpc-network-policy#security_groups), [VPC access control lists (ACLs)](https://cloud.ibm.com/docs/containers?topic=containers-vpc-network-policy#acls), or another custom firewall solution to block incoming traffic to Ingress or router services.
 
-To ensure that the NS1 Connect health-monitor can check the health of your ALBs of routers, you must allow inbound access from the following NS1 IP address ranges:
+To ensure that the NS1 Connect health-monitor can check the health of your ALBs or routers, you must allow inbound access from the following NS1 IP address ranges:
 
  - `163.114.225.0/24`
  - `163.114.230.0/24`
