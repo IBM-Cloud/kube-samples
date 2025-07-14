@@ -32,6 +32,9 @@ spec:
       # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_ingestion_private
       - 166.9.34.56/32
       - 166.9.36.71/32
+      - 166.9.245.189/32
+      - 166.9.245.221/32
+      - 166.9.245.253/32
       ports:
       - 6443
     protocol: TCP
@@ -43,6 +46,9 @@ spec:
       # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints#endpoints_rest_api
       - 166.9.244.29/32
       - 166.9.244.59/32
+      - 166.9.245.189/32
+      - 166.9.245.221/32
+      - 166.9.245.253/32
       ports:
       - 443
     protocol: TCP
