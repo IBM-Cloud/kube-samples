@@ -1,0 +1,62 @@
+---
+node:
+  components:
+    - kubelet
+    - proxy
+    - kubernetes
+
+  kubernetes:
+    confs:
+    - "/etc/kubernetes/config"
+    - "/etc/kubernetes/kubelet.conf"
+    defaultconf: "/etc/kubernetes/config"
+
+  kubelet:
+    bins:
+    - hyperkube kubelet
+    - kubelet
+    svc:
+    - /lib/systemd/system/kubelet.service
+    - /etc/systemd/system/kubelet.service
+    cafile:
+      - "/etc/kubernetes/pki/ca.crt"
+      - "/etc/kubernetes/certs/ca.crt"
+      - "/etc/kubernetes/cert/ca.pem"
+      - "/var/lib/kubelet/pki/kubelet-client-current.pem"
+      - "/var/lib/kubelet/pki/kubelet-server-current.pem"
+    confs:
+    - /etc/kubernetes/kubelet.conf
+    - /etc/kubernetes/kubelet-config.yaml
+    - /lib/systemd/system/kubelet.service
+    - /etc/systemd/system/kubelet.service
+    kubeconfig:
+    - /etc/kubernetes/kubelet-kubeconfig
+    - /var/lib/kubelet/kubeconfig
+    defaultconf: /etc/kubernetes/kubelet.conf
+    defaultsvc: /lib/systemd/system/kubelet.service
+    defaultkubeconfig: /etc/kubernetes/kubelet-kubeconfig
+
+  proxy:
+    bins:
+    - hyperkube proxy
+    - hyperkube kube-proxy
+    - kube-proxy
+    - ovnkube
+    svc:
+    - /lib/systemd/system/kube-proxy.service
+    kubeconfig:
+    - /etc/kubernetes/kubelet-kubeconfig
+    - /var/lib/kubelet/kubeconfig
+    defaultconf: /etc/kubernetes/kubelet.conf
+    defaultsvc: /lib/systemd/system/kube-proxy.service
+    defaultkubeconfig: /etc/kubernetes/kubelet-kubeconfig
+
+policies:
+  components: []
+
+managedservices:
+  components: []
+
+target_mapping:
+  "ibm":
+    - "node"
