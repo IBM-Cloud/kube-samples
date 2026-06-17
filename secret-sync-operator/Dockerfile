@@ -1,16 +1,35 @@
 FROM golang
 ENV RELEASE_VERSION v0.8.0
 ENV GOPATH /go
-ADD . /go/src/github.com/ibm/secret-sync-operator
+
+# Allow setting up proxies:
+ARG http_proxy
+ARG no_proxy
+# maybe you have a (caching) proxy set for GO as well:
+ARG GOPROXY
+
+
 RUN apt update \
     && apt install -y curl
-RUN curl -OJL https://github.com/operator-framework/operator-sdk/releases/download/${RELEASE_VERSION}/operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu \
-    && chmod +x operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu && cp operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu /usr/local/bin/operator-sdk && rm operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu
-RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-WORKDIR /go/src/github.com/ibm/secret-sync-operator
-RUN PATH=$GOPATH/bin:$PATH dep ensure
-RUN PATH=$GOPATH/bin:$PATH go build -o build/_output/bin/secret-sync-operator cmd/manager/main.go 
 
+# the following download is big, so let caching proxies do their best
+RUN \
+    set -e \
+    ; proto=https \
+    ; test -n "$http_proxy" && proto=http \
+    ; curl -OJL $proto://github.com/operator-framework/operator-sdk/releases/download/${RELEASE_VERSION}/operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu \
+    ; chmod +x operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu \
+    ; cp operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu /usr/local/bin/operator-sdk \
+    ; rm operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu
+
+RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+
+ADD .  /go/src/github.com/ibm/secret-sync-operator
+
+
+WORKDIR /go/src/github.com/ibm/secret-sync-operator
+
+RUN PATH=$GOPATH/bin:$PATH go build -o build/_output/bin/secret-sync-operator cmd/manager/main.go
 
 
 FROM registry.access.redhat.com/ubi8-minimal
