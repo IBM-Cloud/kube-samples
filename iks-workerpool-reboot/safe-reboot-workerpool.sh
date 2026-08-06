@@ -1,14 +1,19 @@
 #!/bin/bash
 
+# Note: This is a community sample provided for reference.
+# It is not an officially supported IBM product — please test it
+# in a non-production environment before using it in production.
+
 # ============================================================
-# Safe reboot all nodes in IBM Cloud worker pool via Kubernetes
+# Safe reboot all nodes in IBM Cloud worker pool via ibmcloud CLI
 # No SSH required
-# Usage: ./safe-reboot-workerpool.sh <worker-pool-name>
+# Usage: ./safe-reboot-workerpool.sh <cluster-name-or-id> <worker-pool-name>
 # ============================================================
 
 set -euo pipefail
 
-WORKER_POOL="${1:-}"
+CLUSTER="${1:-}"
+WORKER_POOL="${2:-}"
 LOG_FILE="./k8s-safe-reboot.log"
 
 # ============================================================
@@ -27,8 +32,8 @@ readonly POLL_INTERVAL_READY=10      # seconds between Ready status checks
 readonly TIMEOUT_NOT_READY=300       # max seconds to wait for node to go NotReady (5 min)
 readonly TIMEOUT_READY=900           # max seconds to wait for node to become Ready (15 min)
 
-if [ -z "$WORKER_POOL" ]; then
-  echo "Usage: $0 <worker-pool-name>"
+if [ -z "$CLUSTER" ] || [ -z "$WORKER_POOL" ]; then
+  echo "Usage: $0 <cluster-name-or-id> <worker-pool-name>"
   exit 1
 fi
 
@@ -63,6 +68,17 @@ get_nodes() {
   kubectl get nodes \
     -l "ibm-cloud.kubernetes.io/worker-pool-name=${WORKER_POOL}" \
     -o jsonpath='{.items[*].metadata.name}'
+}
+
+# ============================================================
+# get_worker_id <node-name>
+# Returns the IBM Cloud worker ID from the node label:
+#   ibm-cloud.kubernetes.io/worker-id
+# ============================================================
+get_worker_id() {
+  local node_name="$1"
+  kubectl get node "${node_name}" \
+    -o jsonpath='{.metadata.labels.ibm-cloud\.kubernetes\.io/worker-id}'
 }
 
 # ============================================================
@@ -139,15 +155,22 @@ wait_for_node_ready() {
 
 # ============================================================
 # reboot_node <node-name>
-# Cordons, drains, reboots, and uncordons a single node.
+# Cordons, drains, reboots via ibmcloud CLI, and uncordons a single node.
 # Returns 0 on success, 1 if any step fails.
 # ============================================================
 reboot_node() {
   local node_name="$1"
-  local pod_name="reboot-${node_name}"
+  local worker_id
 
   log_info "================================================"
   log_info "Starting reboot for node: ${node_name}"
+
+  worker_id="$(get_worker_id "${node_name}")"
+  if [[ -z "${worker_id}" ]]; then
+    log_error "Could not resolve worker ID for ${node_name} — label ibm-cloud.kubernetes.io/worker-id not found"
+    return 1
+  fi
+  log_info "Resolved worker ID: ${worker_id}"
 
   log_info "Cordoning ${node_name}"
   kubectl cordon "${node_name}"
@@ -159,33 +182,9 @@ reboot_node() {
     --grace-period=60 \
     --timeout=15m
 
-  # Remove any leftover reboot pod from a previous interrupted run
-  kubectl delete pod "${pod_name}" --ignore-not-found 2>/dev/null || true
-
-  log_info "Triggering reboot via Kubernetes privileged pod"
-  if ! kubectl run "${pod_name}" \
-      --image=agnhost \
-      --restart=Never \
-      --overrides="
-{
-  \"spec\": {
-    \"nodeName\": \"${node_name}\",
-    \"hostPID\": true,
-    \"hostNetwork\": true,
-    \"containers\": [
-      {
-        \"name\": \"reboot\",
-        \"image\": \"us.icr.io/armada-master/agnhost:2.52\",
-        \"securityContext\": {
-          \"privileged\": true
-        },
-        \"command\": [\"nsenter\"],
-        \"args\": [\"-t\",\"1\",\"-m\",\"-u\",\"-i\",\"-n\",\"reboot\"]
-      }
-    ]
-  }
-}"; then
-    log_error "Failed to create reboot pod for ${node_name}"
+  log_info "Triggering reboot via ibmcloud CLI: cluster=${CLUSTER} worker=${worker_id}"
+  if ! ibmcloud ks worker reboot --cluster "${CLUSTER}" --worker "${worker_id}" -f; then
+    log_error "ibmcloud ks worker reboot failed for ${node_name} (worker: ${worker_id})"
     return 1
   fi
 
@@ -202,8 +201,6 @@ reboot_node() {
   log_info "Uncordoning ${node_name}"
   kubectl uncordon "${node_name}"
 
-  kubectl delete pod "${pod_name}" --ignore-not-found
-
   log_info "Reboot completed successfully for ${node_name}"
   return 0
 }
@@ -212,7 +209,7 @@ reboot_node() {
 # MAIN
 # ============================================================
 
-log_info "Starting rolling reboot of worker pool: ${WORKER_POOL}"
+log_info "Starting rolling reboot of worker pool: ${WORKER_POOL} on cluster: ${CLUSTER}"
 
 NODES=$(get_nodes)
 
