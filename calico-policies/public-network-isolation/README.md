@@ -1,6 +1,6 @@
 # Public network Calico policies
 
-This set of Calico policies work in conjunction with the [default Calico policies](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#default_policy) to protect public network traffic of a cluster while allowing communication on the public network that is necessary for the cluster to function. The policies target the public interface (eth1) and the pod network of a cluster.
+This set of Calico policies only apply to classic clusters, and they are just examples which are intended as a starting point and must be edited to meet your unique use cases. They work in conjunction with the [default Calico policies](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#default_policy) to protect public network traffic of a classic cluster while allowing communication on the public network that is necessary for the cluster to function. The policies target the public interface (eth1) and the pod network of a cluster.
 
 For more information on how to use these policies, see the [IBM Cloud Kubernetes Service documentation](https://cloud.ibm.com/docs/containers?topic=containers-network_policies#isolate_workers_public).
 
