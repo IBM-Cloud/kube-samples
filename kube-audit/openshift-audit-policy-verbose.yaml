@@ -6,8 +6,8 @@
 # * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 # ******************************************************************************
 # This policy is used by the audit webhook to collect and forward any events that are passed
-# through your Kubernetes API server to IBM Log Analysis with LogDNA. For more information,
-# see the docs: https://cloud.ibm.com/docs/containers?topic=containers-health#webhook_logdna
+# through your Kubernetes API server to IBM Cloud Logs. For more information,
+# see the docs: https://cloud.ibm.com/docs/containers?topic=containers-health#webhook_ibm_cloud_logs
 
 apiVersion: audit.k8s.io/v1
 kind: Policy
