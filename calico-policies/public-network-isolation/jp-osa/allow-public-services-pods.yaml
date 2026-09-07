@@ -1,6 +1,6 @@
 # This policy allows outgoing network traffic from pods to other IBM Cloud services.
 # The example nets and ports in this policy are for IBM Cloud Container Registry, IBM Cloud
-# Monitoring with Sysdig, IBM Log Analysis with LogDNA, and the managed Istio add-on.
+# IBM Cloud Monitoring, IBM Cloud Logs, and the managed Istio add-on.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -49,12 +49,12 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Cloud Monitoring with Sysdig: jp-osa
+      # IBM Cloud Monitoring: jp-osa
       # Taken from: https://cloud.ibm.com/docs/monitoring?topic=monitoring-endpoints
       - 163.68.67.98/32
       - 163.69.66.170/32
       - 163.73.67.180/32
-      # backup pools IBM Cloud Monitoring with Sysdig: AP North nets
+      # backup pools IBM Cloud Monitoring: AP North nets
       - 128.168.75.14/32
       - 128.168.91.236/32
       - 128.168.91.238/32
@@ -75,7 +75,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Log Analysis with LogDNA: AP North nets
+      # IBM Cloud Logs: AP North nets
       - 128.168.70.51/32
       - 128.168.70.53/32
       - 161.202.67.2/32

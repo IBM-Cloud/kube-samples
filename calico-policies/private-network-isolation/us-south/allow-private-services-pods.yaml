@@ -1,7 +1,7 @@
 # This policy allows outgoing network traffic from pods to other
 # IBM Cloud services that support private service endpoints.
 # The example nets in this policy are for IBM Cloud Container Registry,
-# IBM Cloud Monitoring with Sysdig, and IBM Log Analysis with LogDNA.
+# IBM Cloud Monitoring, and IBM Cloud Logs.
 
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
@@ -58,7 +58,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Log Analysis with LogDNA: us-south
+      # IBM Cloud Logs: us-south
       # Taken from: https://cloud.ibm.com/docs/log-analysis?topic=log-analysis-endpoints
       - 166.9.12.12/32
       - 166.9.12.13/32
@@ -83,7 +83,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Log Analysis with LogDNA: US South nets
+      # IBM Cloud Logs: US South nets
       - 166.9.12.15/32
       - 166.9.14.5/32
       - 166.9.16.14/32
@@ -95,7 +95,7 @@ spec:
   - action: Allow
     destination:
       nets:
-      # IBM Log Analysis with LogDNA: US South nets
+      # IBM Cloud Logs: US South nets
       - 166.9.12.16/32
       - 166.9.14.6/32
       - 166.9.16.15/32
