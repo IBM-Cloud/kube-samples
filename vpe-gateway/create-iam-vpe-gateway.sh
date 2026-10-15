@@ -173,7 +173,7 @@ else
   fi
 fi
 
-GATEWAY_NAME="kube-iam-${VPC_ID}"
+GATEWAY_NAME="iks-iam-${VPC_ID}"
 IAM_TARGET_CRN="crn:v1:bluemix:public:iam-svcs:global:::endpoint:private.iam.cloud.ibm.com"
 
 if [[ "$ACTION" == "remove" ]]; then
